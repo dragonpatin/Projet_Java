@@ -10,7 +10,7 @@ import java.util.*;
 import java.text.SimpleDateFormat;
 public class Simulateur{
     int prixHeureCreuse;
-   int prixHeurePic;
+    int prixHeurePic;
     int consommationTotale;
     entresortie S;
     SimpleDateFormat date;
@@ -23,10 +23,13 @@ public class Simulateur{
 
     }
     public void recherchePrix (){
-
+        int prixHeureCreuse = 0;
+        int prixHeurePic = 0 ;
     }
     public void calculConsommation (){
-
+        for(int i = 0;i<ConsommationObjet.size();i++){
+            consommationTotale += Integer.parseInt(ConsommationObjet.get(i));
+        }
     }
     public void recupereObjet (){
 
@@ -38,7 +41,7 @@ public class Simulateur{
 
     }
     public void recupereTemperatureExt (){
-
+        temperatureExterieur = 0;
     }
     public Vector getConsommation (){
         return null;
