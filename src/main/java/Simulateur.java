@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.io.*;
 import java.util.*;
 import java.text.SimpleDateFormat;
+import java.text.DateFormatSymbols;
+import java.util.Date;
 public class Simulateur{
     int prixHeureCreuse;
     int prixHeurePic;
@@ -15,12 +17,17 @@ public class Simulateur{
     entresortie S;
     SimpleDateFormat date;
     int consommationANePasDepasser;
-    Vector<String> ConsommationObjet;
+    Vector<Integer> ConsommationObjet;
     Vector<Objet> objet;
     int temperatureExterieur;
 
     public Simulateur( entresortie e){
-
+        //initialisation de tout.
+        //recherchePrix();
+        //recupereObjet();
+        //calculConsommation();
+        //recupereTemperatureExt();
+        rechercheDateHeure();
     }
     public void recherchePrix (){
         int prixHeureCreuse = 0;
@@ -28,61 +35,94 @@ public class Simulateur{
     }
     public void calculConsommation (){
         for(int i = 0;i<ConsommationObjet.size();i++){
-            consommationTotale += Integer.parseInt(ConsommationObjet.get(i));
+            consommationTotale += ConsommationObjet.get(i) ;
         }
     }
     public void recupereObjet (){
-
+        objet = S.getObjet();
+        for(int i = 0 ;i<objet.size();i++){
+            ConsommationObjet.add(objet.get(i).getConsommation());
+        }
     }
     public void miseAJourObjet (){
-
+        objet = S.getObjet();
+        ConsommationObjet.clear();
+        for(int i = 0;i<objet.size();i++){
+            ConsommationObjet.add(objet.get(i).getConsommation());
+        }
     }
     public void ExtinctionAutomatique (int ConsoMax){
-
+            consommationANePasDepasser = ConsoMax;
     }
     public void recupereTemperatureExt (){
         temperatureExterieur = 0;
+    }
+    public void rechercheDateHeure (){
+        DateFormatSymbols monDFS = new DateFormatSymbols();
+        String[] joursCourts = new String[] {
+                 "",
+                "Dimanche",
+                "Lundi",
+                "Mardi",
+                "Mercredi",
+                "Jeudi",
+                "Vendredi",
+                "Samedi" };
+        monDFS.setShortWeekdays(joursCourts);
+        date = new SimpleDateFormat(
+                "EEE dd MMM yyyy HH:mm:ss",
+                monDFS);
+
     }
     public Vector getConsommation (){
         return null;
     }
     public int getPrixHC (){
-        return 0;
+        return prixHeureCreuse;
     }
     public int getPrixHP (){
-        return 0;
+        return prixHeurePic;
     }
     public int ConsommationANePasDepasser ( ){
-        return 0;
+        return consommationANePasDepasser;
     }
     public int consommationTotale (){
-        return 0;
+        return consommationTotale;
     }
-    public void rechercheDateHeure (){
 
-    }
     public SimpleDateFormat getDate (){
-        return null;
+        return date;
     }
     public Vector ConsommationObjet (){
-        return null;
+        return ConsommationObjet;
     }
     public int getTemperatureExt (){
-        return 0;
+        return temperatureExterieur;
     }
     public Vector getObjet (){
-        return null;
+        return objet;
     }
     public Vector consoJour (){
-        return null;
+
+        //Calcul de prévisualisation.
+
+
+        return S.consoJour();
     }
     public Vector ConsoMois (){
-        return null;
+        return S.consoMois();
     }
     public Vector ConsoSemaine (){
-        return null;
+        return S.consoSemaine();
     }
 
-
+    public static void main(String [] args)
+    {
+        entresortie E = new entresortie();
+        Simulateur S = new Simulateur(E);
+        S.rechercheDateHeure();
+        Date aujourdhui = new Date();
+        System.out.println(S.getDate().format(aujourdhui));
+    }
 
 }

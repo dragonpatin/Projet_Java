@@ -49,10 +49,10 @@ public class entresortie{
     public Vector consoJour (){
         return null;
     }
-    public Vector ConsoMois (){
+    public Vector consoMois (){
         return null;
     }
-    public Vector ConsoSemaine (){
+    public Vector consoSemaine (){
         return null;
     }
 }
