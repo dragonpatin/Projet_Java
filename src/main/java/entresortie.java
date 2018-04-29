@@ -9,8 +9,8 @@ public class entresortie{
     File NomFichier;
     Vector <Objet> ListeObjet;
     Vector <Objet> ObjetFavoris;
-    Vector <String> Preference;
-    Vector <Integer> consoJour;
+    Vector <preference> Preference;
+    Vector <Integer> ConsoJour;
     Vector <Integer> ConsoMois;
     Vector <Integer> ConsoSemaine;
 
@@ -23,8 +23,8 @@ public class entresortie{
 
         this.ListeObjet = new Vector<Objet>();
         this.ObjetFavoris = new Vector<Objet>();
-        this.Preference = new Vector<String>();
-        this.consoJour = new Vector<Integer>();
+        this.Preference = new Vector<preference>();
+        this.ConsoJour = new Vector<Integer>();
         this.ConsoMois = new Vector<Integer>();
         this.ConsoSemaine = new Vector<Integer>();
     }
@@ -34,14 +34,68 @@ public class entresortie{
             String str;
             int nombrebloc = 0;
             BufferedReader fichier = new BufferedReader(new FileReader(NomFichier));
+            Objet obj = new Objet();
 
             //Création de l'objet de lecture
             while ((str = fichier.readLine()) != null) {
                 if(str=="##") nombrebloc++;
                 if(nombrebloc==1){
+                    str = fichier.readLine();
+                    String NomObjet = str;
+                    str = fichier.readLine();
+                    String PieceMaison=str;
+                    str = fichier.readLine();
+                    int Consommation = Integer.parseInt(str);
+                    str = fichier.readLine();
+                    String AdresseMAC = str;
+                    str = fichier.readLine();
+                    String favori = str;
 
+                    obj = new Objet(NomObjet,PieceMaison,Consommation,AdresseMAC);
+                    ListeObjet.addElement(obj);
+
+                    if(favori=="true"){
+                        ObjetFavoris.addElement(obj);
+                    }
                 }
-                System.out.println(str);
+
+                else if (nombrebloc==2){
+                    str = fichier.readLine();
+                    String Nompreference = str;
+                    str = fichier.readLine();
+                    for(int j=0; j<ListeObjet.size();j++){
+                        if(ListeObjet.elementAt(j).getNom()==str){
+                            obj = ListeObjet.elementAt(j);
+                        }
+                    }
+                    str = fichier.readLine();
+                    int instruction = Integer.parseInt(str);
+                    str = fichier.readLine();
+                    int heure_debut = Integer.parseInt(str);
+                    str = fichier.readLine();
+                    int heure_fin = Integer.parseInt(str);
+
+                    preference P = new preference(Nompreference,obj,heure_debut,heure_fin);
+                    Preference.addElement(P);
+                }
+
+                else if(nombrebloc==3){
+                    str = fichier.readLine();
+                    int consojour = Integer.parseInt(str);
+                    ConsoJour.addElement(consojour);
+                }
+
+                else if(nombrebloc==4){
+                    str = fichier.readLine();
+                    int consosemaine = Integer.parseInt(str);
+                    ConsoJour.addElement(consosemaine);
+                }
+
+                else if(nombrebloc==5){
+                    str = fichier.readLine();
+                    int consomois = Integer.parseInt(str);
+                    ConsoJour.addElement(consomois);
+                }
             }
             fichier.close();
         }catch (IOException e) {
@@ -64,9 +118,9 @@ public class entresortie{
 
     }
     public Vector getObjet (){
-        return null;
+        return ListeObjet;
     }
-    public Vector getConsommation (){
+    public Objet getConsommation (){
         return null;
     }
     public Vector getPreference (){
