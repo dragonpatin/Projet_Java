@@ -1,10 +1,13 @@
 public class CapteurTemperature extends Objet{
 
-    public CapteurTemperature(int temperature){
+    int temperature;
 
+    public CapteurTemperature(int temperature){
+        this.temperature = temperature;
     }
-    public int getTemperature (){
-        return 0;
+
+    public int getTemperature(){
+        return this.temperature;
     }
 }
 
