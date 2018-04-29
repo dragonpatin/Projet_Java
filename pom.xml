@@ -3,4 +3,12 @@
   <groupId>Licence3</groupId>
   <artifactId>SystemeGestion</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <dependencies>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.0.1</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
 </project>

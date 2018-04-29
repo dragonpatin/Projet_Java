@@ -1,8 +1,5 @@
-import java.applet.*;
-import java.awt.*;
-import java.awt.event.*;
+
 import java.io.*;
-import java.net.*;
 import java.util.*;
 import javax.swing.JFileChooser;
 
@@ -10,70 +7,44 @@ import javax.swing.JFileChooser;
 public class entresortie{
 
     File NomFichier;
-    Vector ListeObjet;
-    Vector ObjetFavoris;
-    Vector Preference;
-    Vector consoJour;
-    Vector ConsoMois;
-    Vector ConsoSemaine;
+    Vector <Objet> ListeObjet;
+    Vector <Objet> ObjetFavoris;
+    Vector <String> Preference;
+    Vector <Integer> consoJour;
+    Vector <Integer> ConsoMois;
+    Vector <Integer> ConsoSemaine;
 
-    public entresortie(String Nom)
-    {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("Sauvegarde.txt")));
-            writer.close();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        this.NomFichier = new File("Sauvegarde.txt");
-    }
 
     public entresortie(){
         JFileChooser dialogue = new JFileChooser();
         dialogue.showOpenDialog(null);
         System.out.println("Fichier choisi : " + dialogue.getSelectedFile());
         this.NomFichier = dialogue.getSelectedFile();
+
+        this.ListeObjet = new Vector<Objet>();
+        this.ObjetFavoris = new Vector<Objet>();
+        this.Preference = new Vector<String>();
+        this.consoJour = new Vector<Integer>();
+        this.ConsoMois = new Vector<Integer>();
+        this.ConsoSemaine = new Vector<Integer>();
     }
 
-    public void lecturefichier(File NomFichier, String donnees){
-        File file = NomFichier;
-        FileReader fr;
-        String str;
-        if(donnees == "Objet"){
-
-        }
-        else if(donnees == "ObjetFavori"){
-
-        }
-        else if(donnees == "Preference"){
-
-        }
-        else if(donnees == "consoJour"){
-
-        }
-        else if(donnees == "ConsoMois"){
-
-        }
-        else if(donnees == "ConsoSemaine"){
-
-        }
+    public void lecturefichier(File NomFichier){
         try{
+            String str;
+            int nombrebloc = 0;
+            BufferedReader fichier = new BufferedReader(new FileReader(NomFichier));
+
             //Création de l'objet de lecture
-            fr = new FileReader(file);
-            str = "";
-            int i = 0;
-            //Lecture des données
-            while((i = fr.read()) != -1)
-                str += (char)i;
+            while ((str = fichier.readLine()) != null) {
+                if(str=="##") nombrebloc++;
+                if(nombrebloc==1){
 
-            //Affichage
-            System.out.println(str);
-
-        }catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+                }
+                System.out.println(str);
+            }
+            fichier.close();
+        }catch (IOException e) {
             e.printStackTrace();
         }
     }
