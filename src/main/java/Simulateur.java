@@ -1,11 +1,3 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.FileReader;
-import java.io.InputStreamReader;
-import java.io.*;
 import java.util.*;
 import java.text.SimpleDateFormat;
 import java.text.DateFormatSymbols;
@@ -15,7 +7,7 @@ public class Simulateur{
     int prixHeurePic;
     int consommationTotale;
     entresortie S;
-    SimpleDateFormat date;
+    Calendar date;
     int consommationANePasDepasser;
     Vector<Integer> ConsommationObjet;
     Vector<Objet> objet;
@@ -23,6 +15,10 @@ public class Simulateur{
 
     public Simulateur( entresortie e){
         //initialisation de tout.
+        this.S = e;
+        this.ConsommationObjet =  new Vector<Integer>();
+        this.objet = new Vector<Objet>();
+        this.consommationTotale = 0;
         //recherchePrix();
         //recupereObjet();
         //calculConsommation();
@@ -58,21 +54,7 @@ public class Simulateur{
         temperatureExterieur = 0;
     }
     public void rechercheDateHeure (){
-        DateFormatSymbols monDFS = new DateFormatSymbols();
-        String[] joursCourts = new String[] {
-                 "",
-                "Dimanche",
-                "Lundi",
-                "Mardi",
-                "Mercredi",
-                "Jeudi",
-                "Vendredi",
-                "Samedi" };
-        monDFS.setShortWeekdays(joursCourts);
-        date = new SimpleDateFormat(
-                "EEE dd MMM yyyy HH:mm:ss",
-                monDFS);
-
+        date = Calendar.getInstance();
     }
     public Vector getConsommation (){
         return null;
@@ -90,7 +72,7 @@ public class Simulateur{
         return consommationTotale;
     }
 
-    public SimpleDateFormat getDate (){
+    public Calendar getDate (){
         return date;
     }
     public Vector ConsommationObjet (){
@@ -104,16 +86,67 @@ public class Simulateur{
     }
     public Vector consoJour (){
 
-        //Calcul de prévisualisation.
-
-
-        return S.consoJour();
+        Calendar Newdate = Calendar.getInstance();
+        Vector<Integer> Conso = S.consoJour();
+        if(Newdate.DAY_OF_MONTH != date.DAY_OF_MONTH){
+            if(Conso.size() == 6){          //On supprime les anciennes consommations si nous en avons suffisaments
+                Conso.remove(0);
+            }
+            Conso.add(consommationTotale);
+        }
+        else{
+            int tmp;
+            if(Conso.size()==0){
+                tmp = 0;
+            }else{
+                tmp = Conso.get(Conso.size()-1);
+                Conso.remove(Conso.size()-1);}
+            Conso.add(tmp+consommationTotale);
+        }
+        date = Newdate;
+        return Conso;
     }
     public Vector ConsoMois (){
-        return S.consoMois();
+        Calendar Newdate = Calendar.getInstance();
+        Vector<Integer> Conso = S.consoMois();
+        if(Newdate.MONTH != date.MONTH){
+            if(Conso.size() == 6){          //On supprime les anciennes consommations si nous en avons suffisaments
+                Conso.remove(0);
+            }
+            Conso.add(consommationTotale);
+        }
+        else{
+            int tmp;
+            if(Conso.size()==0){
+                tmp = 0;
+            }else{
+                tmp = Conso.get(Conso.size()-1);
+                Conso.remove(Conso.size()-1);}
+            Conso.add(tmp+consommationTotale);
+        }
+        date = Newdate;
+        return Conso;
     }
     public Vector ConsoSemaine (){
-        return S.consoSemaine();
+        Calendar Newdate = Calendar.getInstance();
+        Vector<Integer> Conso = S.consoSemaine();
+        if(Newdate.WEEK_OF_YEAR != date.WEEK_OF_YEAR){
+            if(Conso.size() == 6){          //On supprime les anciennes consommations si nous en avons suffisaments
+                Conso.remove(0);
+            }
+            Conso.add(consommationTotale);
+        }
+        else{
+            int tmp;
+            if(Conso.size()==0){
+                tmp = 0;
+            }else{
+            tmp = Conso.get(Conso.size()-1);
+            Conso.remove(Conso.size()-1);}
+            Conso.add(tmp+consommationTotale);
+        }
+        date = Newdate;
+        return Conso;
     }
 
     public static void main(String [] args)
@@ -121,8 +154,7 @@ public class Simulateur{
         entresortie E = new entresortie();
         Simulateur S = new Simulateur(E);
         S.rechercheDateHeure();
-        Date aujourdhui = new Date();
-        System.out.println(S.getDate().format(aujourdhui));
+        Vector<Integer> Conso = S.ConsoMois();
     }
 
 }
