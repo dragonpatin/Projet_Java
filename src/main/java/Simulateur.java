@@ -152,6 +152,7 @@ public class Simulateur{
     public static void main(String [] args)
     {
         entresortie E = new entresortie();
+        E.lecturefichier(E.NomFichier);
         Simulateur S = new Simulateur(E);
         S.rechercheDateHeure();
         Vector<Integer> Conso = S.ConsoMois();

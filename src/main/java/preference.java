@@ -6,8 +6,12 @@ public class preference {
      int heure_fin;
 
 
-     public preference (String nom, Objet O, int hd, int hf){
-
+     public preference (String nom, Objet O,int instruction, int hd, int hf){
+          this.nom=nom;
+          this.O=O;
+          this.instruction=instruction;
+          this.heure_debut=hd;
+          this.heure_fin=hf;
      }
      public void changerNom( String nom){
 

@@ -31,15 +31,17 @@ public class entresortie{
 
     public void lecturefichier(File NomFichier){
         try{
+           // System.out.printf("test");
             String str;
-            int nombrebloc = 0;
             BufferedReader fichier = new BufferedReader(new FileReader(NomFichier));
             Objet obj = new Objet();
 
             //Création de l'objet de lecture
             while ((str = fichier.readLine()) != null) {
-                if(str=="##") nombrebloc++;
-                if(nombrebloc==1){
+                //System.out.printf("%s\n",str);
+               // System.out.printf("%d\n",nombrebloc);
+                if(str.equals("#")){
+                    System.out.printf("test1");
                     str = fichier.readLine();
                     String NomObjet = str;
                     str = fichier.readLine();
@@ -59,12 +61,13 @@ public class entresortie{
                     }
                 }
 
-                else if (nombrebloc==2){
+                else if (str.equals("+")){
+                    System.out.printf("test2");
                     str = fichier.readLine();
-                    String Nompreference = str;
+                    String Nom = str;
                     str = fichier.readLine();
                     for(int j=0; j<ListeObjet.size();j++){
-                        if(ListeObjet.elementAt(j).getNom()==str){
+                        if(ListeObjet.elementAt(j).getNom().equals(str)){
                             obj = ListeObjet.elementAt(j);
                         }
                     }
@@ -75,26 +78,29 @@ public class entresortie{
                     str = fichier.readLine();
                     int heure_fin = Integer.parseInt(str);
 
-                    preference P = new preference(Nompreference,obj,heure_debut,heure_fin);
+                    preference P = new preference(Nom,obj,instruction,heure_debut,heure_fin);
                     Preference.addElement(P);
                 }
 
-                else if(nombrebloc==3){
+                else if(str.equals("-")){
+                    System.out.printf("test3");
                     str = fichier.readLine();
                     int consojour = Integer.parseInt(str);
                     ConsoJour.addElement(consojour);
                 }
 
-                else if(nombrebloc==4){
+                else if(str.equals("%")){
+                    System.out.printf("test4");
                     str = fichier.readLine();
                     int consosemaine = Integer.parseInt(str);
-                    ConsoJour.addElement(consosemaine);
+                    ConsoSemaine.addElement(consosemaine);
                 }
 
-                else if(nombrebloc==5){
+                else if(str.equals("?")){
+                    System.out.printf("test5");
                     str = fichier.readLine();
                     int consomois = Integer.parseInt(str);
-                    ConsoJour.addElement(consomois);
+                    ConsoMois.addElement(consomois);
                 }
             }
             fichier.close();
@@ -102,8 +108,66 @@ public class entresortie{
             e.printStackTrace();
         }
     }
-    public void ecriture ( File NomFichier){
+    public static String enregistre(File f) {
+        try {
+            BufferedInputStream in = new BufferedInputStream(new FileInputStream(f));
+            StringWriter out = new StringWriter();
+            int b;
+            while ((b=in.read()) != -1)
+                out.write(b);
+            out.flush();
+            out.close();
+            in.close();
+            return out.toString();
+        }
+        catch (IOException ie)
+        {
+            ie.printStackTrace();
+        }
+        return null;
+    }
 
+    public void ecriture ( File NomFichier){
+        String test,fina= "";
+        test = enregistre(NomFichier);
+        int acc,acc2;
+       // System.out.printf("test = %s\n",test);
+        for(int i =0;i<this.ListeObjet.size();i++) {
+            acc = test.indexOf("#");
+            acc2 = test.indexOf("+");
+            String before = test.substring(0, acc + 1);
+            String after = test.substring(acc2);
+            String code = ListeObjet.elementAt(i).NomObjet +"\n" + ListeObjet.elementAt(i).PieceMaison + "\n"
+                    + ListeObjet.elementAt(i).Consommation + "\n" + ListeObjet.elementAt(i).AdresseMAC + "\n" + "false";
+            fina = before + "\n" + code + "\n" + after;
+
+            System.out.printf("finaltext = %s\n",fina);
+        }
+
+
+
+        for(int i =0;i<this.Preference.size();i++) {
+            acc = fina.indexOf("+");
+            acc2 = fina.indexOf("-");
+            String before = fina.substring(0, acc + 1);
+            String after = fina.substring(acc2);
+            String code = Preference.elementAt(i).nom +"\n" + Preference.elementAt(i).instruction + "\n"
+                    + Preference.elementAt(i).O.getNom() + "\n" + Preference.elementAt(i).instruction + "\n" + Preference.elementAt(i).heure_debut
+                    + Preference.elementAt(i).heure_fin;
+
+            fina = before + "\n" + code + "\n" + after;
+            System.out.printf("finaltext = %s\n",fina);
+        }
+
+        for(int i =0;i<this.ConsoJour.size();i++) {
+            acc = fina.indexOf("-");
+            acc2 = fina.indexOf("%");
+            String before = fina.substring(0, acc + 1);
+            String after = fina.substring(acc2);
+            String code = ConsoJour.elementAt(i).toString();
+            fina = before + "\n" + code + "\n" + after;
+            System.out.printf("finaltext = %s\n",fina);
+        }
     }
     public void modifieObjet ( Vector ListeObjet ){
 
@@ -138,4 +202,12 @@ public class entresortie{
     public Vector consoSemaine (){
         return this.ConsoSemaine;
     }
+
+    public static void main(String [] args)
+    {
+        entresortie E = new entresortie();
+        E.lecturefichier(E.NomFichier);
+        E.ecriture(E.NomFichier);
+    }
 }
+
