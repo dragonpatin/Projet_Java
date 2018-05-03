@@ -36,15 +36,13 @@ public class Simulateur{
     }
     public void recupereObjet (){
         objet = S.getObjet();
-        for(int i = 0 ;i<objet.size();i++){
-            ConsommationObjet.add(objet.get(i).getConsommation());
-        }
     }
     public void miseAJourObjet (){
-        objet = S.getObjet();
+        recupereObjet();
         ConsommationObjet.clear();
         for(int i = 0;i<objet.size();i++){
-            ConsommationObjet.add(objet.get(i).getConsommation());
+            if(objet.get(i).AllumerEteindre())
+                ConsommationObjet.add(objet.get(i).getConsommation());
         }
     }
     public void ExtinctionAutomatique (int ConsoMax){
@@ -89,7 +87,9 @@ public class Simulateur{
         Calendar Newdate = Calendar.getInstance();
         Vector<Integer> Conso = S.consoJour();
         if(Newdate.DAY_OF_MONTH != date.DAY_OF_MONTH){
-            if(Conso.size() == 6){          //On supprime les anciennes consommations si nous en avons suffisaments
+            if(Conso.size() == 24){          //On supprime les anciennes consommations si nous en avons suffisaments
+                for(int i = 23;i>=12;i++)
+                    Conso.remove(i);
                 Conso.remove(0);
             }
             Conso.add(consommationTotale);
@@ -99,6 +99,8 @@ public class Simulateur{
             if(Conso.size()==0){
                 tmp = 0;
             }else{
+                for(int i = 23;i>=12;i++)
+                    Conso.remove(i);
                 tmp = Conso.get(Conso.size()-1);
                 Conso.remove(Conso.size()-1);}
             Conso.add(tmp+consommationTotale);
@@ -131,7 +133,7 @@ public class Simulateur{
         Calendar Newdate = Calendar.getInstance();
         Vector<Integer> Conso = S.consoSemaine();
         if(Newdate.WEEK_OF_YEAR != date.WEEK_OF_YEAR){
-            if(Conso.size() == 6){          //On supprime les anciennes consommations si nous en avons suffisaments
+            if(Conso.size() == 4){          //On supprime les anciennes consommations si nous en avons suffisaments
                 Conso.remove(0);
             }
             Conso.add(consommationTotale);
