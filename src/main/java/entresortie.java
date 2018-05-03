@@ -151,8 +151,8 @@ public class entresortie{
             acc2 = fina.indexOf("-");
             String before = fina.substring(0, acc + 1);
             String after = fina.substring(acc2);
-            String code = Preference.elementAt(i).nom +"\n" + Preference.elementAt(i).instruction + "\n"
-                    + Preference.elementAt(i).O.getNom() + "\n" + Preference.elementAt(i).instruction + "\n" + Preference.elementAt(i).heure_debut
+            String code = Preference.elementAt(i).nom +"\n" + Preference.elementAt(i).O.getNom()
+                    + "\n" + Preference.elementAt(i).instruction + "\n" + Preference.elementAt(i).heure_debut+"\n"+
                     + Preference.elementAt(i).heure_fin;
 
             fina = before + "\n" + code + "\n" + after;
@@ -168,8 +168,27 @@ public class entresortie{
             fina = before + "\n" + code + "\n" + after;
             System.out.printf("finaltext = %s\n",fina);
         }
+
+        for(int i =0;i<this.ConsoSemaine.size();i++) {
+            acc = fina.indexOf("%");
+            acc2 = fina.indexOf("?");
+            String before = fina.substring(0, acc + 1);
+            String after = fina.substring(acc2);
+            String code = ConsoSemaine.elementAt(i).toString();
+            fina = before + "\n" + code + "\n" + after;
+            System.out.printf("finaltext = %s\n",fina);
+        }
+
+        for(int i =0;i<this.ConsoMois.size();i++) {
+            acc = fina.indexOf("?");
+            String before = fina.substring(0, acc + 1);
+            String code = ConsoMois.elementAt(i).toString();
+            fina = before + "\n" + code + "\n";
+            System.out.printf("finaltext = %s\n",fina);
+        }
     }
     public void modifieObjet ( Vector ListeObjet ){
+        // UTILISE LES FONCTIONS DANS OBJET
 
     }
     public void modifieConsommation ( Vector ListeObjet ){

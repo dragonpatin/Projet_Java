@@ -2,6 +2,7 @@ import java.util.*;
 import java.text.SimpleDateFormat;
 import java.text.DateFormatSymbols;
 import java.util.Date;
+
 public class Simulateur{
     int prixHeureCreuse;
     int prixHeurePic;

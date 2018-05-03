@@ -1,5 +1,10 @@
-public class Objet{
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.text.DateFormatSymbols;
+import java.util.Date;
 
+public class Objet{
 
     String NomObjet;
     String PieceMaison;
@@ -7,6 +12,7 @@ public class Objet{
     boolean Switch;
     double Duree_utilisation;
     String AdresseMAC;
+    Calendar date;  //date et heure pour savoir la durée d'utilisation
 
 
     //Constructeurs :
@@ -31,7 +37,7 @@ public class Objet{
 
     //Méthodes :
 
-    public boolean AllumerEteindre(){
+    public boolean AllumerEteindre(){   //ajouter le calcul de la duree d'utilisation
         if(this.Switch){
             this.Switch = false;
         }
@@ -75,5 +81,17 @@ public class Objet{
 
     public String getadresseMAC() {
         return this.AdresseMAC;
+    }
+
+    public static void main(String [] args){
+        Objet lampe = new Objet("lampe", "Cuisine", 10, "AB:12:CD:34:OP");
+        System.out.println("Objet : " + lampe.getNom() + " Piece : " + lampe.getPiece() + " Conso : " + lampe.getConsommation() + " AdresseMAC : " + lampe.getadresseMAC());
+        System.out.println("Durée : " + lampe.getDuree_utilisation());
+        System.out.println(lampe.Switch);
+
+        Calendar c = Calendar.getInstance();
+        DateFormat df = new SimpleDateFormat("EEE dd/MM/yyyy");
+
+        System.out.println(df.format(c.getTime()));
     }
 }
