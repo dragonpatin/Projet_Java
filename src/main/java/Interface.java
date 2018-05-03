@@ -1,4 +1,3 @@
-/*
 //import java.util.*;
 //import javax.swing.*;
 //import java.awt.*;
@@ -40,13 +39,13 @@
 //	System.out.println("La consommation de cette objet est" + o.Consommation);
 //}
 //
-////public void AfficheConsommationGlobale ( Vector objet ){
-////	int consoG=0;
-////	for(int i=0;i<objet.size();i++){
-////		consoG+= objet.Consommation[i];
-////	}
-////	System.out.println("La consommation globale est" + consoG);
-////}
+//public void AfficheConsommationGlobale ( Vector objet ){
+//	int consoG=0;
+//	for(int i=0;i<objet.size();i++){
+//		consoG+= objet.Consommation[i];
+//	}
+//	System.out.println("La consommation globale est" + consoG);
+//}
 //
 //public void AjoutObjet(entresortie donnee , Objet o){
 //
@@ -146,4 +145,3 @@
 //
 //}
 //}
-*/
