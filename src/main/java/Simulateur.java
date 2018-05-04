@@ -1,8 +1,15 @@
+import com.github.fedy2.weather.YahooWeatherService;
+import com.github.fedy2.weather.data.Channel;
+import com.github.fedy2.weather.data.Condition;
+import com.github.fedy2.weather.data.unit.DegreeUnit;
+
+import javax.xml.bind.JAXBException;
 import java.util.*;
 import java.text.SimpleDateFormat;
 import java.text.DateFormatSymbols;
 import java.util.Date;
-
+import java.io.*;
+import java.net.*;
 public class Simulateur{
     int prixHeureCreuse;
     int prixHeurePic;
@@ -20,16 +27,29 @@ public class Simulateur{
         this.ConsommationObjet =  new Vector<Integer>();
         this.objet = new Vector<Objet>();
         this.consommationTotale = 0;
-        //recherchePrix();
-        //recupereObjet();
-        //calculConsommation();
-        //recupereTemperatureExt();
         rechercheDateHeure();
     }
     public void recherchePrix (){
         int prixHeureCreuse = 0;
         int prixHeurePic = 0 ;
+
+        try{
+            URL url = new URL("http://www.siteduzero.com/forum-83-429067-p1-recuperation-de-donnees-web.html#r4003054");
+
+            URLConnection con=url.openConnection();
+            System.out.println(con.getContent());
+            InputStream input = con.getInputStream();
+            while(input.available()>0)
+                System.out.print((char)input.read());
+        }
+        catch(MalformedURLException e){
+            System.out.println(e);
+        }
+        catch(IOException e){
+            System.out.println(e);
+        }
     }
+
     public void calculConsommation (){
         for(int i = 0;i<ConsommationObjet.size();i++){
             consommationTotale += ConsommationObjet.get(i) ;
@@ -50,7 +70,21 @@ public class Simulateur{
             consommationANePasDepasser = ConsoMax;
     }
     public void recupereTemperatureExt (){
-        temperatureExterieur = 0;
+        YahooWeatherService service = null;
+        try {
+            service = new YahooWeatherService();
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+        Channel channel = null;
+        try {
+            channel = service.getForecast("610264", DegreeUnit.CELSIUS);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        temperatureExterieur = channel.getItem().getCondition().getTemp();
     }
     public void rechercheDateHeure (){
         date = Calendar.getInstance();
@@ -155,10 +189,12 @@ public class Simulateur{
     public static void main(String [] args)
     {
         entresortie E = new entresortie();
-        E.lecturefichier(E.NomFichier);
+        //E.lecturefichier(E.NomFichier);
         Simulateur S = new Simulateur(E);
         S.rechercheDateHeure();
         Vector<Integer> Conso = S.ConsoMois();
+        //S.recherchePrix();
+        S.recupereTemperatureExt();
     }
 
 }
