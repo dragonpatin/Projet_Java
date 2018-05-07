@@ -34,4 +34,7 @@ public class preference {
      public String getNom(){
         return null;
      }
+     public Objet getObjet(){
+          return O;
+     }
  }
