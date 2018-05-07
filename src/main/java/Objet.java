@@ -11,6 +11,7 @@ public class Objet{
     double Duree_utilisation;
     String AdresseMAC;
     Calendar Date_allumage;  //date et heure pour savoir la durée d'utilisation
+    int Priorite; // 0 : priorite basse, 3 : priorité haute
 
 
     //Constructeurs :
@@ -21,16 +22,18 @@ public class Objet{
         this.Consommation = 10;
         this.Switch = false;
         this.Duree_utilisation = 0;
+        this.Priorite = 0;
         this.AdresseMAC = "AA:00:BB:A1:B2";
     }
 
-    public Objet(String NomObjet,String PieceMaison, int Consommation, String AdresseMAC){
+    public Objet(String NomObjet,String PieceMaison, int Consommation, String AdresseMAC, int priorite){
         this.NomObjet = NomObjet;
         this.PieceMaison = PieceMaison;
         this.Consommation = Consommation;
         this.Switch = false;
         this.Duree_utilisation = 0;
         this.AdresseMAC = AdresseMAC;
+        this.Priorite = priorite;
     }
 
     //Méthodes :
@@ -50,6 +53,8 @@ public class Objet{
     }
 
     public int getConsommation(){
+        if(this.Switch == false)
+            return 0;
         return this.Consommation;
     }
 
@@ -77,13 +82,21 @@ public class Objet{
         this.AdresseMAC = AdresseMAC;
     }
 
+    public void ModifiePriorite(int Priorite){
+        this.Priorite = Priorite;
+    }
+
+    public int getPriorite(){
+        return this.Priorite;
+    }
+
     public String getadresseMAC() {
         return this.AdresseMAC;
     }
 
     public static void main(String [] args){
-        Objet lampe = new Objet("lampe", "Cuisine", 10, "AB:12:CD:34:OP");
-        System.out.println("Objet : " + lampe.getNom() + " Piece : " + lampe.getPiece() + " Conso : " + lampe.getConsommation() + " AdresseMAC : " + lampe.getadresseMAC());
+        Objet lampe = new Objet("lampe", "Cuisine", 10, "AB:12:CD:34:OP", 0);
+        System.out.println("Objet : " + lampe.getNom() + " Piece : " + lampe.getPiece() + " Conso : " + lampe.getConsommation() + " AdresseMAC : " + lampe.getadresseMAC() + " Priorité : " + lampe.getPriorite());
         System.out.println("Durée : " + lampe.getDuree_utilisation());
         System.out.println(lampe.Switch);
 

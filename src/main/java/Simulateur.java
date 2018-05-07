@@ -11,8 +11,8 @@ import java.util.Date;
 import java.io.*;
 import java.net.*;
 public class Simulateur{
-    int prixHeureCreuse;
-    int prixHeurePic;
+    float prixHeureCreuse; //Modifie
+    float prixHeurePic;     //Modifier
     int consommationTotale;
     entresortie S;
     Calendar date;
@@ -29,25 +29,81 @@ public class Simulateur{
         this.consommationTotale = 0;
         rechercheDateHeure();
     }
-    public void recherchePrix (){
-        int prixHeureCreuse = 0;
-        int prixHeurePic = 0 ;
+    public void recherchePrix () throws IOException {
+        prixHeureCreuse = 0;
+        prixHeurePic = 0 ;
 
-        try{
-            URL url = new URL("http://www.siteduzero.com/forum-83-429067-p1-recuperation-de-donnees-web.html#r4003054");
+        HttpURLConnection conn = (HttpURLConnection) new URL("https://www.fournisseur-energie.com/edf-fournisseur-historique/tarif-2018/").openConnection();
+        conn.connect();
 
-            URLConnection con=url.openConnection();
-            System.out.println(con.getContent());
-            InputStream input = con.getInputStream();
-            while(input.available()>0)
-                System.out.print((char)input.read());
+        BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
+
+        byte[] bytes = new byte[2048];
+        int tmp ;
+        while( (tmp = bis.read(bytes) ) != -1 ) {
+            String chaine = new String(bytes,0,tmp);
+            //(§System.out.println(chaine);
+
+            if(chaine.contains(("<h4>Option Heures creuses en 2018</h4>"))) {
+                if (chaine.contains(("\n"))) {
+                    int i = 0;
+                    while(true){
+                        if(chaine.charAt(i) == '\n'){
+                            String s;
+                            s = chaine.substring(0,i);
+                            if(s.contains("<h4>Option Heures creuses en 2018</h4>")){
+                                while(true) {
+                                    if (chaine.charAt(i) == '\n') {
+                                        s = chaine.substring(0, i);
+                                        chaine = chaine.substring(i);
+                                        i = 0;
+                                        if (s.contains("<td>9</td>")) {
+                                            i = 1;
+                                            while(chaine.charAt(i) != '\n'){
+                                                i++;
+                                            }
+                                            chaine = chaine.substring(i);
+                                            i=1;
+                                            while(chaine.charAt(i) != '\n'){
+                                                i++;
+                                            }
+                                            s = chaine.substring(0, i);
+                                            chaine = chaine.substring(i);
+                                            s=s.replace("<td>","");
+                                            s=s.replace("</td>","");
+                                            s=s.replace(" €","");
+                                            prixHeurePic = Float.parseFloat(s);
+                                            i=1;
+                                            while(chaine.charAt(i) != '\n'){
+                                                i++;
+                                            }
+                                            s = chaine.substring(0, i);
+                                            s=s.replace("<td>","");
+                                            s=s.replace("</td>","");
+                                            s=s.replace(" €","");
+                                            prixHeureCreuse = Float.parseFloat(s);
+                                            conn.disconnect();
+                                            return;
+                                        }
+
+
+                                    }
+                                    i++;
+                                }
+
+                            }
+                            chaine = chaine.substring(i);
+                            i = 0;
+                        }
+                        i++;
+                    }
+                }
+
+            }
+
         }
-        catch(MalformedURLException e){
-            System.out.println(e);
-        }
-        catch(IOException e){
-            System.out.println(e);
-        }
+
+        conn.disconnect();
     }
 
     public void calculConsommation (){
@@ -62,12 +118,42 @@ public class Simulateur{
         recupereObjet();
         ConsommationObjet.clear();
         for(int i = 0;i<objet.size();i++){
-            if(objet.get(i).AllumerEteindre())
-                ConsommationObjet.add(objet.get(i).getConsommation());
+            ConsommationObjet.add(objet.get(i).getConsommation());
         }
     }
     public void ExtinctionAutomatique (int ConsoMax){
             consommationANePasDepasser = ConsoMax;
+            Vector<Objet> tmp = new Vector<Objet>();
+            //tris consommation.
+            int x=0;
+            int max = 0;
+
+            //Pas encore TEST.
+            for(int i = 0;i<objet.size();i++){
+                for(int j = 0;j<objet.size();j++){
+                    if(objet.get(i).getConsommation()>max){
+                        max = objet.get(i).getConsommation();
+                        x=j;
+                    }
+                }
+                tmp.add(objet.get(x));
+                objet.remove(x);
+                x=0;
+                max = 0;
+
+            }
+        objet = tmp;
+            //Tant que la consommation est supérieur
+        int i =0;
+        for(int j = 0;j<=1;j++) {
+            while (consommationTotale > consommationANePasDepasser) {
+                if (objet.get(i).getConsommation() != 0 && objet.get(i).getPriorite() == j) {
+                    consommationTotale -= objet.get(i).getConsommation();
+                    objet.get(i).AllumerEteindre();
+                }
+                i++;
+            }
+        }
     }
     public void recupereTemperatureExt (){
         YahooWeatherService service = null;
@@ -78,7 +164,7 @@ public class Simulateur{
         }
         Channel channel = null;
         try {
-            channel = service.getForecast("610264", DegreeUnit.CELSIUS);
+            channel = service.getForecast("630908", DegreeUnit.CELSIUS);
         } catch (JAXBException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -92,10 +178,10 @@ public class Simulateur{
     public Vector getConsommation (){
         return null;
     }
-    public int getPrixHC (){
+    public Float getPrixHC (){
         return prixHeureCreuse;
     }
-    public int getPrixHP (){
+    public Float getPrixHP (){
         return prixHeurePic;
     }
     public int ConsommationANePasDepasser ( ){
@@ -128,6 +214,14 @@ public class Simulateur{
                 Conso.remove(0);
             }
             Conso.add(consommationTotale);
+            Vector<preference> pref = S.getPreference();
+            for(int i = 0;i<pref.size();i++){
+                if(pref.get(i).getInstruction()==0){
+
+                }else{
+
+                }
+            }
         }
         else{
             int tmp;
@@ -186,15 +280,19 @@ public class Simulateur{
         return Conso;
     }
 
-    public static void main(String [] args)
-    {
+    public static void main(String [] args) throws IOException {
         entresortie E = new entresortie();
         //E.lecturefichier(E.NomFichier);
         Simulateur S = new Simulateur(E);
         S.rechercheDateHeure();
         Vector<Integer> Conso = S.ConsoMois();
-        //S.recherchePrix();
-        S.recupereTemperatureExt();
+        try {
+            S.recherchePrix();
+            System.out.println("Prix HP : " + S.getPrixHP()+ "Prix HC : " + S.getPrixHC());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //S.recupereTemperatureExt();
     }
 
 }
