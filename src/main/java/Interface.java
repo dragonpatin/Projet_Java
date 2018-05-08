@@ -3,29 +3,31 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Interface{
-
+	
     //private entresortie donnee;
 
     public Interface(){
 
     }
-
+    
 public void ChargerDonnee( String nomFichier , entresortie S){
 
 }
 
 public void SauvegarderDonnee ( String nomFichier , entresortie S){
-
+	
 }
-
+    
 public void AfficheObjet(Vector objet){
-
+	for(int i=0;i<objet.size();i++)
+	System.out.println(objet[i]);			
 }
-
+    
 public void AffichePiece(Vector piece){
-
+	for(int i=0;i<piece.size();i++)
+	System.out.println(piece[i]);
 }
-
+    
 public void AfficheInfosObjet(Objet o){
 	System.out.println("Le nom de l'objet est" + o.NomObjet);
 	System.out.println("L'objet est dans la" + o.PieceMaison);
@@ -34,17 +36,17 @@ public void AfficheInfosObjet(Objet o){
 	System.out.println("La duree d'utilisation est de" + o.Duree_utilisation);
 	System.out.println("Son adresse Mac est" + o.AdresseMAC);
 }
-
+    
 public void AfficheConsommationObjet(Objet o){
 	System.out.println("La consommation de cette objet est" + o.Consommation);
 }
-
+    
 public void AfficheConsommationGlobale ( Vector objet ){
 	int consoG=0;
 	for(int i=0;i<objet.size();i++){
-		consoG+= objet.Consommation[i];
+		consoG+= objet.getConsommation[i];
 	}
-	System.out.println("La consommation globale est" + consoG);
+	System.out.println("La consommation globale est" + consoG);			
 }
 
 public void AjoutObjet(entresortie donnee , Objet o){
@@ -54,7 +56,7 @@ public void AjoutObjet(entresortie donnee , Objet o){
 public void AjoutObjetFavoris ( entresortie donnee , Objet o){
 
 }
-
+   
 public void AjoutPiece ( entresortie donnee , Piece p){
 
 }
@@ -62,8 +64,8 @@ public void AjoutPiece ( entresortie donnee , Piece p){
 public void AjoutObjetDansPiece (){
 
 }
-
-
+    
+    
 public void echanger(int a, int b){
 	int temp;
 	temp=a;
@@ -73,7 +75,7 @@ public void echanger(int a, int b){
 
 public int Partitionner_Objet(Vector O, int premier , int dernier , int pivot){
 	echanger(O[pivot],O[dernier]);
-	int j=premier;
+	int j=premier;   
     for(int i=premier;i<dernier-1;i++)
          {
           if (O[i]<O[dernier])
@@ -85,20 +87,20 @@ public int Partitionner_Objet(Vector O, int premier , int dernier , int pivot){
      echanger(O[dernier],O[j]);
      return j;
 }
-
+    
 public void tri_rapide_Objet(Vector O, int premier , int dernier){
 	if(premier < dernier){
 		int pivot= O[premier];
 		pivot= Partitionner_Objet(O,premier,dernier,pivot);
 		tri_rapide_Objet(O,premier,pivot-1);
 		tri_rapide_Objet(O,pivot+1,dernier);
-
+	
 	}
 }
-
+ 
 public int Partitionner_Piece(Vector O, int premier , int dernier , int pivot){
 	echanger(O[pivot],O[dernier]);
-	int j=premier;
+	int j=premier;   
     for(int i=premier;i<dernier-1;i++)
          {
           if (O[i]<O[dernier])
@@ -119,28 +121,28 @@ public void tri_rapide_Piece(Vector O, int premier , int dernier){
 		tri_rapide_Piece(O,pivot+1,dernier);
 	}
 }
-
-
-
+    
+    
+    
 public boolean test_nom_Objet ( String nomObjet, Vector O, int n){
 	for(int i=0;i<n-1;i++){
 		if(nomObjet == O[i]) return true;
 	}
 	return false;
 }
-
+    
 public boolean test_nom_Piece( String nomPiece, Vector O, int n){
 		for(int i=0;i<n-1;i++){
 		if(nomPiece == O[i]) return true;
 	}
 	return false;
 }
-
-
+    
+    
 public void AppelAutomatiqueRecuperationConsommation( entresortie donnee, int temps){
 
 }
-
+  
 public void lancerSimulateur(Simulateur sim){
 
 }
