@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.util.*;
 import javax.swing.JFileChooser;
@@ -229,4 +228,3 @@ public class entresortie{
         E.ecriture(E.NomFichier);
     }
 }
-
