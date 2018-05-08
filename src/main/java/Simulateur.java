@@ -1,6 +1,5 @@
 import com.github.fedy2.weather.YahooWeatherService;
 import com.github.fedy2.weather.data.Channel;
-import com.github.fedy2.weather.data.Condition;
 import com.github.fedy2.weather.data.unit.DegreeUnit;
 
 import javax.xml.bind.JAXBException;
@@ -294,7 +293,7 @@ public class Simulateur{
         }
         S.recupereTemperatureExt();
         System.out.println("Temperature : " + S.getTemperatureExt());
-        System.out.println(S.getDate());
+        System.out.println("Heure : " + S.getDate().get(Calendar.HOUR_OF_DAY));
     }
 
 }
