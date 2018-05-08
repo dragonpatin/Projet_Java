@@ -173,7 +173,7 @@ public class Simulateur{
         temperatureExterieur = channel.getItem().getCondition().getTemp();
     }
     public void rechercheDateHeure (){
-        date = Calendar.getInstance();
+        date = new GregorianCalendar();
     }
     public Vector getConsommation (){
         return null;
@@ -207,7 +207,7 @@ public class Simulateur{
 
         Calendar Newdate = Calendar.getInstance();
         Vector<Integer> Conso = S.consoJour();
-        if(Newdate.DAY_OF_MONTH != date.DAY_OF_MONTH){
+        if(Newdate.get(Calendar.DAY_OF_MONTH) != date.get(Calendar.DAY_OF_MONTH)){
             if(Conso.size() == 24){          //On supprime les anciennes consommations si nous en avons suffisaments
                 for(int i = 23;i>=12;i++)
                     Conso.remove(i);
@@ -240,7 +240,7 @@ public class Simulateur{
     public Vector ConsoMois (){
         Calendar Newdate = Calendar.getInstance();
         Vector<Integer> Conso = S.consoMois();
-        if(Newdate.MONTH != date.MONTH){
+        if(Newdate.get(Calendar.MONTH) != date.get(Calendar.MONTH)){
             if(Conso.size() == 6){          //On supprime les anciennes consommations si nous en avons suffisaments
                 Conso.remove(0);
             }
@@ -261,7 +261,7 @@ public class Simulateur{
     public Vector ConsoSemaine (){
         Calendar Newdate = Calendar.getInstance();
         Vector<Integer> Conso = S.consoSemaine();
-        if(Newdate.WEEK_OF_YEAR != date.WEEK_OF_YEAR){
+        if(Newdate.get(Calendar.WEEK_OF_YEAR) != date.get(Calendar.WEEK_OF_YEAR)){
             if(Conso.size() == 4){          //On supprime les anciennes consommations si nous en avons suffisaments
                 Conso.remove(0);
             }
@@ -292,7 +292,9 @@ public class Simulateur{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //S.recupereTemperatureExt();
+        S.recupereTemperatureExt();
+        System.out.println("Temperature : " + S.getTemperatureExt());
+        System.out.println(S.getDate());
     }
 
 }
