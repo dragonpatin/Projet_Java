@@ -5,14 +5,14 @@ import java.util.Random;
 
 public class Objet{
 
-    String NomObjet;
-    String PieceMaison;
-    int Consommation;
-    boolean Switch;
-    double Duree_utilisation;  //Durée d'utilisation en minute
-    String AdresseMAC;
-    Calendar Date_allumage;  //date et heure pour savoir la durée d'utilisation
-    int Priorite; // 0 : priorite basse, 3 : priorité haute
+    protected String NomObjet;
+    protected String PieceMaison;
+    protected int Consommation;
+    protected boolean Switch;
+    protected double Duree_utilisation;  //Durée d'utilisation en minute
+    protected String AdresseMAC;
+    protected Calendar Date_allumage;  //date et heure pour savoir la durée d'utilisation
+    protected int Priorite; // 0 : priorite basse, 3 : priorité haute
 
 
     //Constructeurs :
@@ -130,12 +130,11 @@ public class Objet{
         System.out.println(lampe.getConsommation());
         System.out.println(lampe.getDuree_utilisation() + " min");
 
-        TimeUnit.MINUTES.sleep(1);  //wait de 1 minute
+        //TimeUnit.MINUTES.sleep(1);  //wait de 1 minute
 
         lampe.AllumerEteindre();
         System.out.println(lampe.Switch);
         System.out.println(lampe.getDuree_utilisation() + " min");
-
 
     }
 }

@@ -1,6 +1,6 @@
 public class Lampe extends Objet{
 
-    int Indice_de_luminosite;
+    protected int Indice_de_luminosite;
 
     public Lampe(int Indice_de_luminosite){
         this.Indice_de_luminosite = Indice_de_luminosite;

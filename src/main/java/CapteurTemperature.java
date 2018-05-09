@@ -1,6 +1,6 @@
 public class CapteurTemperature extends Objet{
 
-    int temperature;
+    protected int temperature;
 
     public CapteurTemperature(int temperature){
         this.temperature = temperature;
