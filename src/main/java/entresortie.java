@@ -206,7 +206,7 @@ public class entresortie{
         return null;
     }
     public Vector getPreference (){
-        return null;
+        return Preference;
     }
     public Vector getPiece (){
         return null;

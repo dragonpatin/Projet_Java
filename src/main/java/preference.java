@@ -1,7 +1,7 @@
 public class preference {
      String nom ;
      Objet O;
-     int instruction;
+     int instruction; //0 Allumer et 1 eteind
      int heure_debut;
      int heure_fin;
 

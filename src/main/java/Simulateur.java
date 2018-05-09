@@ -4,11 +4,11 @@ import com.github.fedy2.weather.data.unit.DegreeUnit;
 
 import javax.xml.bind.JAXBException;
 import java.util.*;
-import java.text.SimpleDateFormat;
-import java.text.DateFormatSymbols;
-import java.util.Date;
 import java.io.*;
 import java.net.*;
+
+import static java.lang.System.exit;
+
 public class Simulateur{
     float prixHeureCreuse; //Modifie
     float prixHeurePic;     //Modifier
@@ -205,7 +205,6 @@ public class Simulateur{
         return objet;
     }
     public Vector consoJour (){
-
         Calendar Newdate = Calendar.getInstance();
         Vector<Integer> Conso = S.consoJour();
         if(Newdate.get(Calendar.DAY_OF_MONTH) != date.get(Calendar.DAY_OF_MONTH)){
@@ -215,14 +214,6 @@ public class Simulateur{
                 Conso.remove(0);
             }
             Conso.add(consommationTotale);
-            Vector<preference> pref = S.getPreference();
-            for(int i = 0;i<pref.size();i++){
-                if(pref.get(i).getInstruction()==0){
-
-                }else{
-
-                }
-            }
         }
         else{
             int tmp;
@@ -235,6 +226,153 @@ public class Simulateur{
                 Conso.remove(Conso.size()-1);}
             Conso.add(tmp+consommationTotale);
         }
+        Vector<preference> pref = new Vector<preference>();
+        pref = S.getPreference();
+        int Tab[]=new int[12];
+        for(int i = 0;i<12;i++)
+            Tab[i] = consommationTotale;
+        if(!pref.isEmpty()) {
+            for (int i = 0; i < pref.size(); i++) {
+                int t = -1;
+                for (int j = 0; i < objet.size(); i++) {
+                    if (objet.get(j) == pref.get(i).getObjet()) {
+                        t = j;
+                    }
+                }
+                if (t == -1) {
+                    exit(1);
+                }
+                if ((pref.get(i).getInstruction() == 0 && objet.get(t).getSwitch() == true) || (pref.get(i).getInstruction() == 1 && objet.get(t).getSwitch() == false)) {
+
+                } else {
+                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 1) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 1)))) {
+                        if ((pref.get(i).getInstruction() == 0)) {
+                            Tab[0] += pref.get(i).getObjet().getConsommation();
+
+                        } else {
+                            Tab[0] -= pref.get(i).getObjet().getConsommation();
+                        }
+                    }
+                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 2) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 2)))) {
+                        if ((pref.get(i).getInstruction() == 0)) {
+                            Tab[1] += pref.get(i).getObjet().getConsommation();
+                        } else {
+                            Tab[1] -= pref.get(i).getObjet().getConsommation();
+                        }
+                    }
+                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 3) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 3)))) {
+                        if ((pref.get(i).getInstruction() == 0)) {
+                            Tab[2] += pref.get(i).getObjet().getConsommation();
+                        } else {
+                            Tab[2] -= pref.get(i).getObjet().getConsommation();
+                        }
+                    }
+                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 4) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 4)))) {
+                        if ((pref.get(i).getInstruction() == 0)) {
+                            Tab[3] += pref.get(i).getObjet().getConsommation();
+                        } else {
+                            Tab[3] -= pref.get(i).getObjet().getConsommation();
+                        }
+                    }
+                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 5) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 5)))) {
+                        if ((pref.get(i).getInstruction() == 0)) {
+                            Tab[4] += pref.get(i).getObjet().getConsommation();
+                        } else {
+                            Tab[4] -= pref.get(i).getObjet().getConsommation();
+                        }
+                    }
+                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 6) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 6)))) {
+                        if ((pref.get(i).getInstruction() == 0)) {
+                            Tab[5] += pref.get(i).getObjet().getConsommation();
+                        } else {
+                            Tab[5] -= pref.get(i).getObjet().getConsommation();
+                        }
+                    }
+                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 7) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 7)))) {
+                        if ((pref.get(i).getInstruction() == 0)) {
+                            Tab[6] += pref.get(i).getObjet().getConsommation();
+                        } else {
+                            Tab[6] -= pref.get(i).getObjet().getConsommation();
+                        }
+                    }
+                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 8) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 8)))) {
+                        if ((pref.get(i).getInstruction() == 0)) {
+                            Tab[7] += pref.get(i).getObjet().getConsommation();
+                        } else {
+                            Tab[7] -= pref.get(i).getObjet().getConsommation();
+                        }
+                    }
+                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 9) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 9)))) {
+                        if ((pref.get(i).getInstruction() == 0)) {
+                            Tab[8] += pref.get(i).getObjet().getConsommation();
+                        } else {
+                            Tab[8] -= pref.get(i).getObjet().getConsommation();
+                        }
+                    }
+                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 10) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 10)))) {
+                        if ((pref.get(i).getInstruction() == 0)) {
+                            Tab[9] += pref.get(i).getObjet().getConsommation();
+                        } else {
+                            Tab[9] -= pref.get(i).getObjet().getConsommation();
+                        }
+                    }
+                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 111) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 11)))) {
+                        if ((pref.get(i).getInstruction() == 0)) {
+                            Tab[10] += pref.get(i).getObjet().getConsommation();
+                        } else {
+                            Tab[10] -= pref.get(i).getObjet().getConsommation();
+                        }
+                    }
+                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 12) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 12)))) {
+                        if ((pref.get(i).getInstruction() == 0)) {
+                            Tab[11] += pref.get(i).getObjet().getConsommation();
+                        } else {
+                            Tab[11] -= pref.get(i).getObjet().getConsommation();
+                        }
+                    }
+                }
+                //Si pas trouver exit(1)
+                //Si Preference allumer = objet allumer ou Preference eteindre = objet eteindre rien faire
+                //si heure debut>= heure actuelle +1 et heure fin <= heure actuelle+1
+                //Si instruction allumer consototale +
+                //Sinon consototal -
+                //si heure debut>= heure actuelle +2 et heure fin <= heure actuelle+2
+                //Si instruction allumer consototale +
+                //Sinon consototal -
+                //si heure debut>= heure actuelle +3 et heure fin <= heure actuelle+3
+                //Si instruction allumer consototale +
+                //Sinon consototal -
+                //si heure debut>= heure actuelle +4 et heure fin <= heure actuelle+4
+                //Si instruction allumer consototale +
+                //Sinon consototal -
+                //si heure debut>= heure actuelle +5 et heure fin <= heure actuelle+5
+                //Si instruction allumer consototale +
+                //Sinon consototal -
+                //si heure debut>= heure actuelle +6 et heure fin <= heure actuelle+6
+                //Si instruction allumer consototale +
+                //Sinon consototal -
+                //si heure debut>= heure actuelle +7 et heure fin <= heure actuelle+7
+                //Si instruction allumer consototale +
+                //Sinon consototal -
+                //si heure debut>= heure actuelle +8 et heure fin <= heure actuelle+8
+                //Si instruction allumer consototale +
+                //Sinon consototal -
+                //si heure debut>= heure actuelle +9 et heure fin <= heure actuelle+9
+                //Si instruction allumer consototale +
+                //Sinon consototal -
+                //si heure debut>= heure actuelle +10 et heure fin <= heure actuelle+10
+                //Si instruction allumer consototale +
+                //Sinon consototal -
+                //si heure debut>= heure actuelle +11 et heure fin <= heure actuelle+11
+                //Si instruction allumer consototale +
+                //Sinon consototal -
+                //si heure debut>= heure actuelle +12 et heure fin <= heure actuelle+12
+                //Si instruction allumer consototale +
+                //Sinon consototal -
+            }
+        }
+        for(int i = 0 ;i<12;i++)
+            Conso.add(Tab[i]);
         date = Newdate;
         return Conso;
     }
@@ -313,6 +451,8 @@ public class Simulateur{
         System.out.println("Temperature : " + S.getTemperatureExt());
         System.out.println("Heure : " + S.getDate().get(Calendar.HOUR_OF_DAY));
         System.out.println(S.ConsoMois());
+        System.out.println(S.ConsoSemaine());
+        System.out.println(S.consoJour());
 
     }
 
