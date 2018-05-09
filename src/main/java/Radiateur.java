@@ -1,7 +1,7 @@
 public class Radiateur extends Objet{
 
-    int thermostat;
-    int temperature;
+    protected int thermostat;
+    protected int temperature;
 
     public Radiateur(int thermostat , int temperature){
         this.thermostat = thermostat;
