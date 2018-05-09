@@ -15,10 +15,10 @@ public class entresortie{
 
 
     public entresortie(){
-        //JFileChooser dialogue = new JFileChooser();
-        //dialogue.showOpenDialog(null);
-        //System.out.println("Fichier choisi : " + dialogue.getSelectedFile());
-        //this.NomFichier = dialogue.getSelectedFile();
+        JFileChooser dialogue = new JFileChooser();
+        dialogue.showOpenDialog(null);
+        System.out.println("Fichier choisi : " + dialogue.getSelectedFile());
+        this.NomFichier = dialogue.getSelectedFile();
 
         this.ListeObjet = new Vector<Objet>();
         this.ObjetFavoris = new Vector<Objet>();
@@ -51,8 +51,10 @@ public class entresortie{
                     String AdresseMAC = str;
                     str = fichier.readLine();
                     String favori = str;
+                    str = fichier.readLine();
+                    int priorite = Integer.parseInt(str);
 
-                    //obj = new Objet(NomObjet,PieceMaison,Consommation,AdresseMAC);
+                    obj = new Objet(NomObjet,PieceMaison,Consommation,AdresseMAC,priorite);
                     ListeObjet.addElement(obj);
 
                     if(favori=="true"){
@@ -137,7 +139,8 @@ public class entresortie{
             String before = test.substring(0, acc + 1);
             String after = test.substring(acc2);
             String code = ListeObjet.elementAt(i).NomObjet +"\n" + ListeObjet.elementAt(i).PieceMaison + "\n"
-                    + ListeObjet.elementAt(i).Consommation + "\n" + ListeObjet.elementAt(i).AdresseMAC + "\n" + "false";
+                    + ListeObjet.elementAt(i).Consommation + "\n" + ListeObjet.elementAt(i).AdresseMAC + "\n" + "false"
+                    + ListeObjet.elementAt(i).Priorite;
             fina = before + "\n" + code + "\n" + after;
 
             System.out.printf("finaltext = %s\n",fina);
@@ -202,15 +205,15 @@ public class entresortie{
     public Vector getObjet (){
         return ListeObjet;
     }
-    public Objet getConsommation (){
-        return null;
-    }
+    /*public Objet getConsommation (){
+        return ListeObjet.elementAt();
+    }*/
     public Vector getPreference (){
         return Preference;
     }
-    public Vector getPiece (){
+    /*public Vector getPiece (){
         return null;
-    }
+    }*/
     public Vector consoJour (){
         return this.ConsoJour;
     }
