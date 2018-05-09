@@ -10,20 +10,20 @@ import java.net.*;
 import static java.lang.System.exit;
 
 public class Simulateur{
-    float prixHeureCreuse; //Modifie
-    float prixHeurePic;     //Modifier
-    int consommationTotale;
-    entresortie S;
-    Calendar date;
-    int consommationANePasDepasser;
-    Vector<Integer> ConsommationObjet;
-    Vector<Objet> objet;
-    int temperatureExterieur;
+    private float prixHeureCreuse; //Modifie
+    private float prixHeurePic;     //Modifier
+    private int consommationTotale;
+    private entresortie S;
+    private Calendar date;
+    private int consommationANePasDepasser;
+    private Vector<Integer> ConsommationObjet;
+    private Vector<Objet> objet;
+    private int temperatureExterieur;
 
     public Simulateur( entresortie e){
         //initialisation de tout.
         this.S = e;
-        this.ConsommationObjet =  new Vector<Integer>();
+        this.ConsommationObjet = new Vector<Integer>();
         this.objet = new Vector<Objet>();
         this.consommationTotale = 0;
         rechercheDateHeure();
@@ -156,7 +156,7 @@ public class Simulateur{
             }
         }
     }
-    public void recupereTemperatureExt (){
+    public void recupereTemperatureExt () throws JAXBException, IOException {
         YahooWeatherService service = null;
         try {
             service = new YahooWeatherService();
@@ -164,13 +164,8 @@ public class Simulateur{
             e.printStackTrace();
         }
         Channel channel = null;
-        try {
-            channel = service.getForecast("630908", DegreeUnit.CELSIUS);
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        channel = service.getForecast("630908", DegreeUnit.CELSIUS);
+        assert channel != null;
         temperatureExterieur = channel.getItem().getCondition().getTemp();
     }
     public void rechercheDateHeure (){
@@ -226,7 +221,7 @@ public class Simulateur{
                 Conso.remove(Conso.size()-1);}
             Conso.add(tmp+consommationTotale);
         }
-        Vector<preference> pref = new Vector<preference>();
+        Vector<preference> pref;
         pref = S.getPreference();
         int Tab[]=new int[12];
         for(int i = 0;i<12;i++)
@@ -242,9 +237,7 @@ public class Simulateur{
                 if (t == -1) {
                     exit(1);
                 }
-                if ((pref.get(i).getInstruction() == 0 && objet.get(t).getSwitch() == true) || (pref.get(i).getInstruction() == 1 && objet.get(t).getSwitch() == false)) {
-
-                } else {
+                if (!((pref.get(i).getInstruction() == 0) && objet.get(t).getSwitch()) || ((pref.get(i).getInstruction() == 1) && !objet.get(t).getSwitch())) {
                     if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 1) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 1)))) {
                         if ((pref.get(i).getInstruction() == 0)) {
                             Tab[0] += pref.get(i).getObjet().getConsommation();
@@ -440,14 +433,17 @@ public class Simulateur{
         //E.lecturefichier(E.NomFichier);
         Simulateur S = new Simulateur(E);
         S.rechercheDateHeure();
-        Vector<Integer> Conso = S.ConsoMois();
         try {
             S.recherchePrix();
             System.out.println("Prix HP : " + S.getPrixHP()+ "Prix HC : " + S.getPrixHC());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        S.recupereTemperatureExt();
+        try {
+            S.recupereTemperatureExt();
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
         System.out.println("Temperature : " + S.getTemperatureExt());
         System.out.println("Heure : " + S.getDate().get(Calendar.HOUR_OF_DAY));
         System.out.println(S.ConsoMois());
