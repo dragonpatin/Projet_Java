@@ -27,6 +27,7 @@ public class Simulateur{
         this.objet = new Vector<Objet>();
         this.consommationTotale = 0;
         rechercheDateHeure();
+        consommationTotale = 1000;
     }
     public void recherchePrix () throws IOException {
         prixHeureCreuse = 0;
@@ -41,16 +42,16 @@ public class Simulateur{
         int tmp ;
         while( (tmp = bis.read(bytes) ) != -1 ) {
             String chaine = new String(bytes,0,tmp);
-            //(§System.out.println(chaine);
-
-            if(chaine.contains(("<h4>Option Heures creuses en 2018</h4>"))) {
+            //Pour une raison étrange cela peut ne pas bien fonctionner
+            //Nous devons utilisé les deux écritures possibles de la ligne
+            if(chaine.contains("<h4>Option Heures creuses en 2018</h4>")|| chaine.contains("<h4 style=\"text-align: left\">Option Heures creuses en 2018</h4>")) {
                 if (chaine.contains(("\n"))) {
                     int i = 0;
                     while(true){
                         if(chaine.charAt(i) == '\n'){
                             String s;
                             s = chaine.substring(0,i);
-                            if(s.contains("<h4>Option Heures creuses en 2018</h4>")){
+                            if(s.contains("<h4>Option Heures creuses en 2018</h4>") || s.contains("<h4 style=\"text-align: left\">Option Heures creuses en 2018</h4>")){
                                 while(true) {
                                     if (chaine.charAt(i) == '\n') {
                                         s = chaine.substring(0, i);
@@ -82,6 +83,7 @@ public class Simulateur{
                                             s=s.replace(" €","");
                                             prixHeureCreuse = Float.parseFloat(s);
                                             conn.disconnect();
+
                                             return;
                                         }
 
@@ -239,11 +241,19 @@ public class Simulateur{
     public Vector ConsoMois (){
         Calendar Newdate = Calendar.getInstance();
         Vector<Integer> Conso = S.consoMois();
+
+        //On calcule le temps qui c'est écoulé.
+        //consommation total étant en Watt/heure
+        //Il nous faut savoir la consommation utilisé entre les deux temps
+        int minute = Newdate.get(Calendar.MINUTE) - date.get(Calendar.MINUTE);
+        minute = minute/60;
+        //divisiopn zero impossible;
+        if(minute==0){minute = 60;}
         if(Newdate.get(Calendar.MONTH) != date.get(Calendar.MONTH)){
             if(Conso.size() == 6){          //On supprime les anciennes consommations si nous en avons suffisaments
                 Conso.remove(0);
             }
-            Conso.add(consommationTotale);
+            Conso.add(consommationTotale/minute);
         }
         else{
             int tmp;
@@ -251,8 +261,9 @@ public class Simulateur{
                 tmp = 0;
             }else{
                 tmp = Conso.get(Conso.size()-1);
-                Conso.remove(Conso.size()-1);}
-            Conso.add(tmp+consommationTotale);
+                Conso.remove(Conso.size()-1);
+            }
+            Conso.add(tmp+(consommationTotale/minute));
         }
         date = Newdate;
         return Conso;
@@ -260,11 +271,17 @@ public class Simulateur{
     public Vector ConsoSemaine (){
         Calendar Newdate = Calendar.getInstance();
         Vector<Integer> Conso = S.consoSemaine();
+        //On calcule le temps qui c'est écoulé.
+        //consommation total étant en Watt/heure
+        //Il nous faut savoir la consommation utilisé entre les deux temps
+        int minute = Newdate.get(Calendar.MINUTE) - date.get(Calendar.MINUTE);
+        minute = minute/60;
+        if(minute==0){minute = 60;}
         if(Newdate.get(Calendar.WEEK_OF_YEAR) != date.get(Calendar.WEEK_OF_YEAR)){
             if(Conso.size() == 4){          //On supprime les anciennes consommations si nous en avons suffisaments
                 Conso.remove(0);
             }
-            Conso.add(consommationTotale);
+            Conso.add(consommationTotale/minute);
         }
         else{
             int tmp;
@@ -272,8 +289,9 @@ public class Simulateur{
                 tmp = 0;
             }else{
             tmp = Conso.get(Conso.size()-1);
-            Conso.remove(Conso.size()-1);}
-            Conso.add(tmp+consommationTotale);
+            Conso.remove(Conso.size()-1);
+            }
+            Conso.add(tmp+(consommationTotale/minute));
         }
         date = Newdate;
         return Conso;
@@ -294,6 +312,8 @@ public class Simulateur{
         S.recupereTemperatureExt();
         System.out.println("Temperature : " + S.getTemperatureExt());
         System.out.println("Heure : " + S.getDate().get(Calendar.HOUR_OF_DAY));
+        System.out.println(S.ConsoMois());
+
     }
 
 }
