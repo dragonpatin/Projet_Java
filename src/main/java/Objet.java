@@ -1,6 +1,7 @@
 import java.text.*;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.concurrent.TimeUnit;
+import java.util.Random;
 
 public class Objet{
 
@@ -8,7 +9,7 @@ public class Objet{
     String PieceMaison;
     int Consommation;
     boolean Switch;
-    double Duree_utilisation;
+    double Duree_utilisation;  //Durée d'utilisation en minute
     String AdresseMAC;
     Calendar Date_allumage;  //date et heure pour savoir la durée d'utilisation
     int Priorite; // 0 : priorite basse, 3 : priorité haute
@@ -38,12 +39,29 @@ public class Objet{
 
     //Méthodes :
 
-    public boolean AllumerEteindre(){   //ajouter le calcul de la duree d'utilisation
+    public boolean AllumerEteindre(){   //ajouter le calcul de la duree d'utilisation pour les jours
         if(this.Switch){
             this.Switch = false;
+            Calendar Date_extinction = Calendar.getInstance();
+            int heure = Date_allumage.get(Calendar.HOUR_OF_DAY);
+            int minute = Date_allumage.get(Calendar.MINUTE);
+
+            heure = (heure - Date_extinction.get(Calendar.HOUR_OF_DAY))%24;
+            minute = (minute - Date_extinction.get(Calendar.MINUTE));
+
+            if(heure<0){
+                heure = -heure;
+            }
+            if(minute<0){
+                minute = -minute;
+            }
+
+            Duree_utilisation = minute + heure*60;
         }
         else {
             this.Switch = true;
+            Date_allumage = Calendar.getInstance();
+            Duree_utilisation = 0;
         }
         return true;
     }
@@ -53,9 +71,12 @@ public class Objet{
     }
 
     public int getConsommation(){
-        if(this.Switch == false)
+        if(this.Switch == false){
             return 0;
-        return this.Consommation;
+        }
+        Random r = new Random();
+        int a = -(this.Consommation/4) + r.nextInt(this.Consommation/4 - (-this.Consommation/4));   //genere un nb aleatoire entre -Consommation/4 et Consommation/4
+        return (this.Consommation + a);
     }
 
     public String getNom(){
@@ -94,56 +115,27 @@ public class Objet{
         return this.AdresseMAC;
     }
 
-    public static void main(String [] args){
+    public boolean getSwitch(){
+        return this.Switch;
+    }
+
+    public static void main(String [] args) throws InterruptedException {
         Objet lampe = new Objet("lampe", "Cuisine", 10, "AB:12:CD:34:OP", 0);
         System.out.println("Objet : " + lampe.getNom() + " Piece : " + lampe.getPiece() + " Conso : " + lampe.getConsommation() + " AdresseMAC : " + lampe.getadresseMAC() + " Priorité : " + lampe.getPriorite());
         System.out.println("Durée : " + lampe.getDuree_utilisation());
         System.out.println(lampe.Switch);
 
-        Calendar c = Calendar.getInstance();
-        int heure = 12; //c.get(c.HOUR_OF_DAY);
-        int minute = 30; //c.get(c.MINUTE);
-        int seconde = 00; //c.get(c.SECOND);
+        lampe.AllumerEteindre();
+        System.out.println(lampe.Switch);
+        System.out.println(lampe.getConsommation());
+        System.out.println(lampe.getDuree_utilisation() + " min");
 
-        int milliseconde = (int) c.getTimeInMillis();
-        System.out.println("seconde = " + milliseconde/1000);
-        int s = milliseconde/1000;
-        int m = 0;
-        while(s>60){
-            m++;
-            s = s - 60;
-        }
-        System.out.println("seconde = " + s);
-        int h = 0;
-        while(m>60){
-            h++;
-            m = m - 60;
-        }
-        System.out.println("minute = " + m);
-        int d = 0;
-        while(h>24){
-            d++;
-            h = h - 24;
-        }
-        System.out.println("heure = " + h);
+        TimeUnit.MINUTES.sleep(1);  //wait de 1 minute
+
+        lampe.AllumerEteindre();
+        System.out.println(lampe.Switch);
+        System.out.println(lampe.getDuree_utilisation() + " min");
 
 
-
-        System.out.println("Temps : " + heure + ":" + minute + ":" + seconde);
-
-        heure = (heure + 11)%24;
-        minute = (minute + 40)%60;
-        seconde = (seconde + 50)%60;
-
-        System.out.println("Temps : " + heure + ":" + minute + ":" + seconde);
-
-
-        SimpleDateFormat date1 = new SimpleDateFormat("HH:mm:ss");
-        String date = date1.format(c.getTime());
-        System.out.println("Date : " + date);
-
-        SimpleDateFormat date2 = new SimpleDateFormat("HH:mm:ss");
-        String date3 = date2.format(c.getTime());
-        System.out.println("Date3 : " + date3);
     }
 }
