@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+import java.util.prefs.Preferences;
 import javax.swing.JFileChooser;
 
 
@@ -13,6 +14,17 @@ public class entresortie{
     Vector <Integer> ConsoMois;
     Vector <Integer> ConsoSemaine;
 
+    public entresortie(String nomfichier){
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(nomfichier)));
+            writer.write("#"+"\n"+"+"+"\n"+"-"+"\n"+"%"+"\n"+"?");
+            writer.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     public entresortie(){
         JFileChooser dialogue = new JFileChooser();
@@ -205,15 +217,31 @@ public class entresortie{
     public Vector getObjet (){
         return ListeObjet;
     }
-    /*public Objet getConsommation (){
-        return ListeObjet.elementAt();
-    }*/
-    public Vector getPreference (){
-        return Preference;
+    public int getConsommation (){
+        for(int i =0 ; i<ListeObjet.size();i++){
+            if(ListeObjet.elementAt(i).equals(this)){
+                return ListeObjet.elementAt(i).Consommation;
+            }
+        }
+        return 0;
     }
-    /*public Vector getPiece (){
+    public preference getPreference (){
+        for(int i =0 ; i<Preference.size();i++){
+            if(Preference.elementAt(i).equals(this)){
+                return Preference.elementAt(i);
+            }
+        }
         return null;
-    }*/
+    }
+    
+    public String getPiece (){
+        for(int i =0 ; i<ListeObjet.size();i++){
+            if(ListeObjet.elementAt(i).equals(this)){
+                return ListeObjet.elementAt(i).PieceMaison;
+            }
+        }
+        return null;
+    }
     public Vector consoJour (){
         return this.ConsoJour;
     }
@@ -226,8 +254,9 @@ public class entresortie{
 
     public static void main(String [] args)
     {
-        entresortie E = new entresortie();
-        E.lecturefichier(E.NomFichier);
-        E.ecriture(E.NomFichier);
+        entresortie E = new entresortie("test");
+        //entresortie E = new entresortie();
+        //E.lecturefichier(E.NomFichier);
+        //E.ecriture(E.NomFichier);
     }
 }
