@@ -5,7 +5,13 @@ public class preference {
      int heure_debut;
      int heure_fin;
 
-
+     public preference () {
+          this.nom="";
+          this.O=null;
+          this.instruction=-1;
+          this.heure_debut=-1;
+          this.heure_fin=-1;
+     }
      public preference (String nom, Objet O,int instruction, int hd, int hf){
           this.nom=nom;
           this.O=O;
@@ -32,7 +38,7 @@ public class preference {
         return 0;
      }
      public String getNom(){
-        return null;
+        return this.nom;
      }
      public Objet getObjet(){
           return O;

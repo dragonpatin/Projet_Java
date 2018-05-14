@@ -244,19 +244,29 @@ public class entresortie{
             }
         }
     }
-    public void modifieObjet ( Vector ListeObjet ){
+    public void modifieObjet ( Vector ListeObjet,Objet obj ){
         // UTILISE LES FONCTIONS DANS OBJET
-        
-
+        for(int i =0 ; i<ListeObjet.size();i++){
+            if(ListeObjet.elementAt(i).equals(obj)){
+                ListeObjet.removeElementAt(i);
+                ListeObjet.addElement(obj);
+            }
+        }
     }
-    public void modifieConsommation ( Vector ListeObjet ){
-
+    public void modifieConsommation ( Vector ListeObjet){
+        //utilité ?
     }
-    public void modifiePreference(Vector Preference){
-
+    public void modifiePreference(Vector Preference, preference pref){
+        preference p = new preference();
+        for(int i =0 ; i<Preference.size();i++){
+            if(Preference.elementAt(i).equals(pref)){
+                Preference.removeElementAt(i);
+                Preference.addElement(pref);
+            }
+        }
     }
     public void modifiePiece(Vector ListeObjet){
-
+            //un utilité ?
     }
     public Vector getObjet (){
         return ListeObjet;
