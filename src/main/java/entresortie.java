@@ -147,14 +147,18 @@ public class entresortie{
 
     public void ecriture ( File NomFichier){
         String test,fina= "";
-        test = enregistre(NomFichier);
+
         int acc,acc2;
        // System.out.printf("test = %s\n",test);
         for(int i =0;i<this.ListeObjet.size();i++) {
+            test = enregistre(NomFichier);
             acc = test.indexOf("#");
-            acc2 = test.indexOf("+");
-            String before = test.substring(0, acc + 1);
-            String after = test.substring(acc2);
+            //System.out.println(acc+1);
+           // acc2 = test.indexOf("+");
+            String before = test.substring(0, acc+1);
+            String after = test.substring(acc+2);
+            System.out.println(before);
+            System.out.println(after);
             String code = ListeObjet.elementAt(i).NomObjet +"\n" + ListeObjet.elementAt(i).PieceMaison + "\n"
                     + ListeObjet.elementAt(i).Consommation + "\n" + ListeObjet.elementAt(i).AdresseMAC + "\n"
                     + ListeObjet.elementAt(i).Priorite;
@@ -172,6 +176,7 @@ public class entresortie{
 
 
         for(int i =0;i<this.Preference.size();i++) {
+            test = enregistre(NomFichier);
             acc = fina.indexOf("+");
             acc2 = fina.indexOf("-");
             String before = fina.substring(0, acc + 1);
@@ -193,6 +198,7 @@ public class entresortie{
         }
 
         for(int i =0;i<this.ConsoJour.size();i++) {
+            test = enregistre(NomFichier);
             acc = fina.indexOf("-");
             acc2 = fina.indexOf("%");
             String before = fina.substring(0, acc + 1);
@@ -211,6 +217,7 @@ public class entresortie{
         }
 
         for(int i =0;i<this.ConsoSemaine.size();i++) {
+            test = enregistre(NomFichier);
             acc = fina.indexOf("%");
             acc2 = fina.indexOf("?");
             String before = fina.substring(0, acc + 1);
@@ -229,6 +236,7 @@ public class entresortie{
         }
 
         for(int i =0;i<this.ConsoMois.size();i++) {
+            test = enregistre(NomFichier);
             acc = fina.indexOf("?");
             String before = fina.substring(0, acc + 1);
             String code = ConsoMois.elementAt(i).toString();
@@ -244,6 +252,7 @@ public class entresortie{
             }
         }
     }
+
     public void modifieObjet ( Vector ListeObjet,Objet obj ){
         // UTILISE LES FONCTIONS DANS OBJET
         for(int i =0 ; i<ListeObjet.size();i++){
@@ -311,7 +320,9 @@ public class entresortie{
     {
         entresortie E = new entresortie("test");
         Objet test = new Objet( "lampe","chambre", 45, "5462745627", 3);
+        Objet low = new Objet( "test","romm", 45, "5462745627", 3);
         E.ListeObjet.addElement(test);
+        E.ListeObjet.addElement(low);
         E.ecriture(E.NomFichier);
         //entresortie E = new entresortie();
         //E.lecturefichier(E.NomFichier);
