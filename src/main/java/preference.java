@@ -29,13 +29,13 @@ public class preference {
 
      }
      public int getInstruction (){
-         return 0;
+         return instruction;
      }
      public int getHeureFin (){
-        return 0;
+        return heure_fin;
      }
      public int getHeuredebut (){
-        return 0;
+        return heure_debut;
      }
      public String getNom(){
         return this.nom;

@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.*;
 
 import static java.lang.System.exit;
+import static java.lang.Thread.sleep;
 
 public class Simulateur{
     private float prixHeureCreuse; //Modifie
@@ -108,6 +109,7 @@ public class Simulateur{
     }
 
     public void calculConsommation (){
+        consommationTotale = 0;
         for(int i = 0;i<ConsommationObjet.size();i++){
             consommationTotale += ConsommationObjet.get(i) ;
         }
@@ -116,7 +118,6 @@ public class Simulateur{
         objet = S.getObjet();
     }
     public void miseAJourObjet (){
-        recupereObjet();
         ConsommationObjet.clear();
         for(int i = 0;i<objet.size();i++){
             ConsommationObjet.add(objet.get(i).getConsommation());
@@ -125,32 +126,41 @@ public class Simulateur{
     public void ExtinctionAutomatique (int ConsoMax){
             consommationANePasDepasser = ConsoMax;
             Vector<Objet> tmp = new Vector<Objet>();
+            Vector<Integer> tmpConsoO = new Vector<Integer>();
             //tris consommation.
             int x=0;
             int max = 0;
-
+            int n = objet.size();
             //Pas encore TEST.
-            for(int i = 0;i<objet.size();i++){
+            for(int i = 0;i<n;i++){
                 for(int j = 0;j<objet.size();j++){
-                    if(objet.get(i).getConsommation()>max){
-                        max = objet.get(i).getConsommation();
+                    if(objet.get(j).getConsommation()>max){
+                        max = ConsommationObjet.get(j);
                         x=j;
                     }
                 }
                 tmp.add(objet.get(x));
                 objet.remove(x);
+                tmpConsoO.add(ConsommationObjet.get(x));
+                ConsommationObjet.remove(x);
                 x=0;
                 max = 0;
-
             }
         objet = tmp;
+        ConsommationObjet = tmpConsoO;
             //Tant que la consommation est supérieur
-        int i =0;
-        for(int j = 0;j<=1;j++) {
-            while (consommationTotale > consommationANePasDepasser) {
-                if (objet.get(i).getConsommation() != 0 && objet.get(i).getPriorite() == j) {
-                    consommationTotale -= objet.get(i).getConsommation();
+
+        for(int i = 0;i<objet.size();i++){
+            System.out.println(objet.get(i).getNom());
+        }
+        for(int j = 0;j<=3;j++) {
+            int i =0;
+            while (consommationTotale >= consommationANePasDepasser && i < objet.size()) {
+                if (ConsommationObjet.get(i) != 0 && objet.get(i).getPriorite() == j) {
+                    System.out.println(consommationTotale+ " "+j);
+                    consommationTotale -= ConsommationObjet.get(i);
                     objet.get(i).AllumerEteindre();
+                    System.out.println(consommationTotale);
                 }
                 i++;
             }
@@ -171,9 +181,9 @@ public class Simulateur{
     public void rechercheDateHeure (){
         date = new GregorianCalendar();
     }
-    public Vector getConsommation (){
-        return null;
-    }
+    //public Vector getConsommation (){
+    //    return null;
+    //}
     public Float getPrixHC (){
         return prixHeureCreuse;
     }
@@ -202,34 +212,41 @@ public class Simulateur{
     public Vector consoJour (){
         Calendar Newdate = Calendar.getInstance();
         Vector<Integer> Conso = S.consoJour();
-        if(Newdate.get(Calendar.DAY_OF_MONTH) != date.get(Calendar.DAY_OF_MONTH)){
+        int minute = Newdate.get(Calendar.MINUTE) - date.get(Calendar.MINUTE);
+        minute = minute/60;
+        if(minute==0){minute = 60;}
+        if(Newdate.get(Calendar.HOUR_OF_DAY) != date.get(Calendar.HOUR_OF_DAY)){
             if(Conso.size() == 24){          //On supprime les anciennes consommations si nous en avons suffisaments
                 for(int i = 23;i>=12;i++)
                     Conso.remove(i);
                 Conso.remove(0);
             }
-            Conso.add(consommationTotale);
+            Conso.add(consommationTotale/minute);
         }
         else{
             int tmp;
             if(Conso.size()==0){
                 tmp = 0;
             }else{
-                for(int i = 23;i>=12;i++)
+                int j = Conso.size()-12;
+                for(int i = Conso.size()-1;i>=j;i--) {
                     Conso.remove(i);
+                }
                 tmp = Conso.get(Conso.size()-1);
                 Conso.remove(Conso.size()-1);}
-            Conso.add(tmp+consommationTotale);
+            Conso.add(tmp+(consommationTotale/minute));
         }
         Vector<preference> pref;
         pref = S.getPreference();
         int Tab[]=new int[12];
         for(int i = 0;i<12;i++)
             Tab[i] = consommationTotale;
+
+        System.out.println(Newdate.get(Calendar.HOUR_OF_DAY));
         if(!pref.isEmpty()) {
             for (int i = 0; i < pref.size(); i++) {
                 int t = -1;
-                for (int j = 0; i < objet.size(); i++) {
+                for (int j = 0; j < objet.size(); j++) {
                     if (objet.get(j) == pref.get(i).getObjet()) {
                         t = j;
                     }
@@ -238,89 +255,89 @@ public class Simulateur{
                     exit(1);
                 }
                 if (!((pref.get(i).getInstruction() == 0) && objet.get(t).getSwitch()) || ((pref.get(i).getInstruction() == 1) && !objet.get(t).getSwitch())) {
-                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 1) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 1)))) {
-                        if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[0] += pref.get(i).getObjet().getConsommation();
 
+                    if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 1 )%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 1)%24)) {
+                        if ((pref.get(i).getInstruction() == 0)) {
+                            Tab[0] += ConsommationObjet.get(t);
                         } else {
-                            Tab[0] -= pref.get(i).getObjet().getConsommation();
+                            Tab[0] -= ConsommationObjet.get(t);
                         }
                     }
-                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 2) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 2)))) {
+                    if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 2)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 2)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[1] += pref.get(i).getObjet().getConsommation();
+                            Tab[1] += ConsommationObjet.get(t);
                         } else {
-                            Tab[1] -= pref.get(i).getObjet().getConsommation();
+                            Tab[1] -= ConsommationObjet.get(t);
                         }
                     }
-                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 3) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 3)))) {
+                    if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 3)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 3)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[2] += pref.get(i).getObjet().getConsommation();
+                            Tab[2] += ConsommationObjet.get(t);
                         } else {
-                            Tab[2] -= pref.get(i).getObjet().getConsommation();
+                            Tab[2] -= ConsommationObjet.get(t);
                         }
                     }
-                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 4) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 4)))) {
+                    if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 4)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 4)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[3] += pref.get(i).getObjet().getConsommation();
+                            Tab[3] += ConsommationObjet.get(t);
                         } else {
-                            Tab[3] -= pref.get(i).getObjet().getConsommation();
+                            Tab[3] -= ConsommationObjet.get(t);
                         }
                     }
-                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 5) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 5)))) {
+                    if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 5)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 5)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[4] += pref.get(i).getObjet().getConsommation();
+                            Tab[4] += ConsommationObjet.get(t);
                         } else {
-                            Tab[4] -= pref.get(i).getObjet().getConsommation();
+                            Tab[4] -= ConsommationObjet.get(t);
                         }
                     }
-                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 6) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 6)))) {
+                    if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 6)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 6)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[5] += pref.get(i).getObjet().getConsommation();
+                            Tab[5] += ConsommationObjet.get(t);
                         } else {
-                            Tab[5] -= pref.get(i).getObjet().getConsommation();
+                            Tab[5] -= ConsommationObjet.get(t);
                         }
                     }
-                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 7) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 7)))) {
+                    if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 7)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 7)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[6] += pref.get(i).getObjet().getConsommation();
+                            Tab[6] += ConsommationObjet.get(t);
                         } else {
-                            Tab[6] -= pref.get(i).getObjet().getConsommation();
+                            Tab[6] -= ConsommationObjet.get(t);
                         }
                     }
-                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 8) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 8)))) {
+                    if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 8)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 8)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[7] += pref.get(i).getObjet().getConsommation();
+                            Tab[7] += ConsommationObjet.get(t);
                         } else {
-                            Tab[7] -= pref.get(i).getObjet().getConsommation();
+                            Tab[7] -= ConsommationObjet.get(t);
                         }
                     }
-                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 9) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 9)))) {
+                    if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 9)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 9)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[8] += pref.get(i).getObjet().getConsommation();
+                            Tab[8] += ConsommationObjet.get(t);
                         } else {
-                            Tab[8] -= pref.get(i).getObjet().getConsommation();
+                            Tab[8] -= ConsommationObjet.get(t);
                         }
                     }
-                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 10) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 10)))) {
+                    if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 10)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 10)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[9] += pref.get(i).getObjet().getConsommation();
+                            Tab[9] += ConsommationObjet.get(t);
                         } else {
-                            Tab[9] -= pref.get(i).getObjet().getConsommation();
+                            Tab[9] -= ConsommationObjet.get(t);
                         }
                     }
-                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 111) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 11)))) {
+                    if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 11)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 11)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[10] += pref.get(i).getObjet().getConsommation();
+                            Tab[10] += ConsommationObjet.get(t);
                         } else {
-                            Tab[10] -= pref.get(i).getObjet().getConsommation();
+                            Tab[10] -= ConsommationObjet.get(t);
                         }
                     }
-                    if ((pref.get(i).heure_debut >= (Newdate.get(Calendar.HOUR_OF_DAY) + 12) && (pref.get(i).heure_fin >= (Newdate.get(Calendar.HOUR_OF_DAY) + 12)))) {
+                    if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 12)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 12)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[11] += pref.get(i).getObjet().getConsommation();
+                            Tab[11] += ConsommationObjet.get(t);
                         } else {
-                            Tab[11] -= pref.get(i).getObjet().getConsommation();
+                            Tab[11] -= ConsommationObjet.get(t);
                         }
                     }
                 }
@@ -430,7 +447,7 @@ public class Simulateur{
 
     public static void main(String [] args) throws IOException {
         entresortie E = new entresortie();
-        //E.lecturefichier(E.NomFichier);
+        E.lecturefichier(E.NomFichier);
         Simulateur S = new Simulateur(E);
         S.rechercheDateHeure();
         try {
@@ -446,9 +463,26 @@ public class Simulateur{
         }
         System.out.println("Temperature : " + S.getTemperatureExt());
         System.out.println("Heure : " + S.getDate().get(Calendar.HOUR_OF_DAY));
-        System.out.println(S.ConsoMois());
-        System.out.println(S.ConsoSemaine());
-        System.out.println(S.consoJour());
+        S.recupereObjet();
+        S.miseAJourObjet();
+        S.calculConsommation();
+        System.out.println(S.consommationTotale());
+        while(true) {
+            S.miseAJourObjet();
+            S.calculConsommation();
+            System.out.println(S.ConsommationANePasDepasser());
+            System.out.println(S.ConsommationObjet());
+            System.out.println(S.ConsoMois());
+            System.out.println(S.ConsoSemaine());
+            System.out.println(S.consoJour());
+            System.out.println();
+            S.ExtinctionAutomatique(1000);
+            try {
+                sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 

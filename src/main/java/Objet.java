@@ -21,7 +21,7 @@ public class Objet{
         this.NomObjet = "Objet1";
         this.PieceMaison = "Salon";
         this.Consommation = 10;
-        this.Switch = false;
+        this.Switch = true;
         this.Duree_utilisation = 0;
         this.Priorite = 0;
         this.AdresseMAC = "AA:00:BB:A1:B2";
@@ -31,7 +31,7 @@ public class Objet{
         this.NomObjet = NomObjet;
         this.PieceMaison = PieceMaison;
         this.Consommation = Consommation;
-        this.Switch = false;
+        this.Switch = true;
         this.Duree_utilisation = 0;
         this.AdresseMAC = AdresseMAC;
         this.Priorite = priorite;
@@ -42,6 +42,7 @@ public class Objet{
     public boolean AllumerEteindre(){   //ajouter le calcul de la duree d'utilisation pour les jours
         if(this.Switch){
             this.Switch = false;
+            /*
             Calendar Date_extinction = Calendar.getInstance();
             int heure = Date_allumage.get(Calendar.HOUR_OF_DAY);
             int minute = Date_allumage.get(Calendar.MINUTE);
@@ -56,7 +57,7 @@ public class Objet{
                 minute = -minute;
             }
 
-            Duree_utilisation = minute + heure*60;
+            Duree_utilisation = minute + heure*60;*/
         }
         else {
             this.Switch = true;
