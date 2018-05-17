@@ -1,61 +1,183 @@
-/*
-
-import java.awt.*; 
+import java.awt.Color; 
 import java.lang.Integer;
-import javax.swing.*;
-import java.util.*;
-import java.awt.event.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import java.util.Vector;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JLayeredPane;
+import java.awt.Canvas;
+import javax.swing.JLabel;
+import java.awt.SystemColor;
+import java.awt.Font;
+import java.util.Timer;
 
 public class Interface implements ActionListener {
-
 	private JFrame frame;
 	private JPanel piecepanel = new JPanel();
+	private JPanel piececontent = new JPanel();
 	private JPanel menupanel = new JPanel();
 	private JPanel objetpanel = new JPanel();
 	private JPanel objetcontent = new JPanel();
 	private JPanel infobjcontent = new JPanel();
 	private JPanel infobjpanel = new JPanel();
+	private JPanel listobjpanel = new JPanel();
+	private JPanel favorispanel = new JPanel();
+	private JPanel simupanel = new JPanel();
 	private Vector<JButton> btpiece = new Vector<JButton>();
 	private Vector<JButton> btobjet = new Vector<JButton>();	
-	private JButton btonoff;
-	private Vector<Piece> piece = new Vector<Piece>(); 
+	private Vector<Piece> piece = new Vector<Piece>();
+	private Vector<Objet> objets = new Vector<Objet>();
+	private Vector<Objet> objets_favoris = new Vector<Objet>(); 
 	private Piece pieceactuelle;	
 	private Objet objetactuel;
+	private entresortie donnee;
 		
-	public static void main(String[] args) {
+	public static void main(String[] args){
+					
 					Interface window = new Interface();
-					window.frame.setVisible(true);
+					window.frame.setVisible(true);	
+					
+	}
 	
-	}
-
-
-	public Interface() {
-		init_vect_piece(piece,3);	
-		setBtpiece();
-		//setBtobjet();
+	public Interface(){
 		initialiseUI();
+	;
 	}
 
-
-	private void initialiseUI() {
+	private void initialiseUI(){
 		frame = new JFrame();
 		frame.setBounds(100, 100,600,800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		infobjpanel.setBounds(0, 0, 582, 814);
-		frame.getContentPane().add(infobjpanel);
-		infobjpanel.setLayout(null);
 		
-
+		JButton btnRetour = new JButton("Retour");
+		btnRetour.setBounds(485, 703, 97, 25);
+		frame.getContentPane().add(btnRetour);
+		btnRetour.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(listobjpanel.isVisible()) {
+					menupanel.setVisible(true);
+					listobjpanel.setVisible(false);}
+				
+				if(favorispanel.isVisible()) {
+					menupanel.setVisible(true);
+					favorispanel.setVisible(false);}
+				
+				if(simupanel.isVisible()) {
+					menupanel.setVisible(true);
+					simupanel.setVisible(false);}
+				
+				else if( infobjpanel.isVisible() ) {
+					infobjpanel.setVisible(false);					
+					if( pieceactuelle != null ) {
+						objetpanel.setVisible(true);
+						affiche_objet(pieceactuelle.getObjetPiece(),objetcontent);
+						
+					} else if( pieceactuelle == null && favorispanel.isEnabled() ) { 
+						favorispanel.setVisible(true);
+						affiche_objet(donnee.ObjetFavoris,favorispanel);}
+					 else if( pieceactuelle == null && listobjpanel.isEnabled() ) { 
+						listobjpanel.setVisible(true);
+						favorispanel.setVisible(false);
+						affiche_objet(donnee.ObjetFavoris,listobjpanel);}}
+				
+				else if( piecepanel.isVisible()) {
+					piecepanel.setVisible(false);
+					menupanel.setVisible(true);}
+			
+				else if(  objetpanel.isVisible() ) {
+					if( pieceactuelle != null) {
+					piecepanel.setVisible(true);		
+					objetpanel.setVisible(false);}
+					else {
+						menupanel.setVisible(true);		
+						objetpanel.setVisible(false);}}}});
 		
-		JButton retour = new JButton("Retour");
-		retour.addActionListener(new ActionListener() {
+		menupanel.setBounds(0, 0, 582, 697);
+		frame.getContentPane().add(menupanel);
+		menupanel.setLayout(null);
+		
+		JButton PIECE = new JButton("Afficher pieces");
+		PIECE.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				infobjpanel.setVisible(false);
-				objetpanel.setVisible(true);
+				piecepanel.setVisible(true);
+				menupanel.setVisible(false);
+				objetpanel.setVisible(false);
+				simupanel.setVisible(false);
+				affiche_piece();}});
+		
+		PIECE.setBounds(12, 39, 162, 25);
+		menupanel.add(PIECE);
+		
+		JLabel lblMenus = new JLabel("Menus");
+		lblMenus.setBounds(12, 12, 70, 15);
+		menupanel.add(lblMenus);
+		
+		JButton btsimu = new JButton("Lancer simulateur");
+		btsimu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				piecepanel.setVisible(false);
+				menupanel.setVisible(false);
+				objetpanel.setVisible(false);
+				simupanel.setVisible(true);
+				
+				affiche_simulateur();
 			}
 		});
-		retour.setBounds(453, 27, 117, 25);
-		infobjpanel.add(retour);
+		btsimu.setBounds(12, 115, 162, 25);
+		menupanel.add(btsimu);
+		
+		JButton btfav = new JButton("Objets favoris");
+		btfav.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent e) {
+			menupanel.setVisible(false);
+			favorispanel.setVisible(true);
+			pieceactuelle=null;
+			favorispanel.enable();
+			listobjpanel.disable();
+			affiche_objet(donnee.ObjetFavoris,favorispanel);			
+			}
+		});
+		btfav.setBounds(12, 77, 162, 25);
+		menupanel.add(btfav);
+		
+		JButton btlistobj = new JButton("Liste objets ");
+		btlistobj.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent e) {
+				menupanel.setVisible(false);
+				listobjpanel.setVisible(true);
+				pieceactuelle=null;
+				favorispanel.disable();
+				listobjpanel.enable();
+				affiche_objet(donnee.getObjet(),listobjpanel);
+			}
+		});
+		btlistobj.setBounds(12, 153, 162, 25);
+		menupanel.add(btlistobj);
+		
+		
+		listobjpanel.setBounds(0, 0, 594, 697);
+		frame.getContentPane().add(listobjpanel);
+		listobjpanel.setVisible(false);
+		listobjpanel.setLayout(null);
+		infobjpanel.setBounds(0, 0, 594, 697);
+		frame.getContentPane().add(infobjpanel);
+		frame.setResizable(false);
+		infobjpanel.setLayout(null);
 		
 		
 		infobjcontent.setBounds(12, 64, 484, 517);
@@ -68,17 +190,16 @@ public class Interface implements ActionListener {
 				supprime_objet(objetactuel);
 				infobjpanel.setVisible(false);
 				objetpanel.setVisible(true);
-				affiche_objet(pieceactuelle);
+				affiche_objet(pieceactuelle.getObjetPiece(),objetcontent);
 			}
 		});
-		btnSupprimerObjet.setBounds(415, 689, 155, 25);
+		btnSupprimerObjet.setBounds(415, 650, 155, 25);
 		infobjpanel.add(btnSupprimerObjet);
 		
 		JButton btmodifnom = new JButton("modifier");
 		btmodifnom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nom = JOptionPane.showInputDialog(piecepanel, "Changer le nom de l'objet", JOptionPane.QUESTION_MESSAGE);
-				
 				if( nom != null) {
 				objetactuel.ModifieNomObjet(nom);
 				infobjcontent.revalidate();
@@ -143,149 +264,43 @@ public class Interface implements ActionListener {
 		btmodifpriorite.setBounds(500, 220, 82, 20);
 		infobjpanel.add(btmodifpriorite);
 		
-		btonoff = new JButton("off"); 
-		btonoff.setBounds(500, 252, 82, 20);
+		JButton btonoff = new JButton("on/off");
+		btonoff.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				objetactuel.AllumerEteindre();		
+				objetcontent.revalidate();
+				objetcontent.repaint();
+				infobjpanel.revalidate();
+				infobjpanel.repaint();
+				affiche_infos_objet(objetactuel);
+				System.out.println(objetactuel.getSwitch());
+				
+			}
+		});
+		btonoff.setBounds(500, 253, 82, 20);
 		infobjpanel.add(btonoff);
 		
+		JButton btaddfavoris = new JButton("Favoris");
+		btaddfavoris.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			ajout_objet_favoris(objetactuel);
+			}
+		});
+		btaddfavoris.setBounds(12, 13, 117, 25);
 		
-		btonoff.addActionListener(this);
-		btonoff.setFont(new Font("Dialog", Font.BOLD, 10));
+		infobjpanel.add(btaddfavoris);
 		infobjpanel.setVisible(false);
 		
-		menupanel.setBounds(12, 25, 570, 710);
-		frame.getContentPane().add(menupanel);
-		menupanel.setLayout(null);
-		
-		piecepanel.setBounds(12, 25, 570, 710);
+		piecepanel.setBounds(12, 0, 570, 697);
 		frame.getContentPane().add(piecepanel);
 		piecepanel.setLayout(null);
 		
-		objetpanel.setBounds(12, 25, 570, 710);
-		frame.getContentPane().add(objetpanel);
-		objetpanel.setLayout(null);
-		
 		piecepanel.setVisible(false);
-		objetpanel.setVisible(false);
 		
-
-		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
-		
-		JMenu mnFichier = new JMenu("Fichier");
-		mnFichier.setForeground(Color.GRAY);
-		menuBar.add(mnFichier);
-		
-		JMenuItem mntmSauvegarder = new JMenuItem("Sauvegarder");
-		mntmSauvegarder.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				sauvegarder_fichier();
-			}
-		});
-		mntmSauvegarder.setForeground(Color.GRAY);
-		mnFichier.add(mntmSauvegarder);
-		
-		JMenuItem mntmImporterFichier = new JMenuItem("Charger sauvegarde");
-		mntmImporterFichier.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				charger_sauvegarde();
-			}
-		});
-		mntmImporterFichier.setForeground(Color.GRAY);
-		mnFichier.add(mntmImporterFichier);
-		frame.getContentPane().setLayout(null);
-		
-		
-		
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setBounds(0, 744, 594, -743);
-		frame.getContentPane().add(layeredPane);
-				
-		JButton PIECE = new JButton("Afficher pieces");
-		PIECE.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				piecepanel.setVisible(true);
-				menupanel.setVisible(false);
-				objetpanel.setVisible(false);
-				
-				affiche_piece();
-			}
-		});
-		PIECE.setBounds(12, 39, 162, 25);
-		menupanel.add(PIECE);
-		
-		JLabel lblMenus = new JLabel("Menus");
-		lblMenus.setBounds(12, 12, 70, 15);
-		menupanel.add(lblMenus);
-		
-		JButton btnNewButton = new JButton("Lancer simulateur");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Lancement simulateur");
-			}
-		});
-		btnNewButton.setBounds(12, 76, 162, 25);
-		menupanel.add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("Objet favoris");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton_1.setBounds(12, 113, 162, 25);
-		menupanel.add(btnNewButton_1);
-		
-		
-		objetcontent.setBackground(SystemColor.control);
-		objetcontent.setBounds(0, 104, 570, 710);
-		objetpanel.add(objetcontent);
-		objetcontent.setLayout(null);
-			
-		JLabel lblPiece = new JLabel("Piece");
-		lblPiece.setBounds(10, 12, 70, 15);
-		piecepanel.add(lblPiece);
-			
-		objetpanel.add(objetcontent);
-		
-		JLabel lblChambre = new JLabel("Objet");
-		lblChambre.setBounds(12, 12, 70, 15);
-		objetpanel.add(lblChambre);
-		
-		JButton btnaddObjet = new JButton("ajout objet ");
-		btnaddObjet.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ajout_objet(pieceactuelle);
-				objetpanel.revalidate();
-				objetpanel.repaint();	
-				System.out.println("ajout objet");
-				affiche_objet(pieceactuelle);
-						
-			}
-		});
-		btnaddObjet.setBounds(250, 39, 117, 25);
-		objetpanel.add(btnaddObjet);
-		
-		JButton btrtchambre = new JButton("retour");
-		btrtchambre.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				piecepanel.setVisible(true);
-				menupanel.setVisible(false);
-				objetpanel.setVisible(false);
-			}
-		});
-		
-		btrtchambre.setBounds(417, 39, 117, 25);
-		objetpanel.add(btrtchambre);
-		
-		JButton btretpiece = new JButton("retour");
-		btretpiece.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				piecepanel.setVisible(false);
-				menupanel.setVisible(true);
-				objetpanel.setVisible(false);
-			}
-		});
-		btretpiece.setBounds(417, 39, 117, 25);
-		piecepanel.add(btretpiece);
+		simupanel.setBounds(12, 25, 570, 710);
+		frame.getContentPane().add(simupanel);
+		simupanel.setLayout(null);
+		simupanel.setVisible(false);
 		
 		JButton btaddpiece = new JButton("ajout piece");
 		btaddpiece.addActionListener(new ActionListener() {
@@ -297,12 +312,102 @@ public class Interface implements ActionListener {
 				System.out.println("ajout piece");
 			}
 		});
-		btaddpiece.setBounds(250, 39, 117, 25);
+		btaddpiece.setBounds(344, 0, 117, 25);
 		piecepanel.add(btaddpiece);
-			
+		piececontent.setBounds(-13, 25, 583, 672);
+		piecepanel.add(piececontent);
+		piececontent.setLayout(null);		
+		objetpanel.setBounds(0, 0, 594, 697);
+		frame.getContentPane().add(objetpanel);
+		objetpanel.setLayout(null);
+		objetpanel.setVisible(false);
+		
+		
+		objetcontent.setBackground(SystemColor.control);
+		objetcontent.setBounds(0, 38, 570, 618);
+		objetpanel.add(objetcontent);
+		objetcontent.setLayout(null);
+		
+		objetpanel.add(objetcontent);
+		
+		JButton btnaddObjet = new JButton("ajout objet ");
+		btnaddObjet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ajout_objet(pieceactuelle);
+				objetpanel.revalidate();
+				objetpanel.repaint();	
+				System.out.println("ajout objet");
+				affiche_objet(pieceactuelle.getObjetPiece(),objetcontent);
+						
+			}
+		});
+		btnaddObjet.setBounds(353, 0, 117, 25);
+		objetpanel.add(btnaddObjet);
+		
+		JButton btsuppiece = new JButton("Supprimer piece");
+		btsuppiece.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btpiece.removeElementAt(piece.indexOf(pieceactuelle));
+				piece.removeElement(pieceactuelle);
+				piecepanel.setVisible(true);
+				menupanel.setVisible(false);
+				objetpanel.setVisible(false);			
+				affiche_piece();
+			}
+		});
+		btsuppiece.setBounds(431, 666, 127, 25);
+		objetpanel.add(btsuppiece);
+		
+		JButton btmodpiece = new JButton("modifer nom");
+		btmodpiece.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nom = JOptionPane.showInputDialog(piecepanel, "Modifier le nom de la piece", JOptionPane.QUESTION_MESSAGE);
+				if(nom !=null) {
+				pieceactuelle.changerNom(nom);
+				btpiece.elementAt(piece.indexOf(pieceactuelle)).setText(nom);
+				}
+			}
+		});
+		btmodpiece.setBounds(301, 666, 117, 25);
+		objetpanel.add(btmodpiece);
+		
+
+		JMenuBar menuBar = new JMenuBar();
+		frame.setJMenuBar(menuBar);
+		
+		JMenu mnFichier = new JMenu("Fichier");
+		mnFichier.setForeground(new Color(0, 128, 0));
+		menuBar.add(mnFichier);
+		
+		JMenuItem mntmSauvegarder = new JMenuItem("Sauvegarder");
+		mntmSauvegarder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				sauvegarder_fichier();
+			}
+		});
+		mntmSauvegarder.setForeground(new Color(46, 139, 87));
+		mnFichier.add(mntmSauvegarder);
+		
+		JMenuItem mntmImporterFichier = new JMenuItem("Charger sauvegarde");
+		mntmImporterFichier.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				charger_sauvegarde();
+			}
+		});
+		mntmImporterFichier.setForeground(new Color(46, 139, 87));
+		mnFichier.add(mntmImporterFichier);
+		frame.getContentPane().setLayout(null);
+		
+		
+		JLayeredPane layeredPane = new JLayeredPane();
+		layeredPane.setBounds(0, 744, 594, -743); 
+		frame.getContentPane().add(layeredPane);			
+		
+		favorispanel.setBounds(0, 0, 594, 690);
+		frame.getContentPane().add(favorispanel);
+		favorispanel.setLayout(null);
+		favorispanel.setVisible(false);
 	}
-
-
 
 	public void actionPerformed(ActionEvent e) {
 		
@@ -310,55 +415,44 @@ public class Interface implements ActionListener {
 		for(int i=0 ; i< btpiece.size() ; i++) {
 			if(e.getSource() ==  btpiece.elementAt(i) ) {						
 				System.out.println( piece.elementAt(i).getNom());
-				piecepanel.setVisible(false);
 				menupanel.setVisible(false);
-				objetpanel.setVisible(true);				
-				affiche_objet( piece.elementAt(i));
-			    pieceactuelle= piece.elementAt(i);			
+				objetpanel.setVisible(true);
+				piecepanel.setVisible(false);
+
+				affiche_objet( piece.elementAt(i).getObjetPiece(),objetcontent);
+			    pieceactuelle= piece.elementAt(i);	
+				
 				}			
 		}		
-		//action sur les boutons dobjets
+		//action sur les boutons d'objets
 		for( int i=0 ; i< btobjet.size() ; i++) {
-			if(e.getSource() ==  btobjet.elementAt(i) ) {
+			if(e.getSource() ==  btobjet.elementAt(i) ) {		
+				if(pieceactuelle != null) {
 				objetactuel =  pieceactuelle.getObjetPiece().elementAt(i);
-				System.out.println(objetactuel.getNom() );
 				objetpanel.setVisible(false);
 				infobjpanel.setVisible(true);
-				affiche_infos_objet(objetactuel);
-			}	
-			if(e.getSource() ==  btonoff) {
-				
-				objetactuel.AllumerEteindre();
-				
-				if( objetactuel.getSwitch() == false ) {
-					btonoff.setText("off");	
-					btonoff.setBackground(new Color(192, 192, 192));				
 				}
 				
-				if( objetactuel.getSwitch() == true ) {
-					btonoff.setText("on");	
-					btonoff.setBackground(new Color(0, 255, 127));
-				}		
-				objetcontent.revalidate();
-				objetcontent.repaint();
-				infobjpanel.revalidate();
-				infobjpanel.repaint();
-
+				else if (pieceactuelle == null &&  favorispanel.isVisible() )
+				{objetactuel = donnee.ObjetFavoris.elementAt(i);
+				favorispanel.setVisible(false);
+				infobjpanel.setVisible(true);
+				}	
+				
+				else if (pieceactuelle == null &&  listobjpanel.isVisible() ) 
+				{objetactuel = donnee.getObjet().elementAt(i);
+				listobjpanel.setVisible(false);
+				infobjpanel.setVisible(true);
+				}								
 				affiche_infos_objet(objetactuel);
-				System.out.println(objetactuel.getSwitch());
-			}
-	
-			
+			}		
 		}
 	}
-
 
 	public void setBtpiece() {
 		for(int i=0;i<piece.size();i++) {
 			btpiece.add(new JButton( piece.elementAt(i).getNom() ));
-			btpiece.elementAt(i).addActionListener(this);
-	}
-		
+			btpiece.elementAt(i).addActionListener(this);}	
 	} 
 	
 	public void ajout_piece(){ 	
@@ -367,109 +461,150 @@ public class Interface implements ActionListener {
 	    if( nom != null ) {  
 	    piece.add(new Piece(nom,0,null));	 
 	    btpiece.addElement(new JButton(piece.lastElement().getNom()));
-	    btpiece.lastElement().addActionListener(this);
-	    }
+	    btpiece.lastElement().addActionListener(this);}
 	       
 	}
-	
-	
-
 
 	public void affiche_piece(){
-		int x=15,y=100;
+		int x=15,y=10;
+		piececontent.removeAll();
 		
-			
-			for(int i=0;i<btpiece.size();i++){
-				
+			for(int i=0;i<btpiece.size();i++){				
 				btpiece.elementAt(i).setBounds(x, y, 180, 115);
 				btpiece.elementAt(i).setBackground(Color.BLACK);
 				btpiece.elementAt(i).setForeground(Color.LIGHT_GRAY);
-				piecepanel.add(btpiece.elementAt(i));
-				
+				piececontent.add(btpiece.elementAt(i));			
 				if(x >=395 ) {x=15;y+=125;}
-				else x+=190;
-				
-			}	
+				else x+=190;}	
+	}
+	
+	public void affiche_simulateur() {
+		JButton consoj = new JButton("ConsoJour");
+		consoj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {			
+				//affiche la graphe 
+			}
+		});
+		consoj.setBounds(15,100,180,115);
+		consoj.setBackground(Color.BLACK);
+		consoj.setForeground(Color.LIGHT_GRAY);
+		simupanel.add(consoj);
+		
+		JButton consos = new JButton("ConsoSemaine");
+		consos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {			
+				//affiche la graphe 
+			}
+		});
+		consos.setBounds(15,225,180,115);
+		consos.setBackground(Color.BLACK);
+		consos.setForeground(Color.LIGHT_GRAY);
+		simupanel.add(consos);
+		
+		JButton consom = new JButton("ConsoMois");
+		consom.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {			
+				//affiche la graphe 
+			}
+		});
+		consom.setBounds(15,350,180,115);
+		consom.setBackground(Color.BLACK);
+		consom.setForeground(Color.LIGHT_GRAY);
+		simupanel.add(consom);
 	}
 
-
-	public void setBtobjet(Piece p) {
+	public void setBtobjet(Vector<Objet> p) {
 		btobjet.removeAllElements();	
-		for(int i=0; i<p.getObjetPiece().size() ;i++){
-			JButton tmp= new JButton(p.getObjetPiece().elementAt(i).getNom() );
+		for(int i=0; i<p.size() ;i++){
+			JButton tmp= new JButton(p.elementAt(i).getNom() );
 			tmp.addActionListener(this);
-			btobjet.addElement(tmp);	
-		}	
+			btobjet.addElement(tmp); }	
 	}
 
-
-	public void affiche_objet(Piece p){
+	public void affiche_objet(Vector<Objet> p , JPanel pan){
 		int y=10;
-		int h=80;
-		objetcontent.removeAll();
+		int h=40;
 		
-		
-		
-		if ( p.getObjetPiece().isEmpty()  == false ) {
-			System.out.println("Piece non vide");
-					
+		pan.removeAll();		
+		if ( p.isEmpty()  == false ) {				
 			setBtobjet(p);			
 			for(int i=0;i<btobjet.size();i++) {	
-				btobjet.elementAt(i).setBounds(20, y+10, 150, 50);
-				objetcontent.add(btobjet.elementAt(i));
-								
+				btobjet.elementAt(i).setBounds(20, y+5, 150, h-10);
+				pan.add(btobjet.elementAt(i));							
 				Canvas canvas = new Canvas();
 				if(i%2==0)canvas.setBackground(Color.LIGHT_GRAY);
 				else canvas.setBackground(Color.white);		
 				canvas.setBounds(12, y, 540, h);
-				objetcontent.add(canvas);			
-				y += (h+10) ;					
+				pan.add(canvas);			
+				y += (h+5) ;					
 			}
 		}
-		else System.out.println("Piece vide");
-	}
-	
-
-	public Vector<JButton> getBtobjet() {
-		return btobjet;
-		
 	}
 	
 	public void ajout_objet(Piece p) {
-	    String nom = JOptionPane.showInputDialog(piecepanel, "Nom objet :");
-
-		
-	    
-	    if( nom != null ) {  	    	
-	    	p.getObjetPiece().addElement(new Objet(nom,pieceactuelle.getNom(),0,"null",0));
-	    }
-	      
+	    String nom = JOptionPane.showInputDialog(piecepanel, "Nom objet :");	    
+	    if( nom != null ) {
+	    	donnee.getObjet().addElement(new Objet(nom,pieceactuelle.getNom(),0,"null",0));
+	    	ajoutObjetDansPiece(pieceactuelle,nom);} }
+	
+	public void ajoutObjetDansPiece(Piece p,String nom) {	    
+	    if( nom != null ) {p.getObjetPiece().addElement(donnee.getObjet().lastElement());}	      
+	}
+	
+	
+	@SuppressWarnings("static-access")
+	public void ajout_objet_favoris(Objet o) {
+		JOptionPane jop = new JOptionPane();
+		if( !donnee.ObjetFavoris.contains(o) ) {
+		donnee.ObjetFavoris.addElement(o);
+		jop.showMessageDialog(null, "Objet ajouté dans les favoris", "Information", JOptionPane.INFORMATION_MESSAGE);
+		}
+		else {
+		donnee.ObjetFavoris.removeElement(o);
+		jop.showMessageDialog(null, "Objet supprimé des favoris", "Information", JOptionPane.WARNING_MESSAGE);
+		}
 	}
 		
 	public void supprime_objet(Objet o) {
+		
+		donnee.getObjet().remove(o);
 		pieceactuelle.getObjetPiece().remove(o);
 	}
 
 	public void sauvegarder_fichier(){
-		System.out.println("Lancer sauvegarde");
 		
+		System.out.println("Lancer sauvegarde");
+		donnee.ecriture(donnee.NomFichier);		
 	}
 	
+	@SuppressWarnings("static-access")
 	public void charger_sauvegarde(){
+		JOptionPane jop = new JOptionPane();
 		System.out.println("Charger sauvegarde");
+		donnee = new entresortie();
+		donnee.lecture(donnee.NomFichier);
+		
+		if( !donnee.getObjet().isEmpty() ) {		
+		jop.showMessageDialog(menupanel, "Sauvegarde importée", "Information", JOptionPane.INFORMATION_MESSAGE);
+		initpiece(donnee.getObjet());	
+		setBtpiece();
+		AppelAutomatiqueRecuperationConsommation(10);
+		}
+		else jop.showMessageDialog(menupanel, "Erreur lors de l'importation de la sauvegarde", "Information", JOptionPane.WARNING_MESSAGE);
+	}
 	
+	public void AppelAutomatiqueRecuperationConsommation(int s){
+		Timer t = new Timer();
+		t.schedule(new taskSauvegarde(this),1000,1000*s);		
 	}
 
-	public void init_vect_piece(Vector<Piece> vectpiece,int n) {
+	public void affiche_conso_globale(){				
 		
-		for(int i = 0 ; i < n; i++) {
-			vectpiece.add(new Piece("piece"+i,0,null)); 
-			vectpiece.elementAt(i).setObjetpiece(i+1);
-		}   
-		}
+	}
 	
 	public void affiche_infos_objet(Objet o) {
-		infobjcontent.removeAll();
+		
+		infobjcontent.removeAll();		
 		JLabel infobj = new JLabel("Information objet");
 		infobj.setBounds(12,10, 200, 15);
 		infobjcontent.add(infobj);
@@ -486,7 +621,7 @@ public class Interface implements ActionListener {
 		conso.setBounds(12,100, 200, 15);
 		infobjcontent.add(conso);
 		
-		JLabel piece = new JLabel("Piece : "+pieceactuelle.getNom());
+		JLabel piece = new JLabel("Piece : "+ o.getPiece() );
 		piece.setBounds(12,130, 200, 15);
 		infobjcontent.add(piece);
 		
@@ -494,22 +629,20 @@ public class Interface implements ActionListener {
 		priorite.setBounds(12,160, 200, 15);
 		infobjcontent.add(priorite);
 		
-		JLabel etat= new JLabel("Allumé: "+objetactuel.getSwitch());
+		JLabel etat= new JLabel("Allumé: "+ o.getSwitch());
 		etat.setBounds(12,190, 200, 15);
-		infobjcontent.add(etat);
-		
+		infobjcontent.add(etat);		
 	}
-	    
-	public void AfficheObjet(Vector <Objet> objet){
-		for(int i=0;i<objet.size();i++)
-		System.out.println(objet.get(i).NomObjet);			
+
+	public entresortie getDonnee() {
+		return donnee;
 	}
-	    
-	public void AffichePiece(Vector <Piece> piece){
-		for(int i=0;i<piece.size();i++)
-		System.out.println(piece.get(i).getNom());
+
+	public void setDonnee(entresortie donnee) {
+		//reimplementer
+		this.donnee = donnee;
 	}
-	    
+		    
 	public void AfficheConsommationObjet(Objet o){
 		System.out.println("La consommation de cette objet est" + o.Consommation);
 	}
@@ -521,27 +654,23 @@ public class Interface implements ActionListener {
 		}
 		System.out.println("La consommation globale est" + consoG);			
 	}
-
 	   
-
 	public void AjoutObjetDansPiece (){
-
 	}
-	    
-	    
+	    	    
 	public void echanger(String a, String b){
 		String temp;
 		temp=a;
 		a=b;
 		b=temp;
 	}
-
+	
 	public int Partitionner_Objet(Vector <Objet> O, int premier , int dernier , int pivot){
 		echanger(O.elementAt(pivot).getNom(),O.elementAt(dernier).getNom());
 		int j=premier;   
 	    for(int i=premier;i<dernier-1;i++)
 	         {
-	          if (O.elementAt(i).getNom().compareTo(O.elementAt(dernier).getNom())) //je ne comprend l erreur 
+	          if (  O.elementAt(i).getNom().compareTo(O.elementAt(dernier).getNom())  > 0  ) //je ne comprend l erreur 
 	              {
 	              echanger(O.elementAt(i).getNom(),O.elementAt(j).getNom());
 	              j++;
@@ -556,23 +685,20 @@ public class Interface implements ActionListener {
 			int pivot= 0; // par defaut
 			pivot= Partitionner_Objet(O,premier,dernier,pivot);
 			tri_rapide_Objet(O,premier,pivot-1);
-			tri_rapide_Objet(O,pivot+1,dernier);
-		
-		}
-	}
+			tri_rapide_Objet(O,pivot+1,dernier);}}
 	
-	public int Partitionner_Piece(Vector <Piece> O, int premier , int dernier , int pivot){
+	public int Partitionner_Piece(Vector<Piece> O, int premier , int dernier , int pivot){
 		echanger(O.elementAt(pivot).getNom(),O.elementAt(dernier).getNom());
 		int j=premier;   
 	    for(int i=premier;i<dernier-1;i++)
 	         {
-	          if (O.elementAt(i).getNom().compareTo(O.elementAt(dernier).getNom())) //je comprend pas l erreur 
+	          if (O.elementAt(i).getNom().compareTo(O.elementAt(dernier).getNom()) > 0 ) //je comprend pas l erreur 
 	              {
 	              echanger(O.elementAt(i).getNom(),O.elementAt(j).getNom());
 	              j++;
 	              }
-	          }O.
-	         echanger(O.elementAt(dernier).getNom(),O.elementAt(j).getNom());
+	          }
+	         echanger(O.elementAt(dernier).getNom(), O.elementAt(j).getNom() );
 	     return j;
 	}
 	    
@@ -581,13 +707,8 @@ public class Interface implements ActionListener {
 			int pivot= 0; // par defaut
 			pivot= Partitionner_Piece(O,premier,dernier,pivot);
 			tri_rapide_Piece(O,premier,pivot-1);
-			tri_rapide_Piece(O,pivot+1,dernier);
-		
-		}
+			tri_rapide_Piece(O,pivot+1,dernier);}
 	}
-	
-	    
-	    
 	    
 	public boolean test_nom_Objet ( String nomObjet, Vector <Objet> O, int n){
 		for(int i=0;i<n-1;i++){
@@ -602,16 +723,53 @@ public class Interface implements ActionListener {
 		}
 		return false;
 	}
-	    
-	    
-	public void AppelAutomatiqueRecuperationConsommation( entresortie donnee, int temps){
-
-	}
-	  
+  	  
 	public void lancerSimulateur(Simulateur sim){
+		}
 
+	public void init_vect_piece(Vector<Objet> obj) {
+		int t=-1;
+		for(Objet o : obj) {
+			if( piece.isEmpty() ) {
+				piece.add(new Piece(o.getPiece(),0,null));
+				piece.firstElement().getObjetPiece().addElement(o);}
+			else {
+				for(Piece p : piece) {
+					if( o.getPiece().equals(p.getNom())  ) {
+						p.getObjetPiece().add(o);
+						t=1;}
+					else t = 0;
+				}
+			if ( t == 0) {
+				piece.add(new Piece(o.getPiece(),0,null));
+				piece.lastElement().getObjetPiece().addElement(o);
+				}				
+			}
+		}
+		}
+	public void initpiece(Vector<Objet> obj) {
+		for(Objet o : obj) {
+			if( pieceExist(o.getPiece()) == -1 ) {
+				piece.add(new Piece(o.getPiece(),0,null));
+				piece.lastElement().getObjetPiece().add(o);
+			}
+			else if( pieceExist(o.getPiece()) != -1 ) {				
+				piece.elementAt(pieceExist(o.getPiece())).getObjetPiece().add(o);
+			}	
+		}		
+	}
+	
+	public int pieceExist(String nom) {
+		if( piece.isEmpty())return -1;
+		
+		for(Piece p : piece) {
+			if( p.getNom().equals(nom)) return piece.indexOf(p);
+		}		
+	return -1;
 	}
 }
 
 
-*/
+
+
+

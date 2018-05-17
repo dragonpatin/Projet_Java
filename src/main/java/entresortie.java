@@ -1,10 +1,22 @@
+/**
+ * Java source Entrée Sortie
+ */
+
 import java.io.*;
 import java.util.*;
-import java.util.prefs.Preferences;
-import javax.swing.JFileChooser;
+import javax.swing.*;
 
 
 public class entresortie{
+
+    /**
+     * @param NomFichier est l'attribut qui permet de garder en sauvegarde le fichier de sauvegarde des données
+     * @param ObjetFavoris C'est une liste qui permet de garder les objets favoris demandé par l'utilisateur
+     * @param Preference C'est une liste qui permet de sauvegarder toutes les préférences sur chaque objet
+     * @param ConsoJour C'est une liste qui permet de donner la consommation journalière de tous les jours déjà sauvegarder ou en calcule
+     * @param ConsoMois C'est une liste qui permet de donner la consommation de chaque Mois déjà en sauvegarde ou en calcule
+     * @param ConsoSemaine C'est une liste qui permet de donner la consommation de chaque Semaine déjà en sauvegarde ou en calcule
+     */
 
     File NomFichier;
     Vector <Objet> ListeObjet;
@@ -13,6 +25,13 @@ public class entresortie{
     Vector <Integer> ConsoJour;
     Vector <Integer> ConsoMois;
     Vector <Integer> ConsoSemaine;
+
+    /**
+     * C'est le premier constructeur de la classe entresortie.
+     * Il est ici pour créer un fichier avec les différentes disposition de la page qui permettront de le lire et d'écrire correctement
+     * @param nomfichier Il va prendre en paramètre un nom de fichier
+     * @throws IOException Si jamais il y a une erreur dans la création du fichier
+     */
 
     public entresortie(String nomfichier){
         try {
@@ -33,6 +52,12 @@ public class entresortie{
         }
     }
 
+    /**
+     * C'est le deuxième constructeur de la classe entresortie.
+     * Il ne prend aucun paramètre car nous utilisons un JfileChooser qui permet d'ouvrire un Jframe pour choisir son fichier
+     * S'il n'a pas de fichier alors le code s'arrête
+     */
+
     public entresortie(){
         JFileChooser dialogue = new JFileChooser();
         dialogue.showOpenDialog(null);
@@ -45,21 +70,25 @@ public class entresortie{
         this.ConsoJour = new Vector<Integer>();
         this.ConsoMois = new Vector<Integer>();
         this.ConsoSemaine = new Vector<Integer>();
-    }
+        }
+
+    /**
+     * Elle permet de lire le fichier choisi au préalable
+     * @param NomFichier Elle prend en paramètre le fichier en question
+     * Elle va lire le fichier d'une façon bien précise, si le fichier a été modifier ou corrompu de manière délibéré
+     * ou accidentellement alors il ne pourra plus le lire et une erreur apparaitra.
+     */
+
 
     public void lecturefichier(File NomFichier){
         try{
-           // System.out.printf("test");
             String str;
             BufferedReader fichier = new BufferedReader(new FileReader(NomFichier));
             Objet obj = new Objet();
 
             //Création de l'objet de lecture
             while ((str = fichier.readLine()) != null) {
-                //System.out.printf("%s\n",str);
-               // System.out.printf("%d\n",nombrebloc);
                 if(str.equals("#")){
-                    System.out.printf("test1");
                     str = fichier.readLine();
                     String NomObjet = str;
                     str = fichier.readLine();
@@ -80,42 +109,47 @@ public class entresortie{
                 }
 
                 else if (str.equals("+")){
-                    System.out.printf("test2");
                     str = fichier.readLine();
-                    String Nom = str;
-                    str = fichier.readLine();
-                    for(int j=0; j<ListeObjet.size();j++){
-                        if(ListeObjet.elementAt(j).getNom().equals(str)){
-                            obj = ListeObjet.elementAt(j);
+                    if(!(str.equals("-") || str .equals("%") || str.equals("?"))){
+                        String Nom = str;
+                        str = fichier.readLine();
+                        for(int j=0; j<ListeObjet.size();j++){
+                            if(ListeObjet.elementAt(j).getNom().equals(str)){
+                                obj = ListeObjet.elementAt(j);
+                            }
                         }
-                    }
-                    str = fichier.readLine();
-                    int instruction = Integer.parseInt(str);
-                    str = fichier.readLine();
-                    int heure_debut = Integer.parseInt(str);
-                    str = fichier.readLine();
-                    int heure_fin = Integer.parseInt(str);
+                        str = fichier.readLine();
+                        int instruction = Integer.parseInt(str);
+                        str = fichier.readLine();
+                        int heure_debut = Integer.parseInt(str);
+                        str = fichier.readLine();
+                        int heure_fin = Integer.parseInt(str);
 
-                    preference P = new preference(Nom,obj,instruction,heure_debut,heure_fin);
-                    Preference.addElement(P);
+                        preference P = new preference(Nom,obj,instruction,heure_debut,heure_fin);
+                        Preference.addElement(P);
+                    }
+
                 }
 
                 else if(str.equals("-")){
-                    System.out.printf("test3");
                     str = fichier.readLine();
-                    int consojour = Integer.parseInt(str);
-                    ConsoJour.addElement(consojour);
+                    if(!(str .equals("%") || str.equals("?"))){
+                        int consojour = Integer.parseInt(str);
+                        ConsoJour.addElement(consojour);
+                    }
+
                 }
 
                 else if(str.equals("%")){
-                    System.out.printf("test4");
                     str = fichier.readLine();
-                    int consosemaine = Integer.parseInt(str);
-                    ConsoSemaine.addElement(consosemaine);
+                    if(!str.equals("?")){
+                        int consosemaine = Integer.parseInt(str);
+                        ConsoSemaine.addElement(consosemaine);
+                    }
+
                 }
 
                 else if(str.equals("?")){
-                    System.out.printf("test5");
                     str = fichier.readLine();
                     int consomois = Integer.parseInt(str);
                     ConsoMois.addElement(consomois);
@@ -126,6 +160,12 @@ public class entresortie{
             e.printStackTrace();
         }
     }
+
+    /**
+     * Cette fonction permet d'enregistrer le nom du fichier et le fichier en entier dans un string pour pouvoir le modifier a souhait
+     * @param f Elle prends en paramètre le nom du fichier
+     * @return Elle return le string qui contient tout fichier lu
+     */
     public static String enregistre(File f) {
         try {
             BufferedInputStream in = new BufferedInputStream(new FileInputStream(f));
@@ -145,16 +185,18 @@ public class entresortie{
         return null;
     }
 
+    /**
+     * Cette fonction permet d'écrire dans le fichier en temps réel, les modifications effectuées ainsi sur les vecteurs de la classe
+     * en question
+     * @param NomFichier
+     */
     public void ecriture ( File NomFichier){
         String test,fina= "";
 
-        int acc,acc2;
-       // System.out.printf("test = %s\n",test);
+        int acc;
         for(int i =0;i<this.ListeObjet.size();i++) {
             test = enregistre(NomFichier);
             acc = test.indexOf("#");
-            //System.out.println(acc+1);
-           // acc2 = test.indexOf("+");
             String before = test.substring(0, acc+1);
             String after = test.substring(acc+2);
             System.out.println(before);
@@ -176,11 +218,9 @@ public class entresortie{
 
 
         for(int i =0;i<this.Preference.size();i++) {
-            test = enregistre(NomFichier);
             acc = fina.indexOf("+");
-            acc2 = fina.indexOf("-");
             String before = fina.substring(0, acc + 1);
-            String after = fina.substring(acc2);
+            String after = fina.substring(acc+2);
             String code = Preference.elementAt(i).nom +"\n" + Preference.elementAt(i).O.getNom()
                     + "\n" + Preference.elementAt(i).instruction + "\n" + Preference.elementAt(i).heure_debut+"\n"+
                     + Preference.elementAt(i).heure_fin;
@@ -198,11 +238,9 @@ public class entresortie{
         }
 
         for(int i =0;i<this.ConsoJour.size();i++) {
-            test = enregistre(NomFichier);
             acc = fina.indexOf("-");
-            acc2 = fina.indexOf("%");
             String before = fina.substring(0, acc + 1);
-            String after = fina.substring(acc2);
+            String after = fina.substring(acc +2);
             String code = ConsoJour.elementAt(i).toString();
             fina = before + "\n" + code + "\n" + after;
             try {
@@ -217,11 +255,9 @@ public class entresortie{
         }
 
         for(int i =0;i<this.ConsoSemaine.size();i++) {
-            test = enregistre(NomFichier);
             acc = fina.indexOf("%");
-            acc2 = fina.indexOf("?");
             String before = fina.substring(0, acc + 1);
-            String after = fina.substring(acc2);
+            String after = fina.substring(acc +2 );
             String code = ConsoSemaine.elementAt(i).toString();
             fina = before + "\n" + code + "\n" + after;
             try {
@@ -236,7 +272,6 @@ public class entresortie{
         }
 
         for(int i =0;i<this.ConsoMois.size();i++) {
-            test = enregistre(NomFichier);
             acc = fina.indexOf("?");
             String before = fina.substring(0, acc + 1);
             String code = ConsoMois.elementAt(i).toString();
@@ -259,6 +294,14 @@ public class entresortie{
             if(ListeObjet.elementAt(i).equals(obj)){
                 ListeObjet.removeElementAt(i);
                 ListeObjet.addElement(obj);
+                try{
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(this.NomFichier));
+                    writer.write("#"+"\n"+"+"+"\n"+"-"+"\n"+"%"+"\n"+"?");
+                    writer.close();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+                ecriture(this.NomFichier);
             }
         }
     }
@@ -271,6 +314,14 @@ public class entresortie{
             if(Preference.elementAt(i).equals(pref)){
                 Preference.removeElementAt(i);
                 Preference.addElement(pref);
+                try{
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(this.NomFichier));
+                    writer.write("#"+"\n"+"+"+"\n"+"-"+"\n"+"%"+"\n"+"?");
+                    writer.close();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+                ecriture(this.NomFichier);
             }
         }
     }
@@ -316,16 +367,14 @@ public class entresortie{
         return this.ConsoSemaine;
     }
 
-    public static void main(String [] args)
-    {
-        entresortie E = new entresortie("test");
+    public static void main(String [] args){
+        entresortie E = new entresortie();
         Objet test = new Objet( "lampe","chambre", 45, "5462745627", 3);
         Objet low = new Objet( "test","romm", 45, "5462745627", 3);
         E.ListeObjet.addElement(test);
         E.ListeObjet.addElement(low);
         E.ecriture(E.NomFichier);
-        //entresortie E = new entresortie();
-        //E.lecturefichier(E.NomFichier);
-        //E.ecriture(E.NomFichier);
+        low.ModifiePieceMaison("toilette");
+        E.modifieObjet(E.ListeObjet,low);
     }
 }
