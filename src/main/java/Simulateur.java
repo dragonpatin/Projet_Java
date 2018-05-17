@@ -258,84 +258,108 @@ public class Simulateur{
 
                     if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 1 )%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 1)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[0] += ConsommationObjet.get(t);
+                            objet.get(t).AllumerEteindre();
+                            Tab[0] += objet.get(t).Consommation;
+                            objet.get(t).AllumerEteindre();
                         } else {
                             Tab[0] -= ConsommationObjet.get(t);
                         }
                     }
                     if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 2)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 2)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[1] += ConsommationObjet.get(t);
+                            objet.get(t).AllumerEteindre();
+                            Tab[1] += objet.get(t).Consommation;
+                            objet.get(t).AllumerEteindre();
                         } else {
                             Tab[1] -= ConsommationObjet.get(t);
                         }
                     }
                     if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 3)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 3)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[2] += ConsommationObjet.get(t);
+                            objet.get(t).AllumerEteindre();
+                            Tab[2] += objet.get(t).Consommation;
+                            objet.get(t).AllumerEteindre();
                         } else {
                             Tab[2] -= ConsommationObjet.get(t);
                         }
                     }
                     if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 4)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 4)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[3] += ConsommationObjet.get(t);
+                            objet.get(t).AllumerEteindre();
+                            Tab[3] += objet.get(t).Consommation;
+                            objet.get(t).AllumerEteindre();
                         } else {
                             Tab[3] -= ConsommationObjet.get(t);
                         }
                     }
                     if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 5)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 5)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[4] += ConsommationObjet.get(t);
+                            objet.get(t).AllumerEteindre();
+                            Tab[4] += objet.get(t).Consommation;
+                            objet.get(t).AllumerEteindre();
                         } else {
                             Tab[4] -= ConsommationObjet.get(t);
                         }
                     }
                     if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 6)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 6)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[5] += ConsommationObjet.get(t);
+                            objet.get(t).AllumerEteindre();
+                            Tab[5] += objet.get(t).Consommation;
+                            objet.get(t).AllumerEteindre();
                         } else {
                             Tab[5] -= ConsommationObjet.get(t);
                         }
                     }
                     if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 7)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 7)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[6] += ConsommationObjet.get(t);
+                            objet.get(t).AllumerEteindre();
+                            Tab[6] += objet.get(t).Consommation;
+                            objet.get(t).AllumerEteindre();
                         } else {
                             Tab[6] -= ConsommationObjet.get(t);
                         }
                     }
                     if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 8)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 8)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[7] += ConsommationObjet.get(t);
+                            objet.get(t).AllumerEteindre();
+                            Tab[7] += objet.get(t).Consommation;
+                            objet.get(t).AllumerEteindre();
                         } else {
                             Tab[7] -= ConsommationObjet.get(t);
                         }
                     }
                     if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 9)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 9)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[8] += ConsommationObjet.get(t);
+                            objet.get(t).AllumerEteindre();
+                            Tab[8] += objet.get(t).Consommation;
+                            objet.get(t).AllumerEteindre();
                         } else {
                             Tab[8] -= ConsommationObjet.get(t);
                         }
                     }
                     if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 10)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 10)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[9] += ConsommationObjet.get(t);
+                            objet.get(t).AllumerEteindre();
+                            Tab[9] += objet.get(t).Consommation;
+                            objet.get(t).AllumerEteindre();
                         } else {
                             Tab[9] -= ConsommationObjet.get(t);
                         }
                     }
                     if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 11)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 11)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[10] += ConsommationObjet.get(t);
+                            objet.get(t).AllumerEteindre();
+                            Tab[10] += objet.get(t).Consommation;
+                            objet.get(t).AllumerEteindre();
                         } else {
                             Tab[10] -= ConsommationObjet.get(t);
                         }
                     }
                     if ((pref.get(i).getHeuredebut() <= (Newdate.get(Calendar.HOUR_OF_DAY) + 12)%24) && (pref.get(i).getHeureFin() > (Newdate.get(Calendar.HOUR_OF_DAY) + 12)%24)) {
                         if ((pref.get(i).getInstruction() == 0)) {
-                            Tab[11] += ConsommationObjet.get(t);
+                            objet.get(t).AllumerEteindre();
+                            Tab[11] += objet.get(t).Consommation;
+                            objet.get(t).AllumerEteindre();
                         } else {
                             Tab[11] -= ConsommationObjet.get(t);
                         }
