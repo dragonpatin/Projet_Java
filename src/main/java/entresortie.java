@@ -191,6 +191,13 @@ public class entresortie{
      * @param NomFichier
      */
     public void ecriture ( File NomFichier){
+        try{
+            BufferedWriter writer = new BufferedWriter(new FileWriter(this.NomFichier));
+            writer.write("#"+"\n"+"+"+"\n"+"-"+"\n"+"%"+"\n"+"?");
+            writer.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
         String test,fina= "";
 
         int acc;
