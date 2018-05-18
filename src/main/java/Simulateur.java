@@ -10,6 +10,12 @@ import java.net.*;
 import static java.lang.System.exit;
 import static java.lang.Thread.sleep;
 
+/**
+ * Classe Simulateur
+ * Il gére les objets.
+ * Utilisation de consoMois, ConsoJour, ConsoSemaine : Il est conseiller de faire appel au 3 pour la sauvegarde
+ * Pour le module interface Il faut demandé les 3 et utilisé la fonction rechercheDateHeure pour mettre à jour le temps
+ */
 public class Simulateur{
     private float prixHeureCreuse; //Modifie
     private float prixHeurePic;     //Modifier
@@ -21,6 +27,11 @@ public class Simulateur{
     private Vector<Objet> objet;
     private int temperatureExterieur;
 
+    /**
+     * Constructeur de la slasse Simulateur
+     * Initialisation de la classe simulateur
+     * @param e La classe entresortie : elle contient tout les objets et les preférences.
+     */
     public Simulateur( entresortie e){
         //initialisation de tout.
         this.S = e;
@@ -28,8 +39,14 @@ public class Simulateur{
         this.objet = new Vector<Objet>();
         this.consommationTotale = 0;
         rechercheDateHeure();
-        consommationTotale = 1000;
+        consommationTotale = 0;
     }
+
+    /**
+     * Recherche Sur internet le prix de l'electricité chez edf avec une puissance de 9 kWa.
+     * Il recupére le prix en heure creuse et heure de pointe
+     * @throws IOException Exception lancé s'il y a une erreur lors de la connexion au site Web
+     */
     public void recherchePrix () throws IOException {
         prixHeureCreuse = 0;
         prixHeurePic = 0 ;
@@ -108,21 +125,41 @@ public class Simulateur{
         conn.disconnect();
     }
 
+    /**
+     * Calcul La consommation de tout les objets.
+     * Il utilise le vecteur Consommation qui contient la consommation de chaque objets.
+     */
     public void calculConsommation (){
         consommationTotale = 0;
         for(int i = 0;i<ConsommationObjet.size();i++){
             consommationTotale += ConsommationObjet.get(i) ;
         }
     }
+
+    /**
+     * Recupére les objets dans la classe entresortie pour être ajour.
+     */
     public void recupereObjet (){
         objet = S.getObjet();
     }
+
+    /**
+     * On réinitialise le vecteur ConsommationObjet puis nous récupérons la consommation de
+     * chaque objet que nous stockons dans ConsommationObjet.
+     */
     public void miseAJourObjet (){
+        rechercheDateHeure();
         ConsommationObjet.clear();
         for(int i = 0;i<objet.size();i++){
             ConsommationObjet.add(objet.get(i).getConsommation());
         }
     }
+
+    /**
+     * Explication rapide : Nous trions les objets en fonction de leur consommation.
+     * Ensuite Nous Parcourons Chaque priotité de 0 à 4 et Nous éteignons tout les objets jusqu'a ce que la ConsommationTotal soit inferieur à ConsoMax
+     * @param ConsoMax Entier qui représente la limite a ne pas dépasser
+     */
     public void ExtinctionAutomatique (int ConsoMax){
             consommationANePasDepasser = ConsoMax;
             Vector<Objet> tmp = new Vector<Objet>();
@@ -166,6 +203,12 @@ public class Simulateur{
             }
         }
     }
+
+    /**
+     * Récupére la température Extérieur ressentie a Versailles
+     * @throws JAXBException Necesaire pour le fonctionnement de la bibliothèque
+     * @throws IOException Exeption
+     */
     public void recupereTemperatureExt () throws JAXBException, IOException {
         YahooWeatherService service = null;
         try {
@@ -178,37 +221,85 @@ public class Simulateur{
         assert channel != null;
         temperatureExterieur = channel.getItem().getCondition().getTemp();
     }
+
+    /**
+     * Récupére la date au moment t. Il récupére La date et l'heure
+     */
     public void rechercheDateHeure (){
         date = new GregorianCalendar();
     }
     //public Vector getConsommation (){
     //    return null;
     //}
+
+    /**
+     * Retourne Le rpix en heure creuse de edf
+     * @return le prix en heure creuse
+     */
     public Float getPrixHC (){
         return prixHeureCreuse;
     }
+
+    /**
+     * Retourne Le prix en heure de pic de edf
+     * @return le prix en heure de pic de consommation
+     */
     public Float getPrixHP (){
         return prixHeurePic;
     }
+
+    /**
+     *
+     * @return La consommation a ne pas dépasser
+     */
     public int ConsommationANePasDepasser ( ){
         return consommationANePasDepasser;
     }
+
+    /**
+     * Somme de la consommation de tout les objets
+     * @return La consommation totale des objets actuellement
+     */
     public int consommationTotale (){
         return consommationTotale;
     }
 
+    /**
+     *
+     * @return La date ou le Simulateur a recupérer la conommation des objets
+     */
     public Calendar getDate (){
         return date;
     }
+
+    /**
+     *
+     * @return Retourne le vecteur qui contient la consommation de tout les Objets
+     */
     public Vector ConsommationObjet (){
         return ConsommationObjet;
     }
+
+    /**
+     *
+     * @return retourne la température extérieur de Versailles
+     */
     public int getTemperatureExt (){
         return temperatureExterieur;
     }
+
+    /**
+     *
+     * @return Le vector objet contenant les Objets
+     */
     public Vector getObjet (){
         return objet;
     }
+
+    /**
+     * On récupére la consommation avec la classe engtresortie, on le met à jour avec la consommation actuelle puis grâce au préférence de l'utilisateur et de la consommation actuelle nous fesaont une simulation sur 12h
+     * @return La consommation heure par heure avec 12 heures de simualtion + les anciennes donné sauvegarde
+     */
     public Vector consoJour (){
         Calendar Newdate = Calendar.getInstance();
         Vector<Integer> Conso = S.consoJour();
@@ -407,9 +498,13 @@ public class Simulateur{
         }
         for(int i = 0 ;i<12;i++)
             Conso.add(Tab[i]);
-        date = Newdate;
         return Conso;
     }
+
+    /**
+     * On récupére la consommation avec la classe engtresortie, on le met à jour avec la consommation actuelle
+     * @return La consomation des mois
+     */
     public Vector ConsoMois (){
         Calendar Newdate = Calendar.getInstance();
         Vector<Integer> Conso = S.consoMois();
@@ -437,9 +532,13 @@ public class Simulateur{
             }
             Conso.add(tmp+(consommationTotale/minute));
         }
-        date = Newdate;
         return Conso;
     }
+
+    /**
+     * On récupére la consommation avec la classe engtresortie, on le met à jour avec la consommation actuelle
+     * @return La consomation des mois
+     */
     public Vector ConsoSemaine (){
         Calendar Newdate = Calendar.getInstance();
         Vector<Integer> Conso = S.consoSemaine();
@@ -465,7 +564,6 @@ public class Simulateur{
             }
             Conso.add(tmp+(consommationTotale/minute));
         }
-        date = Newdate;
         return Conso;
     }
 
@@ -499,6 +597,7 @@ public class Simulateur{
             System.out.println(S.ConsoMois());
             System.out.println(S.ConsoSemaine());
             System.out.println(S.consoJour());
+            S.rechercheDateHeure();
             System.out.println();
             S.ExtinctionAutomatique(1000);
             try {

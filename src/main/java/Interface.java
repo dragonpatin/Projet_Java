@@ -1,4 +1,5 @@
-import java.awt.Color; 
+
+import java.awt.Color;
 import java.lang.Integer;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -768,7 +769,6 @@ public class Interface implements ActionListener {
 	return -1;
 	}
 }
-
 
 
 
