@@ -583,7 +583,7 @@ public class Interface implements ActionListener {
 		JOptionPane jop = new JOptionPane();
 		System.out.println("Charger sauvegarde");
 		donnee = new entresortie();
-		donnee.lecture(donnee.NomFichier);
+		donnee.lecturefichier(donnee.NomFichier);
 		
 		if( !donnee.getObjet().isEmpty() ) {		
 		jop.showMessageDialog(menupanel, "Sauvegarde importée", "Information", JOptionPane.INFORMATION_MESSAGE);
