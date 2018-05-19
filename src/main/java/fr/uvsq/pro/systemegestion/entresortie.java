@@ -59,10 +59,10 @@ public class entresortie{
      */
 
     public entresortie(){
-        //JFileChooser dialogue = new JFileChooser();
-        //dialogue.showOpenDialog(null);
-        //System.out.println("Fichier choisi : " + dialogue.getSelectedFile());
-        //this.NomFichier = dialogue.getSelectedFile();
+        JFileChooser dialogue = new JFileChooser();
+        dialogue.showOpenDialog(null);
+        System.out.println("Fichier choisi : " + dialogue.getSelectedFile());
+        this.NomFichier = dialogue.getSelectedFile();
 
         this.ListeObjet = new Vector<Objet>();
         this.ObjetFavoris = new Vector<Objet>();
