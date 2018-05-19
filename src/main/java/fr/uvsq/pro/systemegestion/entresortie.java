@@ -215,38 +215,66 @@ public class entresortie{
         String test,fina= "";
 
         int acc;
-        for(int i =0;i<this.ListeObjet.size();i++) {
-            test = enregistre(NomFichier);
-            acc = test.indexOf("#");
-            String before = test.substring(0, acc+1);
-            String after = test.substring(acc+2);
-            System.out.println(before);
-            System.out.println(after);
-            String code = ListeObjet.elementAt(i).NomObjet +"\n" + ListeObjet.elementAt(i).PieceMaison + "\n"
-                    + ListeObjet.elementAt(i).Consommation + "\n" + ListeObjet.elementAt(i).AdresseMAC + "\n"
-                    + ListeObjet.elementAt(i).Priorite;
-            fina = before + "\n" + code + "\n" + after;
-            try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter(NomFichier));
-                writer.write(fina);
-                writer.close();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
 
+        for(int i =0;i<this.ListeObjet.size();i++) {
+                test = enregistre(NomFichier);
+                if(i==this.ListeObjet.size()-1){
+                    acc = test.indexOf("#");
+                    String before = test.substring(0, acc + 1);
+                    String after = test.substring(acc + 2);
+                    System.out.println(before);
+                    System.out.println(after);
+
+                    String code = ListeObjet.elementAt(i).NomObjet + "\n" + ListeObjet.elementAt(i).PieceMaison + "\n"
+                            + ListeObjet.elementAt(i).Consommation + "\n" + ListeObjet.elementAt(i).AdresseMAC + "\n"
+                            + ListeObjet.elementAt(i).Priorite;
+                    fina = before + "\n" + code + "\n" + after;
+                }
+                else {
+                    acc = test.indexOf("#");
+                    String before = test.substring(0, acc + 1);
+                    String after = test.substring(acc + 2);
+                    System.out.println(before);
+                    System.out.println(after);
+
+                    String code = "#" + "\n" + ListeObjet.elementAt(i).NomObjet + "\n" + ListeObjet.elementAt(i).PieceMaison + "\n"
+                            + ListeObjet.elementAt(i).Consommation + "\n" + ListeObjet.elementAt(i).AdresseMAC + "\n"
+                            + ListeObjet.elementAt(i).Priorite;
+                    fina = before + "\n" + code + "\n" + after;
+                }
+                try {
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(NomFichier));
+                    writer.write(fina);
+                    writer.close();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
 
         for(int i =0;i<this.Preference.size();i++) {
-            acc = fina.indexOf("+");
-            String before = fina.substring(0, acc + 1);
-            String after = fina.substring(acc+2);
-            String code = Preference.elementAt(i).nom +"\n" + Preference.elementAt(i).O.getNom()
-                    + "\n" + Preference.elementAt(i).instruction + "\n" + Preference.elementAt(i).heure_debut+"\n"+
-                    + Preference.elementAt(i).heure_fin;
+            test = enregistre(NomFichier);
+            if(i==this.Preference.size()-1) {
+                acc = test.indexOf("+");
+                String before = fina.substring(0, acc + 1);
+                String after = fina.substring(acc + 2);
+                String code = Preference.elementAt(i).nom + "\n" + Preference.elementAt(i).O.getNom()
+                        + "\n" + Preference.elementAt(i).instruction + "\n" + Preference.elementAt(i).heure_debut + "\n" +
+                        +Preference.elementAt(i).heure_fin;
 
-            fina = before + "\n" + code + "\n" + after;
+                fina = before + "\n" + code + "\n" + after;
+            }
+            else{
+                acc = test.indexOf("+");
+                String before = fina.substring(0, acc + 1);
+                String after = fina.substring(acc + 2);
+                String code = "+" + "\n" +Preference.elementAt(i).nom + "\n" + Preference.elementAt(i).O.getNom()
+                        + "\n" + Preference.elementAt(i).instruction + "\n" + Preference.elementAt(i).heure_debut + "\n" +
+                        +Preference.elementAt(i).heure_fin;
+
+                fina = before + "\n" + code + "\n" + after;
+            }
             try {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(NomFichier));
                 writer.write(fina);
@@ -259,11 +287,21 @@ public class entresortie{
         }
 
         for(int i =0;i<this.ConsoJour.size();i++) {
-            acc = fina.indexOf("-");
-            String before = fina.substring(0, acc + 1);
-            String after = fina.substring(acc +2);
-            String code = ConsoJour.elementAt(i).toString();
-            fina = before + "\n" + code + "\n" + after;
+            test = enregistre(NomFichier);
+            if(i==this.ConsoJour.size()-1) {
+                acc = test.indexOf("-");
+                String before = fina.substring(0, acc + 1);
+                String after = fina.substring(acc + 2);
+                String code = ConsoJour.elementAt(i).toString();
+                fina = before + "\n" + code + "\n" + after;
+            }
+            else{
+                acc = test.indexOf("-");
+                String before = fina.substring(0, acc + 1);
+                String after = fina.substring(acc + 2);
+                String code = "-" + "\n" + ConsoJour.elementAt(i).toString();
+                fina = before + "\n" + code + "\n" + after;
+            }
             try {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(NomFichier));
                 writer.write(fina);
@@ -276,11 +314,21 @@ public class entresortie{
         }
 
         for(int i =0;i<this.ConsoSemaine.size();i++) {
-            acc = fina.indexOf("%");
-            String before = fina.substring(0, acc + 1);
-            String after = fina.substring(acc +2 );
-            String code = ConsoSemaine.elementAt(i).toString();
-            fina = before + "\n" + code + "\n" + after;
+            test = enregistre(NomFichier);
+            if (i == this.ConsoSemaine.size() - 1) {
+                acc = test.indexOf("%");
+                String before = fina.substring(0, acc + 1);
+                String after = fina.substring(acc + 2);
+                String code = ConsoSemaine.elementAt(i).toString();
+                fina = before + "\n" + code + "\n" + after;
+            }
+            else {
+                acc = test.indexOf("%");
+                String before = fina.substring(0, acc + 1);
+                String after = fina.substring(acc + 2);
+                String code = "%" + "\n" + ConsoSemaine.elementAt(i).toString();
+                fina = before + "\n" + code + "\n" + after;
+            }
             try {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(NomFichier));
                 writer.write(fina);
@@ -293,10 +341,19 @@ public class entresortie{
         }
 
         for(int i =0;i<this.ConsoMois.size();i++) {
-            acc = fina.indexOf("?");
-            String before = fina.substring(0, acc + 1);
-            String code = ConsoMois.elementAt(i).toString();
-            fina = before + "\n" + code + "\n";
+            test = enregistre(NomFichier);
+            if(i==this.ConsoMois.size()-1) {
+                acc = test.indexOf("?");
+                String before = fina.substring(0, acc + 1);
+                String code = ConsoMois.elementAt(i).toString();
+                fina = before + "\n" + code + "\n";
+            }
+            else{
+                acc = test.indexOf("?");
+                String before = fina.substring(0, acc + 1);
+                String code = "?" + "\n" + ConsoMois.elementAt(i).toString();
+                fina = before + "\n" + code + "\n";
+            }
             try {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(NomFichier));
                 writer.write(fina);
@@ -309,19 +366,12 @@ public class entresortie{
         }
     }
 
-    public void modifieObjet ( Vector ListeObjet,Objet obj ){
+    public void modifieObjet (Objet obj ){
         // UTILISE LES FONCTIONS DANS OBJET
         for(int i =0 ; i<ListeObjet.size();i++){
             if(ListeObjet.elementAt(i).equals(obj)){
                 ListeObjet.removeElementAt(i);
                 ListeObjet.addElement(obj);
-                try{
-                    BufferedWriter writer = new BufferedWriter(new FileWriter(this.NomFichier));
-                    writer.write("#"+"\n"+"+"+"\n"+"-"+"\n"+"%"+"\n"+"?");
-                    writer.close();
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
                 ecriture(this.NomFichier);
             }
         }
@@ -349,7 +399,7 @@ public class entresortie{
     public void modifiePiece(Vector ListeObjet){
             //un utilité ?
     }
-    public Vector getObjet (){
+    public Vector<Objet> getObjet (){
         return ListeObjet;
     }
     public int getConsommation (){

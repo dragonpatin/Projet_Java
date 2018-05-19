@@ -67,6 +67,7 @@
           <includes>
             <!-- Ajouté vos fichiers Test ICI -->
             <include>**/SimulateurTest.java</include>
+            <include>**/test.java</include>
           </includes>
         </configuration>
       </plugin>

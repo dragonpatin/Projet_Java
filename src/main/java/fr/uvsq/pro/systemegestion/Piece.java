@@ -6,7 +6,7 @@ public class Piece{
     Simulateur S;
     int etage;
     int NombreObjet;
-    Vector ObjetPiece;
+    Vector <Objet> ObjetPiece;
     int consoPiece;
 
 
@@ -15,34 +15,34 @@ public class Piece{
     }
 
 
-    void changerNom( String n){
+    public void changerNom( String n){
 
     }
-    void changerEtage(int e){
+    public void changerEtage(int e){
 
     }
-    void calculConsoPiece (){
+    public void calculConsoPiece (){
 
     }
-    void ajoutObjet(Objet O){
+    public void ajoutObjet(Objet O){
 
     }
-    void SupprimerObjet(Objet O){
+    public void SupprimerObjet(Objet O){
 
     }
-    int  getEtage (){
+    public int  getEtage (){
         return 0;
     }
-    int  NombreObjet (){
+    public int  NombreObjet (){
         return 0;
     }
-    Vector getObjetPiece (){
-        return null;
+    public Vector getObjetPiece (){
+        return ObjetPiece;
     }
-    int getConsoPiece (){
+    public int getConsoPiece (){
         return 0;
     }
-    String getNom(){
+    public String getNom(){
         return null;
     }
 }

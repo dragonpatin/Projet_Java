@@ -37,7 +37,7 @@ public class Interface implements ActionListener {
 	private Vector<Objet> objets = new Vector<Objet>();
 	private Vector<Objet> objets_favoris = new Vector<Objet>(); 
 	private Piece pieceactuelle;	
-	private Objet objetactuel;
+	private Objet objetactuel = new Objet();
 	private entresortie donnee;
 		
 	public static void main(String[] args){
@@ -195,8 +195,10 @@ public class Interface implements ActionListener {
 		btmodifnom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nom = JOptionPane.showInputDialog(piecepanel, "Changer le nom de l'objet", JOptionPane.QUESTION_MESSAGE);
+				System.out.println("\n"+"nom objet :"+ objetactuel.getNom()+"\n");
 				if( nom != null) {
 				objetactuel.ModifieNomObjet(nom);
+				donnee.modifieObjet(objetactuel);
 				infobjcontent.revalidate();
 				infobjcontent.repaint();
 				affiche_infos_objet(objetactuel);
@@ -433,10 +435,9 @@ public class Interface implements ActionListener {
 				favorispanel.setVisible(false);
 				infobjpanel.setVisible(true);
 				}	
-				
+
 				else if (pieceactuelle == null &&  listobjpanel.isVisible() ) 
-				{
-				    //objetactuel = donnee.getObjet().elementAt(i);
+				{ objetactuel = donnee.getObjet().elementAt(i);
 				listobjpanel.setVisible(false);
 				infobjpanel.setVisible(true);
 				}								
@@ -562,9 +563,12 @@ public class Interface implements ActionListener {
 	}
 		
 	public void supprime_objet(Objet o) {
-		
-		donnee.getObjet().remove(o);
-		pieceactuelle.getObjetPiece().remove(o);
+		for(int i=0;i<donnee.getObjet().size();i++){
+			if(o.equals(donnee.getObjet().elementAt(i))){
+				donnee.getObjet().removeElementAt(i);
+			}
+		}
+		//pieceactuelle.getObjetPiece().remove(o);
 	}
 
 	public void sauvegarder_fichier(){
