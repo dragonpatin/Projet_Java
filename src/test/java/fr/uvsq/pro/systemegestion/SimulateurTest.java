@@ -23,8 +23,8 @@ public class SimulateurTest{
 
     @Before
     public void Initialisation(){
-        E = new entresortie();
-        E2 = new entresortie();
+        E = new entresortie(true);
+        E2 = new entresortie(true);
         E.lecturefichier(new java.io.File("TestSimulateur1"));
         E2.lecturefichier(new java.io.File("TestSimulateur3"));
 

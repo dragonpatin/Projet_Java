@@ -56,6 +56,7 @@
               <mainClass>fr.uvsq.pro.systemegestion.Interface</mainClass>
             </manifest>
           </archive>
+          <outputDirectory>${basedir}/</outputDirectory>
         </configuration>
       </plugin>
       <plugin>
@@ -67,6 +68,23 @@
             <!-- Ajouté vos fichiers Test ICI -->
             <include>**/SimulateurTest.java</include>
           </includes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <!-- Build an executable JAR -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${basedir}/</directory>
+              <includes>
+                <include>*.jar</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+          </filesets>
         </configuration>
       </plugin>
     </plugins>

@@ -73,6 +73,20 @@ public class entresortie{
         }
 
     /**
+     * C'est le troisième constructeur de la classe entresortie.
+     * Celui ci est utilisé uniquement pour les tests.
+     * Il initialise toute les variables sauf NomFichier qui sera transmis plus tard par les tests
+     */
+    public entresortie(boolean b){
+        this.ListeObjet = new Vector<Objet>();
+        this.ObjetFavoris = new Vector<Objet>();
+        this.Preference = new Vector<preference>();
+        this.ConsoJour = new Vector<Integer>();
+        this.ConsoMois = new Vector<Integer>();
+        this.ConsoSemaine = new Vector<Integer>();
+    }
+
+    /**
      * Elle permet de lire le fichier choisi au préalable
      * @param NomFichier Elle prend en paramètre le fichier en question
      * Elle va lire le fichier d'une façon bien précise, si le fichier a été modifier ou corrompu de manière délibéré

@@ -423,7 +423,7 @@ public class Interface implements ActionListener {
 		for( int i=0 ; i< btobjet.size() ; i++) {
 			if(e.getSource() ==  btobjet.elementAt(i) ) {		
 				if(pieceactuelle != null) {
-				objetactuel =  pieceactuelle.getObjetPiece().elementAt(i);
+				//objetactuel =  pieceactuelle.getObjetPiece().elementAt(i);
 				objetpanel.setVisible(false);
 				infobjpanel.setVisible(true);
 				}
@@ -436,7 +436,7 @@ public class Interface implements ActionListener {
 				
 				else if (pieceactuelle == null &&  listobjpanel.isVisible() ) 
 				{
-					objetactuel = donnee.getObjet().elementAt(i);
+				    //objetactuel = donnee.getObjet().elementAt(i);
 				listobjpanel.setVisible(false);
 				infobjpanel.setVisible(true);
 				}								
