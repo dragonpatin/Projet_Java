@@ -1,3 +1,4 @@
+package fr.uvsq.pro.systemegestion;
 public class preference {
      String nom ;
      Objet O;

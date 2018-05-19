@@ -1,3 +1,4 @@
+package fr.uvsq.pro.systemegestion;
 import java.text.*;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
@@ -118,24 +119,5 @@ public class Objet{
 
     public boolean getSwitch(){
         return this.Switch;
-    }
-
-    public static void main(String [] args) throws InterruptedException {
-        Objet lampe = new Objet("lampe", "Cuisine", 10, "AB:12:CD:34:OP", 0);
-        System.out.println("Objet : " + lampe.getNom() + " Piece : " + lampe.getPiece() + " Conso : " + lampe.getConsommation() + " AdresseMAC : " + lampe.getadresseMAC() + " Priorité : " + lampe.getPriorite());
-        System.out.println("Durée : " + lampe.getDuree_utilisation());
-        System.out.println(lampe.Switch);
-
-        lampe.AllumerEteindre();
-        System.out.println(lampe.Switch);
-        System.out.println(lampe.getConsommation());
-        System.out.println(lampe.getDuree_utilisation() + " min");
-
-        //TimeUnit.MINUTES.sleep(1);  //wait de 1 minute
-
-        lampe.AllumerEteindre();
-        System.out.println(lampe.Switch);
-        System.out.println(lampe.getDuree_utilisation() + " min");
-
     }
 }

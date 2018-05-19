@@ -1,3 +1,4 @@
+package fr.uvsq.pro.systemegestion;
 public class CapteurTemperature extends Objet{
 
     protected int temperature;

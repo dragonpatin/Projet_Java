@@ -1,7 +1,7 @@
 /**
  * Java source Entrée Sortie
  */
-
+package fr.uvsq.pro.systemegestion;
 import java.io.*;
 import java.util.*;
 import javax.swing.*;
@@ -59,10 +59,10 @@ public class entresortie{
      */
 
     public entresortie(){
-        JFileChooser dialogue = new JFileChooser();
-        dialogue.showOpenDialog(null);
-        System.out.println("Fichier choisi : " + dialogue.getSelectedFile());
-        this.NomFichier = dialogue.getSelectedFile();
+        //JFileChooser dialogue = new JFileChooser();
+        //dialogue.showOpenDialog(null);
+        //System.out.println("Fichier choisi : " + dialogue.getSelectedFile());
+        //this.NomFichier = dialogue.getSelectedFile();
 
         this.ListeObjet = new Vector<Objet>();
         this.ObjetFavoris = new Vector<Objet>();
@@ -374,14 +374,5 @@ public class entresortie{
         return this.ConsoSemaine;
     }
 
-    public static void main(String [] args){
-        entresortie E = new entresortie();
-        Objet test = new Objet( "lampe","chambre", 45, "5462745627", 3);
-        Objet low = new Objet( "test","romm", 45, "5462745627", 3);
-        E.ListeObjet.addElement(test);
-        E.ListeObjet.addElement(low);
-        E.ecriture(E.NomFichier);
-        low.ModifiePieceMaison("toilette");
-        E.modifieObjet(E.ListeObjet,low);
-    }
+
 }

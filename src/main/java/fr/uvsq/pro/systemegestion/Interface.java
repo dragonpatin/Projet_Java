@@ -1,4 +1,4 @@
-
+package fr.uvsq.pro.systemegestion;
 import java.awt.Color;
 import java.lang.Integer;
 import javax.swing.JButton;
@@ -6,12 +6,6 @@ import javax.swing.JFrame;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -429,7 +423,7 @@ public class Interface implements ActionListener {
 		for( int i=0 ; i< btobjet.size() ; i++) {
 			if(e.getSource() ==  btobjet.elementAt(i) ) {		
 				if(pieceactuelle != null) {
-				objetactuel =  pieceactuelle.getObjetPiece().elementAt(i);
+				//objetactuel =  pieceactuelle.getObjetPiece().elementAt(i);
 				objetpanel.setVisible(false);
 				infobjpanel.setVisible(true);
 				}
@@ -441,7 +435,8 @@ public class Interface implements ActionListener {
 				}	
 				
 				else if (pieceactuelle == null &&  listobjpanel.isVisible() ) 
-				{objetactuel = donnee.getObjet().elementAt(i);
+				{
+				    //objetactuel = donnee.getObjet().elementAt(i);
 				listobjpanel.setVisible(false);
 				infobjpanel.setVisible(true);
 				}								

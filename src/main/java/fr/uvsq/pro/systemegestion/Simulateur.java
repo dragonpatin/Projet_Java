@@ -1,7 +1,7 @@
+package fr.uvsq.pro.systemegestion;
 import com.github.fedy2.weather.YahooWeatherService;
 import com.github.fedy2.weather.data.Channel;
 import com.github.fedy2.weather.data.unit.DegreeUnit;
-
 import javax.xml.bind.JAXBException;
 import java.util.*;
 import java.io.*;
@@ -186,18 +186,12 @@ public class Simulateur{
         objet = tmp;
         ConsommationObjet = tmpConsoO;
             //Tant que la consommation est supérieur
-
-        for(int i = 0;i<objet.size();i++){
-            System.out.println(objet.get(i).getNom());
-        }
         for(int j = 0;j<=3;j++) {
             int i =0;
             while (consommationTotale >= consommationANePasDepasser && i < objet.size()) {
                 if (ConsommationObjet.get(i) != 0 && objet.get(i).getPriorite() == j) {
-                    System.out.println(consommationTotale+ " "+j);
                     consommationTotale -= ConsommationObjet.get(i);
                     objet.get(i).AllumerEteindre();
-                    System.out.println(consommationTotale);
                 }
                 i++;
             }
@@ -565,48 +559,6 @@ public class Simulateur{
             Conso.add(tmp+(consommationTotale/minute));
         }
         return Conso;
-    }
-
-    public static void main(String [] args) throws IOException {
-        entresortie E = new entresortie();
-        E.lecturefichier(E.NomFichier);
-        Simulateur S = new Simulateur(E);
-        S.rechercheDateHeure();
-        try {
-            S.recherchePrix();
-            System.out.println("Prix HP : " + S.getPrixHP()+ "Prix HC : " + S.getPrixHC());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            S.recupereTemperatureExt();
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Temperature : " + S.getTemperatureExt());
-        System.out.println("Heure : " + S.getDate().get(Calendar.HOUR_OF_DAY));
-        S.recupereObjet();
-        S.miseAJourObjet();
-        S.calculConsommation();
-        System.out.println(S.consommationTotale());
-        while(true) {
-            S.miseAJourObjet();
-            S.calculConsommation();
-            System.out.println(S.ConsommationANePasDepasser());
-            System.out.println(S.ConsommationObjet());
-            System.out.println(S.ConsoMois());
-            System.out.println(S.ConsoSemaine());
-            System.out.println(S.consoJour());
-            S.rechercheDateHeure();
-            System.out.println();
-            S.ExtinctionAutomatique(1000);
-            try {
-                sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
     }
 
 }

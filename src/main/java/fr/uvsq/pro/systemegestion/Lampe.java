@@ -1,3 +1,4 @@
+package fr.uvsq.pro.systemegestion;
 public class Lampe extends Objet{
 
     protected int Indice_de_luminosite;

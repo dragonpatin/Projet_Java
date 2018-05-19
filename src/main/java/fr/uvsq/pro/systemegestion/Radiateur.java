@@ -1,3 +1,4 @@
+package fr.uvsq.pro.systemegestion;
 public class Radiateur extends Objet{
 
     protected int thermostat;

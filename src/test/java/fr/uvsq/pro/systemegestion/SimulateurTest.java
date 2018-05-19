@@ -1,7 +1,10 @@
+package fr.uvsq.pro.systemegestion;
 import com.github.fedy2.weather.YahooWeatherService;
 import com.github.fedy2.weather.data.Channel;
 import com.github.fedy2.weather.data.unit.DegreeUnit;
-import org.junit.jupiter.api.Test;
+import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.util.*;
@@ -14,15 +17,25 @@ import static java.lang.Thread.sleep;
  * Test de la classe Simulateur
  * Il n'est pas nécessaire de choisir le fichier Le programme le fait de lui même
  */
-public class SimulateurTest {
+public class SimulateurTest{
+    private entresortie E;
+    private entresortie E2;
+
+    @Before
+    public void Initialisation(){
+        E = new entresortie();
+        E2 = new entresortie();
+        E.lecturefichier(new java.io.File("TestSimulateur1"));
+        E2.lecturefichier(new java.io.File("TestSimulateur3"));
+
+    }
     /**
      * Lire Fichier 1
      * On regarde par la suit que les valeurs change pendant les 5 min.
      */
     @Test
     public void fichierPlein() throws IOException{
-        entresortie E = new entresortie();
-        E.lecturefichier(new java.io.File("TestSimulateur1"));
+
         Simulateur S = new Simulateur(E);
         S.rechercheDateHeure();
         S.recupereObjet();
@@ -35,7 +48,7 @@ public class SimulateurTest {
             System.out.println(S.consoJour());
             System.out.println();
             try {
-                sleep(300000);
+                sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -50,9 +63,7 @@ public class SimulateurTest {
      */
     @Test
     public void fichierMinimum(){
-        entresortie E = new entresortie();
-        E.lecturefichier(new java.io.File("TestSimulateur3"));
-        Simulateur S = new Simulateur(E);
+        Simulateur S = new Simulateur(E2);
         S.rechercheDateHeure();
         S.recupereObjet();
         int i = 0;
@@ -64,7 +75,7 @@ public class SimulateurTest {
             System.out.println(S.consoJour());
             System.out.println();
             try {
-                sleep(300000);
+                sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
 
@@ -73,15 +84,13 @@ public class SimulateurTest {
         }
         System.out.println("fichierMinimum : Ok");
     }
-
     /**
      * Compare les deux températures
      */
+    /*
     @Test
     public void TestTempérature()throws JAXBException, IOException{
-        entresortie E = new entresortie();
         //Obligation de lui donné un fichier
-        E.lecturefichier(new java.io.File("TestSimulateur1"));
         Simulateur S = new Simulateur(E);
         S.recupereObjet();
         S.recupereTemperatureExt();
@@ -102,13 +111,12 @@ public class SimulateurTest {
         }
         System.out.println("TestTempérature : Ok");
     }
+    */
     /**
      * Lire Fichier 1 et compare les noms entre les 2
      */
     @Test
     public void TestObjet(){
-        entresortie E = new entresortie();
-        E.lecturefichier(new java.io.File("TestSimulateur1"));
         Simulateur S = new Simulateur(E);
         Vector<Objet> os = S.getObjet();
         Vector<Objet> oe = S.getObjet();
@@ -129,8 +137,6 @@ public class SimulateurTest {
      */
     @Test
     public void TestPrix() {
-        entresortie E = new entresortie();
-        E.lecturefichier(new java.io.File("TestSimulateur1"));
         Simulateur S = new Simulateur(E);
         if(S.getPrixHP()==0.1593){
             System.out.println("Erreur Mauvais Prix en heure de pointe !");
@@ -143,12 +149,10 @@ public class SimulateurTest {
         System.out.println("TestPrix : Ok");
     }
     /**
-     * Vérifie que les données soit bonne
+     * Vérifie que les données soit bonnes
      */
     @Test
     public void TestExtinctionAutomatique(){
-        entresortie E = new entresortie();
-        E.lecturefichier(new java.io.File("TestSimulateur1"));
         Simulateur S = new Simulateur(E);
         S.rechercheDateHeure();
         S.recupereObjet();

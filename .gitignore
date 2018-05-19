@@ -8,4 +8,3 @@ target/*
 .idea/vcs.xml
 .idea/workspace.xml
 src/main/resources/
-src/test/
