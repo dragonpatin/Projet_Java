@@ -69,6 +69,7 @@
             <include>**/SimulateurTest.java</include>
             <include>**/entresortieTest.java</include>
             <include>**/ObjetTest.java</include>
+            <include>**/PieceTest.java</include>
           </includes>
         </configuration>
       </plugin>
