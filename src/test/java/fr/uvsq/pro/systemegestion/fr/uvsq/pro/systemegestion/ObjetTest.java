@@ -1,7 +1,5 @@
 package fr.uvsq.pro.systemegestion;
 import org.junit.Test;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
-
 import static java.lang.Thread.sleep;
 import static org.junit.Assert.*;
 
@@ -108,6 +106,7 @@ public class ObjetTest {
             test.AllumerEteindre();
             test.AllumerEteindre();
         }
+        System.out.println("Test durée d'utilisation en cours..");
 
         try{
             sleep(60000);

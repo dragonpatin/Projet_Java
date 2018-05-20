@@ -456,7 +456,7 @@ public class Interface implements ActionListener {
 	    String nom = JOptionPane.showInputDialog(piecepanel, "Nom de la piece", JOptionPane.QUESTION_MESSAGE);
 	    
 	    if( nom != null ) {  
-	    piece.add(new Piece(nom,0,null));	 
+	    piece.add(new Piece(nom,0));
 	    btpiece.addElement(new JButton(piece.lastElement().getNom()));
 	    btpiece.lastElement().addActionListener(this);}
 	       
@@ -731,7 +731,7 @@ public class Interface implements ActionListener {
 		int t=-1;
 		for(Objet o : obj) {
 			if( piece.isEmpty() ) {
-				piece.add(new Piece(o.getPiece(),0,null));
+				piece.add(new Piece(o.getPiece(),0));
 				piece.firstElement().getObjetPiece().addElement(o);}
 			else {
 				for(Piece p : piece) {
@@ -741,7 +741,7 @@ public class Interface implements ActionListener {
 					else t = 0;
 				}
 			if ( t == 0) {
-				piece.add(new Piece(o.getPiece(),0,null));
+				piece.add(new Piece(o.getPiece(),0));
 				piece.lastElement().getObjetPiece().addElement(o);
 				}				
 			}
@@ -750,7 +750,7 @@ public class Interface implements ActionListener {
 	public void initpiece(Vector<Objet> obj) {
 		for(Objet o : obj) {
 			if( pieceExist(o.getPiece()) == -1 ) {
-				piece.add(new Piece(o.getPiece(),0,null));
+				piece.add(new Piece(o.getPiece(),0));
 				piece.lastElement().getObjetPiece().add(o);
 			}
 			else if( pieceExist(o.getPiece()) != -1 ) {				
