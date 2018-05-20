@@ -15,15 +15,27 @@ public class CapteurTemperature extends Objet{
     /**
      * Constructeur de la classe
      * @param temperature une température pour le capteur
+     * @param Nom un nom pour le capteur
+     * @param Piece la pièce où le capteur ce trouve
+     * @param AdresseMAC son identifiant unique
      */
-    public CapteurTemperature(int temperature){
+    public CapteurTemperature(int temperature, String Nom, String Piece, String AdresseMAC){
         this.temperature = temperature;
+        this.NomObjet = Nom;
+        this.PieceMaison = Piece;
+        this.Switch = false;
+        this.AdresseMAC = AdresseMAC;
+        this.Consommation = 0;
+        this.Duree_utilisation = 0;
     }
 
     /**
      * @return retourne la temperature du capteur
      */
     public int getTemperature(){
+        if(this.Switch == false){
+            return 0;
+        }
         return this.temperature;
     }
 }

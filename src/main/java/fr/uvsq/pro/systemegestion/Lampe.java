@@ -14,15 +14,30 @@ public class Lampe extends Objet{
     /**
      * Constructeur de la classe
      * @param Indice_de_luminosite une luminosité pour la lampe
+     * @param Nom un nom pour la lampe
+     * @param Piece la pièce où elle ce situe
+     * @param AdresseMAC son identifiant unique
+     * @param priorite la priorité de la lampe, compris entre 0 et 3
+     * @param consommation la consommation de la lampe
      */
-    public Lampe(int Indice_de_luminosite){
+    public Lampe(int Indice_de_luminosite, String Nom, String Piece, String AdresseMAC, int priorite, int consommation){
         this.Indice_de_luminosite = Indice_de_luminosite;
+        this.NomObjet = Nom;
+        this.PieceMaison = Piece;
+        this.AdresseMAC = AdresseMAC;
+        this.Priorite = priorite;
+        this.Consommation = consommation;
+        this.Switch = false;
+        this.Duree_utilisation = 0;
     }
 
     /**
      * @return retourne l'indice de luminosité de l'objet
      */
     public int getLuminosite() {
+        if(this.Switch == false){
+            return 0;
+        }
         return this.Indice_de_luminosite;
     }
 
