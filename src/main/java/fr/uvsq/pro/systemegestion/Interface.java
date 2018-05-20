@@ -1,22 +1,13 @@
 package fr.uvsq.pro.systemegestion;
-import java.awt.Color;
+import java.awt.*;
+import java.io.IOException;
 import java.lang.Integer;
-import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JLayeredPane;
-import java.awt.Canvas;
-import javax.swing.JLabel;
-import java.awt.SystemColor;
-import java.awt.Font;
 import java.util.Timer;
 
 public class Interface implements ActionListener {

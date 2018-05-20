@@ -206,7 +206,7 @@ public class entresortie{
      */
     public void ecriture ( File NomFichier){
         try{
-            BufferedWriter writer = new BufferedWriter(new FileWriter(this.NomFichier));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(NomFichier));
             writer.write("#"+"\n"+"+"+"\n"+"-"+"\n"+"%"+"\n"+"?");
             writer.close();
         }catch (IOException e){
@@ -222,8 +222,8 @@ public class entresortie{
                     acc = test.indexOf("#");
                     String before = test.substring(0, acc + 1);
                     String after = test.substring(acc + 2);
-                    System.out.println(before);
-                    System.out.println(after);
+                   // System.out.println(before);
+                    //System.out.println(after);
 
                     String code = ListeObjet.elementAt(i).NomObjet + "\n" + ListeObjet.elementAt(i).PieceMaison + "\n"
                             + ListeObjet.elementAt(i).Consommation + "\n" + ListeObjet.elementAt(i).AdresseMAC + "\n"
@@ -234,8 +234,8 @@ public class entresortie{
                     acc = test.indexOf("#");
                     String before = test.substring(0, acc + 1);
                     String after = test.substring(acc + 2);
-                    System.out.println(before);
-                    System.out.println(after);
+                   // System.out.println(before);
+                    //System.out.println(after);
 
                     String code = "#" + "\n" + ListeObjet.elementAt(i).NomObjet + "\n" + ListeObjet.elementAt(i).PieceMaison + "\n"
                             + ListeObjet.elementAt(i).Consommation + "\n" + ListeObjet.elementAt(i).AdresseMAC + "\n"
@@ -419,7 +419,6 @@ public class entresortie{
         }
         return null;*/
     }
-
     public String getPiece (){
         for(int i =0 ; i<ListeObjet.size();i++){
             if(ListeObjet.elementAt(i).equals(this)){
