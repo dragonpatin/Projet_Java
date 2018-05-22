@@ -6,7 +6,11 @@ import java.io.File;
 
 import static junit.framework.TestCase.fail;
 
-
+/**
+ * Fonction de test de la classe entree sortie
+ * Il n'a pas d'effet sur le programme en lui même, il est juste ici pour éviter que le programme est des erreurs quelconques.
+ * Donc il ne faut pas modifier les fichiers suivant sous peinne de test fail : entreesortie et entresortie2
+ */
 public class entresortieTest {
 
     private entresortie testentre;
@@ -20,6 +24,10 @@ public class entresortieTest {
 
     }
 
+    /**
+     * Il va lire le fichier entresortie
+     * Il va lire le fichier et vérifier ce qu'il a écrit dans les vecteurs
+     */
     @Test
     public void testlecture(){
         System.out.println(testentre.getObjet().elementAt(0).getNom());
@@ -36,7 +44,10 @@ public class entresortieTest {
         System.out.println("Test de lecture  : OK");
     }
 
-
+    /**
+     * Il va écrire dans le fichier entresortie2
+     * Il va écrire de tel façon que lors qu'il va le relire, que le vecteur possède ce qu'il a écrit
+     */
     @Test
     public void testecriture(){
         File file  = new java.io.File("testentreesortie2");

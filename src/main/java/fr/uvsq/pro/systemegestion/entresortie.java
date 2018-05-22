@@ -201,8 +201,9 @@ public class entresortie{
 
     /**
      * Cette fonction permet d'écrire dans le fichier en temps réel, les modifications effectuées ainsi sur les vecteurs de la classe
-     * en question
-     * @param NomFichier
+     * en question.
+     * Attention elle l'écrit d'une certaine façon pour que la fonction de lecture puisse la lire.
+     * @param NomFichier est le fichier où l'on veut écrire
      */
     public void ecriture ( File NomFichier){
         try{
@@ -222,9 +223,6 @@ public class entresortie{
                     acc = test.indexOf("#");
                     String before = test.substring(0, acc + 1);
                     String after = test.substring(acc + 2);
-                   // System.out.println(before);
-                    //System.out.println(after);
-
                     String code = ListeObjet.elementAt(i).NomObjet + "\n" + ListeObjet.elementAt(i).PieceMaison + "\n"
                             + ListeObjet.elementAt(i).Consommation + "\n" + ListeObjet.elementAt(i).AdresseMAC + "\n"
                             + ListeObjet.elementAt(i).Priorite;
@@ -234,9 +232,6 @@ public class entresortie{
                     acc = test.indexOf("#");
                     String before = test.substring(0, acc + 1);
                     String after = test.substring(acc + 2);
-                   // System.out.println(before);
-                    //System.out.println(after);
-
                     String code = "#" + "\n" + ListeObjet.elementAt(i).NomObjet + "\n" + ListeObjet.elementAt(i).PieceMaison + "\n"
                             + ListeObjet.elementAt(i).Consommation + "\n" + ListeObjet.elementAt(i).AdresseMAC + "\n"
                             + ListeObjet.elementAt(i).Priorite;
@@ -366,8 +361,13 @@ public class entresortie{
         }
     }
 
+    /**
+     * La modification d'un objet peut intervenir lors de l'utilisation de l'interface avec l'utilisateur. Par exemple on veut modifier si l'on
+     * veut qu'il soit éteint ou allumé.
+     * @param obj C'est l'objet que l'on à modifié.
+     */
+
     public void modifieObjet (Objet obj ){
-        // UTILISE LES FONCTIONS DANS OBJET
         for(int i =0 ; i<ListeObjet.size();i++){
             if(ListeObjet.elementAt(i).equals(obj)){
                 ListeObjet.removeElementAt(i);
@@ -376,32 +376,33 @@ public class entresortie{
             }
         }
     }
-    public void modifieConsommation ( Vector ListeObjet){
-        //utilité ?
-    }
-    public void modifiePreference(Vector Preference, preference pref){
-        preference p = new preference();
+
+    /**
+     * Cette fonction permet de mettre à jour les préférences d'un objet en particulier.
+     * @param pref c'est l'objet préférence que l'on aura créer ou modifier au préalable
+     */
+    public void modifiePreference(preference pref){
         for(int i =0 ; i<Preference.size();i++){
             if(Preference.elementAt(i).equals(pref)){
                 Preference.removeElementAt(i);
                 Preference.addElement(pref);
-                try{
-                    BufferedWriter writer = new BufferedWriter(new FileWriter(this.NomFichier));
-                    writer.write("#"+"\n"+"+"+"\n"+"-"+"\n"+"%"+"\n"+"?");
-                    writer.close();
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
                 ecriture(this.NomFichier);
             }
         }
     }
-    public void modifiePiece(Vector ListeObjet){
-            //un utilité ?
-    }
+
+    /**
+     *Elle va return la liste des objets stockés
+     * @return
+     */
     public Vector<Objet> getObjet (){
         return ListeObjet;
     }
+
+    /**
+     * Elle va return la consommation de l'objet en question.
+     * @return
+     */
     public int getConsommation (){
         for(int i =0 ; i<ListeObjet.size();i++){
             if(ListeObjet.elementAt(i).equals(this)){
@@ -410,15 +411,19 @@ public class entresortie{
         }
         return 0;
     }
+
+    /**
+     * Elle va return la la liste des préférences stockés dans le vecteur préférence
+     * @return
+     */
     public Vector getPreference (){
         return Preference;
-        /*for(int i =0 ; i<Preference.size();i++){
-            if(Preference.elementAt(i).equals(this)){
-                return Preference.elementAt(i);
-            }
-        }
-        return null;*/
     }
+
+    /**
+     * Elle va return la pièce où se trouve l'objet stocké
+     * @return
+     */
     public String getPiece (){
         for(int i =0 ; i<ListeObjet.size();i++){
             if(ListeObjet.elementAt(i).equals(this)){
@@ -427,12 +432,27 @@ public class entresortie{
         }
         return null;
     }
+
+    /**
+     * Elle va return le vecteur consoJour
+     * @return
+     */
     public Vector consoJour (){
         return this.ConsoJour;
     }
+
+    /**
+     * Elle va return le vecteur ConsoMois
+     * @return
+     */
     public Vector consoMois (){
         return this.ConsoMois;
     }
+
+    /**
+     *Elle va return le vecteur Consosemaine
+     * @return
+     */
     public Vector consoSemaine (){
         return this.ConsoSemaine;
     }
