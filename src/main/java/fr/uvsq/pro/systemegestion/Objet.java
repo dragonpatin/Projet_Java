@@ -1,5 +1,6 @@
 package fr.uvsq.pro.systemegestion;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -41,7 +42,7 @@ public class Objet{
         this.Switch = false;
         this.Duree_utilisation = 0;
         this.Priorite = 0;
-        this.AdresseMAC = "AA:00:BB:A1:B2";
+        this.AdresseMAC = "AA:00:BB";
     }
 
     /**
@@ -75,14 +76,31 @@ public class Objet{
             int heure = Date_allumage.get(Calendar.HOUR_OF_DAY);
             int minute = Date_allumage.get(Calendar.MINUTE);
             int seconde = Date_allumage.get(Calendar.SECOND);
+            int jour = Date_allumage.get(Calendar.DAY_OF_YEAR);
 
-            heure = (heure - Date_extinction.get(Calendar.HOUR_OF_DAY))%24;
+            jour = (jour - Date_extinction.get(Calendar.DAY_OF_YEAR));
+            heure = (heure - Date_extinction.get(Calendar.HOUR_OF_DAY));
             minute = (minute - Date_extinction.get(Calendar.MINUTE));
             seconde = (seconde - Date_extinction.get(Calendar.SECOND));
+
+            if(jour<0){
+                jour = -jour;
+                if(jour>0){
+                    if(heure<0){
+                        heure = -heure;
+                    }
+                    heure = 24 - heure;
+                }
+            }
+
+            if(jour>=1){
+                jour = jour - 1;
+            }
 
             if(heure<0){
                 heure = -heure;
             }
+
             if(minute<0){
                 minute = -minute;
             }
@@ -93,7 +111,7 @@ public class Objet{
                 }
             }
 
-            Duree_utilisation = minute + heure*60;
+            Duree_utilisation = minute + (heure + jour*24)*60;
         }
         else {
             this.Switch = true;
