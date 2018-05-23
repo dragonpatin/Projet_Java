@@ -104,7 +104,7 @@ public class Piece{
     /**
      * @return retourne la liste des objets de la pièce
      */
-    public Vector getObjetPiece(){
+    public Vector<Objet> getObjetPiece(){
         return ObjetPiece;
     }
 
