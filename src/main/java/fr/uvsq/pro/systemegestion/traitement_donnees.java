@@ -1,56 +1,85 @@
 package fr.uvsq.pro.systemegestion;
-import java.util.Calendar;
-import java.util.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.Canvas;
+import java.awt.SystemColor;
+import java.util.Vector;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Color;
+import java.awt.Font;
 
-/**
- * class de gestion de donné
- * crée des graph avec les donné du simulateur
- */
-public class traitement_donnees {
 
-     // abscisse et ordonnée d'un graphique contenant la consomation global  sur un Ans
-     Vector<Integer> absMois;
-     Vector<Integer> ordMois;
-     // abscisse et ordonnée d'un graphique contenant la consomation global  sur un Ans
-     Vector<Integer> absAns;
-     Vector<Integer> ordAns;
-     // abscisse et ordonnée d'un graphique contenant la consomation global  sur un Jour
-     Vector<Integer> absJour;
-     Vector<Integer> ordJour;
-     // abscisse et ordonnée d'un graphique contenant la consomation instantané sur une heure
-     Vector<Integer> absHeure;
-     Vector<Integer> ordHeure;
-
-     /**
-      * Constructeur de la slasse  traitement_donnees
-      * Initialisation de la classe  traitement_donnees
-      */
-     public traitement_donnees(){
-          this.absMois = new Vector<Integer>();
-          this.ordMois = new Vector<Integer>();
-          this.absAns = new Vector<Integer>();
-          this.ordAns = new Vector<Integer>();
-          this.absJour = new Vector<Integer>();
-          this.ordJour = new Vector<Integer>();
-          this.absHeure = new Vector<Integer>();
-          this.ordHeure = new Vector<Integer>();
+public class traitement_donnees{
+    // abscisse et ordonnée d'un graphique contenant la consomation global  sur un Ans
+    Vector<Integer> absMois;
+    Vector<Integer> ordMois;
+    // abscisse et ordonnée d'un graphique contenant la consomation global  sur un Ans
+    Vector<Integer> absAns;
+    Vector<Integer> ordAns;
+    // abscisse et ordonnée d'un graphique contenant la consomation global  sur un Jour
+    Vector<Integer> absJour;
+    Vector<Integer> ordJour;
+    // abscisse et ordonnée d'un graphique contenant la consomation instantané sur une heure
+    Vector<Integer> absHeure;
+    Vector<Integer> ordHeure;
+	 JFrame frame = new JFrame();
+	 JPanel graphpanel = new JPanel();
+     String TitreGraph;
+     int echelle_de_temps;
+   
+ 	public static void main(String[] args) {
+ 		traitement_donnees t = new traitement_donnees("Consommation du moi ",testvect(),5000);
+ 	}
+ 	
+    public traitement_donnees(){
+        this.absMois = new Vector<Integer>();
+        this.ordMois = new Vector<Integer>();
+        this.absAns = new Vector<Integer>();
+        this.ordAns = new Vector<Integer>();
+        this.absJour = new Vector<Integer>();
+        this.ordJour = new Vector<Integer>();
+        this.absHeure = new Vector<Integer>();
+        this.ordHeure = new Vector<Integer>();
+    }
+ 	
+ 	
+     
+     public traitement_donnees(String TitreGraph ,Vector<Integer> conso,int valeur_max_ord){
+    	 this.TitreGraph=TitreGraph;   	 
+    	 init_affichage();
+    	 affiche_graph_conso(conso,valeur_max_ord);
      }
-
+     
+     public static Vector<Integer> testvect(){
+  		Vector<Integer> cons =new Vector<Integer>(); 
+  		cons.add(1093);
+  		cons.add(2000);
+  		cons.add(1500);
+  		cons.add(1750); 		
+  		cons.add(700);
+  		cons.add(2000); 		
+  		cons.add(1800); 		
+  		cons.add(1500); 		
+  		cons.add(3000);
+  		return cons;
+     }
      /**
       * methode de création et de modification des graphique.
       * la premiere execution initialise les graphique.
       * les execution suivante update les graphique pendant que l'application tourne en arriere plan
       * @param S contient les données de consomation utilisé pour faire les graphiques
       */
-     public void Creer_un_Graphe(Simulateur S)
+     @SuppressWarnings("static-access")
+	public void Creer_un_Graphe(Simulateur S)
      {
-          int i;
+         
           int conso =0;
           conso = S.consommationTotale();
-          /*for(i=0;i<S.ConsommationObjet().size();i++)
-          {
-               conso += S.ConsommationObjet().get(i);
-          }*/
+//          for(i=0;i<S.ConsommationObjet().size();i++)
+//          {
+//               conso += S.ConsommationObjet().get(i);
+//          }
 
           if(((S.getDate().MINUTE)%5)!=0)
           {
@@ -61,9 +90,13 @@ public class traitement_donnees {
                }
                absHeure.add(0,S.getDate().MINUTE);
                ordHeure.add(0,conso);
+               ordJour.add(0);
+               ordMois.add(0);
+               ordAns.add(0);
                ordJour.set(0,ordJour.get(0)+(conso/12));
                ordMois.set(0,ordMois.get(0)+(conso/12));
                ordAns.set(0,ordAns.get(0)+(conso/12));
+
           }
           if((S.getDate().MINUTE)!=0)
           {
@@ -174,7 +207,58 @@ public class traitement_donnees {
      {
           return ordHeure;
      }
+     
+     
+     private void init_affichage() {
 
+  		frame.setBounds(100, 100,700,500);
+  		frame.setVisible(true);
+  		frame.setTitle(this.TitreGraph);
+  		frame.getContentPane().setLayout(null);		
+  		graphpanel.setBounds(60, 67, 550, 300);
+  		frame.getContentPane().add(graphpanel);
+  		graphpanel.setLayout(null);	
+  		
+  		JLabel titregraph = new JLabel(TitreGraph);
+  		titregraph.setFont(new Font("Verdana", Font.BOLD,16));
+  		titregraph.setHorizontalAlignment(SwingConstants.CENTER);
+  		titregraph.setBounds(140, 13, 318, 30);
+  		frame.getContentPane().add(titregraph);
+  		
+     }
 
+     public void graphe_temps_reel(Simulateur S, int echelle_de_temps){
+
+     }
+     
+     
+     public void aff_canvas_graph(int nb) {
+   		int y=0;
+   		for(int i= 0 ; i < 6; i++) {
+   	   		Canvas canvas = new Canvas();
+   	   		canvas.setBackground(SystemColor.controlHighlight);
+   	   		canvas.setBounds(0, 258-y, 505, 25);
+   	   		graphpanel.add(canvas);
+   	   		y+=50;
+   		}  		
+     }
+     
+     public void affiche_graph_conso(Vector<Integer>conso,int pic) {
+    	 int x =0,h=0,h_max=290;
+    	 int nb=conso.size();
+    	 int w = (graphpanel.getWidth()/nb)-6; 	
+    	 if (nb<4) w = (graphpanel.getWidth()/4)-6;
+    	 int ecart = w/5;
+    	 
+    	for(int i= 0 ; i < conso.size(); i++) {
+   		h= (conso.elementAt(i)*h_max)/pic;
+   		Canvas canvas = new Canvas();
+		canvas.setBackground(new Color(100,150,0));
+   		canvas.setBounds(x+3,300-h,w-ecart,h);
+   		graphpanel.add(canvas);	
+   		x+=500/nb;
+   		}
+    	aff_canvas_graph(nb);
+     }
 }
 
