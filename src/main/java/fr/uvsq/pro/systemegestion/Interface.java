@@ -1,4 +1,4 @@
-package fr.uvsq.pro.systemegestion;
+package projet.smarthome;
 import java.awt.Color;
 import java.lang.Integer;
 import javax.swing.JButton;
@@ -483,7 +483,7 @@ public class Interface implements ActionListener {
 	    if( nom != null ) {
 	    if ( pieceExist(nom) != -1 )JOptionPane.showMessageDialog(piecepanel, "Piece déja existante", "Information", JOptionPane.WARNING_MESSAGE);
 	    else {
-	    piece.add(new Piece(nom,0,null));	 
+	    piece.add(new Piece(nom,0));	 
 	    btpiece.addElement(new JButton(piece.lastElement().getNom()));
 	    btpiece.lastElement().addActionListener(this);}}       
 	}
@@ -756,7 +756,7 @@ public class Interface implements ActionListener {
 	public void initpiece(Vector<Objet> obj) {
 		for(Objet o : obj) {
 			if( pieceExist(o.getPiece()) == -1 ) {
-				piece.add(new Piece(o.getPiece(),0,null));
+				piece.add(new Piece(o.getPiece(),0));
 				piece.lastElement().getObjetPiece().add(o);
 			}
 			else if( pieceExist(o.getPiece()) != -1 ) {				
@@ -781,4 +781,3 @@ public class Interface implements ActionListener {
 		return false;
 	}
 }
-
