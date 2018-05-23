@@ -58,7 +58,7 @@ public class Interface implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JButton btnRetour = new JButton("Retour");
-		btnRetour.setIcon(new ImageIcon(Interface.class.getResource("/com/sun/javafx/scene/web/skin/Undo_16x16_JFX.png")));
+		//btnRetour.setIcon(new ImageIcon(Interface.class.getResource("/com/sun/javafx/scene/web/skin/Undo_16x16_JFX.png")));
 		btnRetour.setBounds(460, 703, 122, 28);
 		frame.getContentPane().add(btnRetour);
 		btnRetour.addActionListener(new ActionListener() {
@@ -131,7 +131,7 @@ public class Interface implements ActionListener {
 		
 		JButton btsimu = new JButton("Lancer simulateur");
 		btsimu.setHorizontalAlignment(SwingConstants.LEFT);
-		btsimu.setIcon(new ImageIcon("src/play-256.png"));
+		btsimu.setIcon(new ImageIcon("src/main/resources/play-256.png"));
 		btsimu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				piecepanel.setVisible(false);
@@ -147,7 +147,7 @@ public class Interface implements ActionListener {
 		
 		JButton btfav = new JButton("Objets favoris");
 		btfav.setHorizontalAlignment(SwingConstants.LEFT);
-		btfav.setIcon(new ImageIcon("src/fa1v.png"));
+		btfav.setIcon(new ImageIcon("src/main/resources/fa1v.png"));
 		btfav.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
@@ -193,7 +193,7 @@ public class Interface implements ActionListener {
 		infobjcontent.setLayout(null);
 		
 		JButton btnSupprimerObjet = new JButton("");
-		btnSupprimerObjet.setIcon(new ImageIcon("src/corb.png"));
+		btnSupprimerObjet.setIcon(new ImageIcon("src/main/resources/corb.png"));
 		btnSupprimerObjet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				supprime_objet(objetactuel);
@@ -296,7 +296,7 @@ public class Interface implements ActionListener {
 		infobjpanel.add(btonoff);
 		
 		JButton btaddfavoris = new JButton("");
-		btaddfavoris.setIcon(new ImageIcon("src/fa1v.png"));
+		btaddfavoris.setIcon(new ImageIcon("src/main/resources/fa1v.png"));
 		btaddfavoris.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			ajout_objet_favoris(objetactuel);

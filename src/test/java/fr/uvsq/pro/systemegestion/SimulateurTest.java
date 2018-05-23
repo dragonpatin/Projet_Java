@@ -87,7 +87,6 @@ public class SimulateurTest{
     /**
      * Compare les deux températures
      */
-    /*
     @Test
     public void TestTempérature()throws JAXBException, IOException{
         //Obligation de lui donné un fichier
@@ -111,7 +110,6 @@ public class SimulateurTest{
         }
         System.out.println("TestTempérature : Ok");
     }
-    */
     /**
      * Lire Fichier 1 et compare les noms entre les 2
      */
