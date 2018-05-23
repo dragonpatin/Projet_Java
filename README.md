@@ -3,8 +3,8 @@
 Projet de Licence 3 année pour la fac UVSQ
 Projet sur un systéme de gestion énergétique.
 
-1.Installation.  
-    - Verification.  
+1.Installation  
+    - Verification  
 Utilisation de Java 1.8.  
 Vérifier que le JAVA_HOME utilise la version 1.8 de Java sinon la changer.  
 Sur macOS, Unix suivre le tuto : [macOS](https://www.mkyong.com/java/how-to-set-java_home-environment-variable-on-mac-os-x/).  
