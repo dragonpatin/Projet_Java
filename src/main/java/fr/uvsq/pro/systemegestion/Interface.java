@@ -39,13 +39,12 @@ public class Interface implements ActionListener {
 	private Piece pieceactuelle;	
 	private Objet objetactuel = new Objet();
 	private entresortie donnee;
+	private String panelprec="";
+	private String panelactu="menus";
 	
-	
-	public static void main(String[] args){
-					
+	public static void main(String[] args){					
 					Interface window = new Interface();
-					window.frame.setVisible(true);						
-					
+					window.frame.setVisible(true);										
 	}
 	
 	public Interface(){
@@ -63,45 +62,42 @@ public class Interface implements ActionListener {
 		frame.getContentPane().add(btnRetour);
 		btnRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(listobjpanel.isVisible()) {
-					menupanel.setVisible(true);
-					listobjpanel.setVisible(false);}
-				
-				if(favorispanel.isVisible()) {
-					menupanel.setVisible(true);
-					favorispanel.setVisible(false);}
-				
-				if(simupanel.isVisible()) {
-					menupanel.setVisible(true);
-					simupanel.setVisible(false);}
-				
-				else if( infobjpanel.isVisible() ) {
-					infobjpanel.setVisible(false);					
-					if( pieceactuelle != null ) {
-						objetpanel.setVisible(true);
-						affiche_objet(pieceactuelle.getObjetPiece(),objetcontent);
-						
-					} else if( pieceactuelle == null && favorispanel.isEnabled() ) { 
-						favorispanel.setVisible(true);
-						affiche_objet(donnee.ObjetFavoris,favorispanel);}
-					 else if( pieceactuelle == null && listobjpanel.isEnabled() ) { 
-						listobjpanel.setVisible(true);
-						favorispanel.setVisible(false);
-						affiche_objet(donnee.ObjetFavoris,listobjpanel);}}
-				
-				else if( piecepanel.isVisible()) {
+				if( piecepanel.isVisible() ) {
 					piecepanel.setVisible(false);
-					menupanel.setVisible(true);}
-			
-				else if(  objetpanel.isVisible() ) {
-					if( pieceactuelle != null) {
-					piecepanel.setVisible(true);		
-					objetpanel.setVisible(false);}
-					else {
-						menupanel.setVisible(true);		
-						objetpanel.setVisible(false);}}}});
-		
+					menupanel.setVisible(true);
+				}
+				if( simupanel.isVisible() ) {
+					simupanel.setVisible(false);
+					menupanel.setVisible(true);
 
+				}
+				if(favorispanel.isVisible()) {
+					favorispanel.setVisible(false);
+					menupanel.setVisible(true);
+				}
+				if( listobjpanel.isVisible() ) {
+					listobjpanel.setVisible(false);
+					menupanel.setVisible(true);
+				}
+				if( objetpanel.isVisible() ) {
+					piecepanel.setVisible(true);
+					objetpanel.setVisible(false);
+				}
+				if( infobjpanel.isVisible() && !panelprec.equals("favoris") && !panelprec.equals("listobj") ) {
+					infobjpanel.setVisible(false);
+					objetpanel.setVisible(true);
+				}
+				if( panelprec.equals("favoris") ) {
+					panelprec="objfavoris";
+					favorispanel.setVisible(true);
+					infobjpanel.setVisible(false);
+				}
+				if( panelprec.equals("listobj") ) {
+					panelprec="objlistobj";
+					listobjpanel.setVisible(true);
+					infobjpanel.setVisible(false);	
+				}			
+			}});
 		
 		menupanel.setBounds(0, 0, 582, 697);
 		frame.getContentPane().add(menupanel);
@@ -115,6 +111,7 @@ public class Interface implements ActionListener {
 				menupanel.setVisible(false);
 				objetpanel.setVisible(false);
 				simupanel.setVisible(false);
+				panelactu="";
 				if(donnee !=null )affiche_piece();
 				else {JOptionPane.showMessageDialog(piecepanel, "Liste des pieces vide", "Information", JOptionPane.WARNING_MESSAGE);
 				menupanel.setVisible(true);
@@ -152,13 +149,11 @@ public class Interface implements ActionListener {
 		btfav.setHorizontalAlignment(SwingConstants.LEFT);
 		btfav.setIcon(new ImageIcon("src/main/resources/fa1v.png"));
 		btfav.addActionListener(new ActionListener() {
-			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 			menupanel.setVisible(false);
 			favorispanel.setVisible(true);
 			pieceactuelle=null;
-			favorispanel.enable();
-			listobjpanel.disable();
+			panelactu="favoris";
 			if(donnee !=null )affiche_objet(donnee.ObjetFavoris,favorispanel);
 			else {JOptionPane.showMessageDialog(favorispanel, "Aucun Favoris", "Information", JOptionPane.WARNING_MESSAGE);
 			menupanel.setVisible(true);
@@ -170,13 +165,11 @@ public class Interface implements ActionListener {
 		JButton btlistobj = new JButton("Liste objets ");
 		btlistobj.setHorizontalAlignment(SwingConstants.LEFT);
 		btlistobj.addActionListener(new ActionListener() {
-			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				menupanel.setVisible(false);
 				listobjpanel.setVisible(true);
 				pieceactuelle=null;
-				favorispanel.disable();
-				listobjpanel.enable();
+				panelactu="listobj";
 				if( donnee != null  )affiche_objet(donnee.getObjet(),listobjpanel);
 				else {JOptionPane.showMessageDialog(listobjpanel, "Liste Objet vide", "Information", JOptionPane.WARNING_MESSAGE);
 				menupanel.setVisible(true);
@@ -308,17 +301,15 @@ public class Interface implements ActionListener {
 		btaddfavoris.setBounds(12, 13, 65, 38);
 		
 		infobjpanel.add(btaddfavoris);
-		infobjpanel.setVisible(false);
-		
-		
+				
 		listobjpanel.setBounds(0, 0, 594, 697);
 		frame.getContentPane().add(listobjpanel);
-		listobjpanel.setVisible(false);
+		
 		listobjpanel.setLayout(null);
 		objetpanel.setBounds(0, 0, 594, 697);
 		frame.getContentPane().add(objetpanel);
 		objetpanel.setLayout(null);
-		objetpanel.setVisible(false);
+		
 		
 		
 		objetcontent.setBackground(SystemColor.control);
@@ -345,8 +336,7 @@ public class Interface implements ActionListener {
 		JButton btsuppiece = new JButton("Supprimer piece");
 		btsuppiece.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btpiece.removeElementAt(piece.indexOf(pieceactuelle));
-				piece.removeElement(pieceactuelle);
+				supprime_piece(pieceactuelle);
 				piecepanel.setVisible(true);
 				menupanel.setVisible(false);
 				objetpanel.setVisible(false);			
@@ -374,7 +364,7 @@ public class Interface implements ActionListener {
 		frame.getContentPane().add(piecepanel);
 		piecepanel.setLayout(null);
 		
-		piecepanel.setVisible(false);
+		
 		
 		JButton btaddpiece = new JButton("ajout piece");
 		btaddpiece.addActionListener(new ActionListener() {
@@ -431,7 +421,13 @@ public class Interface implements ActionListener {
 		simupanel.setBounds(0, 0, 594, 697);
 		frame.getContentPane().add(simupanel);
 		simupanel.setLayout(null);
+		
+		infobjpanel.setVisible(false);
+		listobjpanel.setVisible(false);
+		objetpanel.setVisible(false);
+		piecepanel.setVisible(false);
 		favorispanel.setVisible(false);
+		simupanel.setVisible(false);		
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -443,10 +439,8 @@ public class Interface implements ActionListener {
 				menupanel.setVisible(false);
 				objetpanel.setVisible(true);
 				piecepanel.setVisible(false);
-
 				affiche_objet( piece.elementAt(i).getObjetPiece(),objetcontent);
 			    pieceactuelle= piece.elementAt(i);	
-				
 				}			
 		}		
 		//action sur les boutons d'objets
@@ -458,17 +452,21 @@ public class Interface implements ActionListener {
 				infobjpanel.setVisible(true);
 				}
 				
-				else if (pieceactuelle == null &&  favorispanel.isVisible() )
+				else if (panelactu.equals("favoris"))
 				{objetactuel = donnee.ObjetFavoris.elementAt(i);
-				favorispanel.setVisible(false);
-				infobjpanel.setVisible(true);
+				 panelprec = panelactu;
+				 panelactu="objfavoris";
+				 favorispanel.setVisible(false);
+				 infobjpanel.setVisible(true);
 				}	
 
-				else if (pieceactuelle == null &&  listobjpanel.isVisible() ) 
+				else if (panelactu.equals("listobj")) 
 				{ objetactuel = donnee.getObjet().elementAt(i);
+				panelprec = panelactu;
+				panelactu="objlistobj";
 				listobjpanel.setVisible(false);
 				infobjpanel.setVisible(true);
-				}								
+				}						
 				affiche_infos_objet(objetactuel);
 			}		
 		}
@@ -479,7 +477,7 @@ public class Interface implements ActionListener {
 			btpiece.add(new JButton( piece.elementAt(i).getNom() ));
 			btpiece.elementAt(i).addActionListener(this);}	
 	} 
-	
+
 	public void ajout_piece(){ 	
 	    String nom = JOptionPane.showInputDialog(piecepanel, "Nom de la piece", JOptionPane.QUESTION_MESSAGE);
 	    
@@ -606,6 +604,15 @@ public class Interface implements ActionListener {
 		if(pieceactuelle != null)pieceactuelle.getObjetPiece().remove(o);
 		
 	}
+	
+	public void supprime_piece(Piece p) {
+		btpiece.removeElementAt(piece.indexOf(p));
+		for( Objet o : p.getObjetPiece() ) {
+			if( donnee.getObjet().contains(o))donnee.getObjet().remove(o);
+			if( donnee.ObjetFavoris.contains(o))donnee.ObjetFavoris.remove(o);			
+		}	
+		piece.removeElement(p);	
+	}
 
 	public void sauvegarder_fichier(){		
 		System.out.println("Lancement sauvegarde");
@@ -663,7 +670,7 @@ public class Interface implements ActionListener {
 		priorite.setBounds(12,160, 200, 15);
 		infobjcontent.add(priorite);
 		
-		JLabel etat= new JLabel("AllumÃ©: "+ o.getSwitch());
+		JLabel etat= new JLabel("Allumee: "+ o.getSwitch());
 		etat.setBounds(12,190, 200, 15);
 		infobjcontent.add(etat);		
 	}
