@@ -58,7 +58,7 @@ public class Interface implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JButton btnRetour = new JButton("Retour");
-		//btnRetour.setIcon(new ImageIcon(Interface.class.getResource("/com/sun/javafx/scene/web/skin/Undo_16x16_JFX.png")));
+		btnRetour.setIcon(new ImageIcon(Interface.class.getResource("/com/sun/javafx/scene/web/skin/Undo_16x16_JFX.png")));
 		btnRetour.setBounds(460, 703, 122, 28);
 		frame.getContentPane().add(btnRetour);
 		btnRetour.addActionListener(new ActionListener() {
@@ -493,15 +493,14 @@ public class Interface implements ActionListener {
 
 	public void affiche_piece(){
 		int x=15,y=10;
-		piececontent.removeAll();
-		
+		piececontent.removeAll();		
 			for(int i=0;i<btpiece.size();i++){				
 				btpiece.elementAt(i).setBounds(x, y, 180, 115);
 				btpiece.elementAt(i).setBackground(Color.BLACK);
 				btpiece.elementAt(i).setForeground(Color.LIGHT_GRAY);
 				piececontent.add(btpiece.elementAt(i));			
 				if(x >=395 ) {x=15;y+=125;}
-				else x+=190;}	
+				else x+=190;}
 	}
 	
 	public void affiche_simulateur() {
@@ -623,9 +622,10 @@ public class Interface implements ActionListener {
 			System.out.println("Charger sauvegarde");
 			donnee = new entresortie();
 			donnee.lecturefichier(donnee.NomFichier);			
-		if( !donnee.getObjet().isEmpty() && donnee!=null ) {		
+		if(donnee!=null ) {		
 		jop.showMessageDialog(menupanel, "Sauvegarde importee", "Information", JOptionPane.INFORMATION_MESSAGE);
 		initpiece(donnee.getObjet());	
+		Allume_tous_objets();
 		setBtpiece();
 		AppelAutomatiqueRecuperationConsommation(10);}
 		else jop.showMessageDialog(menupanel, "Erreur lors de l'importation de la sauvegarde", "Information", JOptionPane.WARNING_MESSAGE);}
@@ -795,9 +795,13 @@ public class Interface implements ActionListener {
 		donnee.ConsoSemaine= s.ConsoSemaine();
 		//Réinitialise la date pour le prochain passage.
 		s.rechercheDateHeure();
-		//sauvegarder_fichier();		
 	}
-
+	
+	public void Allume_tous_objets() {
+		for(Objet o: donnee.ListeObjet)
+			o.AllumerEteindre();
+	}
+	
 	
 	
 }
