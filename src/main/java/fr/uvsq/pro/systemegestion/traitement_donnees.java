@@ -1,5 +1,4 @@
 package fr.uvsq.pro.systemegestion;
-package projet.smarthome;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Canvas;
