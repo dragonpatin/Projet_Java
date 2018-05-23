@@ -186,7 +186,7 @@ public class Simulateur{
         objet = tmp;
         ConsommationObjet = tmpConsoO;
             //Tant que la consommation est supérieur
-        for(int j = 3;j>=0;j--) {
+        for(int j = 3;j>=1;j--) {
             int i =0;
             while (consommationTotale >= consommationANePasDepasser && i < objet.size()) {
                 if (ConsommationObjet.get(i) != 0 && objet.get(i).getPriorite() == j) {

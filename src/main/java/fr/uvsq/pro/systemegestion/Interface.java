@@ -135,11 +135,14 @@ public class Interface implements ActionListener {
 		btsimu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				piecepanel.setVisible(false);
+				objetpanel.setVisible(false);			
+				if(donnee !=null ) {
 				menupanel.setVisible(false);
-				objetpanel.setVisible(false);
 				simupanel.setVisible(true);
-				
-				affiche_simulateur();
+				lancer_simulateur();
+				affiche_simulateur();}
+				else 
+				JOptionPane.showMessageDialog(simupanel, "Impossible de lancer le simulateur", "Information", JOptionPane.WARNING_MESSAGE);
 			}
 		});
 		btsimu.setBounds(12, 115, 162, 25);
@@ -268,12 +271,12 @@ public class Interface implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				String prt = JOptionPane.showInputDialog(piecepanel, "Changer priorite", JOptionPane.QUESTION_MESSAGE);
 				if( prt != null) {
-					if(Integer.parseInt(prt)> 0 && Integer.parseInt(prt) < 4) {
+					if(Integer.parseInt(prt)> -1 && Integer.parseInt(prt) < 4) {
 						objetactuel.ModifiePriorite(Integer.parseInt(prt));
 						infobjcontent.revalidate();
 						infobjcontent.repaint();
 						affiche_infos_objet(objetactuel);}
-					else {JOptionPane.showMessageDialog(infobjcontent, "Priorité comprise entre 1 et 3", "Information", JOptionPane.WARNING_MESSAGE);}}}
+					else {JOptionPane.showMessageDialog(infobjcontent, "Priorité comprise entre 0 et 3", "Information", JOptionPane.WARNING_MESSAGE);}}}
 		});
 		btmodifpriorite.setFont(new Font("Dialog", Font.BOLD, 10));
 		btmodifpriorite.setBounds(500, 220, 82, 20);
@@ -506,8 +509,8 @@ public class Interface implements ActionListener {
 		JButton consoj = new JButton("ConsoJour");
 		consoj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				traitement_donnees t;
-				if(donnee != null ) t = new traitement_donnees("Consommation jours ",donnee.ConsoJour,5000);
+				if(donnee != null )
+					new traitement_donnees("Consommation jours ",donnee.ConsoJour,5000);
 				else JOptionPane.showMessageDialog(simupanel, "Aucune donnée n'a été importée !", "Information", JOptionPane.WARNING_MESSAGE);	
 		}});
 		consoj.setBounds(12, 40, 160, 25);
@@ -518,8 +521,8 @@ public class Interface implements ActionListener {
 		JButton consos = new JButton("ConsoSemaine");
 		consos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {			
-				traitement_donnees t;
-				if(donnee != null ) t = new traitement_donnees("Consommation de la semaine ",donnee.ConsoSemaine,5000);
+				if(donnee != null )
+					new traitement_donnees("Consommation de la semaine ",donnee.ConsoSemaine,5000);
 				else JOptionPane.showMessageDialog(simupanel, "Aucune donnée n'a été importée !", "Information", JOptionPane.WARNING_MESSAGE);
 			}
 		});
@@ -531,8 +534,8 @@ public class Interface implements ActionListener {
 		JButton consom = new JButton("ConsoMois");
 		consom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {			
-				traitement_donnees t;
-				if(donnee != null ) t = new traitement_donnees("Consommation du mois ",donnee.ConsoMois,15000);
+				if(donnee != null )
+					new traitement_donnees("Consommation du mois ",donnee.ConsoMois,15000);
 				else JOptionPane.showMessageDialog(simupanel, "Aucune donnée n'a été importée !", "Information", JOptionPane.WARNING_MESSAGE);
 			}
 		});
@@ -780,4 +783,15 @@ public class Interface implements ActionListener {
 		return true ;}
 		return false;
 	}
+	
+	public void lancer_simulateur() {
+		Simulateur s = new Simulateur(donnee);
+		donnee.ConsoJour= s.consoJour();		
+		donnee.ConsoMois= s.ConsoMois();
+		donnee.ConsoSemaine= s.ConsoSemaine();
+		//sauvegarder_fichier();		
+	}
+
+	
+	
 }
