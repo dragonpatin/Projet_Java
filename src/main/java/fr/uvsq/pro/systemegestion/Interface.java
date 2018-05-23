@@ -101,6 +101,8 @@ public class Interface implements ActionListener {
 						menupanel.setVisible(true);		
 						objetpanel.setVisible(false);}}}});
 		
+
+		
 		menupanel.setBounds(0, 0, 582, 697);
 		frame.getContentPane().add(menupanel);
 		menupanel.setLayout(null);
@@ -310,11 +312,6 @@ public class Interface implements ActionListener {
 		frame.getContentPane().add(listobjpanel);
 		listobjpanel.setVisible(false);
 		listobjpanel.setLayout(null);
-		
-		simupanel.setBounds(0, 0, 594, 697);
-		frame.getContentPane().add(simupanel);
-		simupanel.setLayout(null);
-		simupanel.setVisible(false);
 		objetpanel.setBounds(0, 0, 594, 697);
 		frame.getContentPane().add(objetpanel);
 		objetpanel.setLayout(null);
@@ -427,6 +424,10 @@ public class Interface implements ActionListener {
 		favorispanel.setBounds(0, 0, 594, 690);
 		frame.getContentPane().add(favorispanel);
 		favorispanel.setLayout(null);
+		
+		simupanel.setBounds(0, 0, 594, 697);
+		frame.getContentPane().add(simupanel);
+		simupanel.setLayout(null);
 		favorispanel.setVisible(false);
 	}
 
@@ -501,15 +502,15 @@ public class Interface implements ActionListener {
 	}
 	
 	public void affiche_simulateur() {
+
 		JButton consoj = new JButton("ConsoJour");
 		consoj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				traitement_donnees t;
 				if(donnee != null ) t = new traitement_donnees("Consommation jours ",donnee.ConsoJour,5000);
-				else JOptionPane.showMessageDialog(simupanel, "Aucune donnée n'a été importée !", "Information", JOptionPane.WARNING_MESSAGE);
-			
+				else JOptionPane.showMessageDialog(simupanel, "Aucune donnée n'a été importée !", "Information", JOptionPane.WARNING_MESSAGE);	
 		}});
-		consoj.setBounds(15,100,180,115);
+		consoj.setBounds(12, 40, 160, 25);
 		consoj.setBackground(Color.BLACK);
 		consoj.setForeground(Color.LIGHT_GRAY);
 		simupanel.add(consoj);
@@ -522,7 +523,7 @@ public class Interface implements ActionListener {
 				else JOptionPane.showMessageDialog(simupanel, "Aucune donnée n'a été importée !", "Information", JOptionPane.WARNING_MESSAGE);
 			}
 		});
-		consos.setBounds(15,225,180,115);
+		consos.setBounds(12,90, 160, 25);
 		consos.setBackground(Color.BLACK);
 		consos.setForeground(Color.LIGHT_GRAY);
 		simupanel.add(consos);
@@ -535,7 +536,7 @@ public class Interface implements ActionListener {
 				else JOptionPane.showMessageDialog(simupanel, "Aucune donnée n'a été importée !", "Information", JOptionPane.WARNING_MESSAGE);
 			}
 		});
-		consom.setBounds(15,350,180,115);
+		consom.setBounds(12,140, 160, 25);
 		consom.setBackground(Color.BLACK);
 		consom.setForeground(Color.LIGHT_GRAY);
 		simupanel.add(consom);
@@ -780,3 +781,4 @@ public class Interface implements ActionListener {
 		return false;
 	}
 }
+
