@@ -7,5 +7,4 @@ target/*
 .DS_Store
 .idea/vcs.xml
 .idea/workspace.xml
-src/main/resources/
 /SystemeGestion-1.0.jar
