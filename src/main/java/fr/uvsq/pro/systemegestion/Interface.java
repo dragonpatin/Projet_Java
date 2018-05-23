@@ -786,9 +786,15 @@ public class Interface implements ActionListener {
 	
 	public void lancer_simulateur() {
 		Simulateur s = new Simulateur(donnee);
-		donnee.ConsoJour= s.consoJour();		
+		//Mais a jour les données
+		s.recupereObjet();
+		s.miseAJourObjet();
+		s.calculConsommation();
+		donnee.ConsoJour= s.consoJour();
 		donnee.ConsoMois= s.ConsoMois();
 		donnee.ConsoSemaine= s.ConsoSemaine();
+		//Réinitialise la date pour le prochain passage.
+		s.rechercheDateHeure();
 		//sauvegarder_fichier();		
 	}
 
