@@ -27,11 +27,7 @@ public class traitement_donnees{
 	 JPanel graphpanel = new JPanel();
      String TitreGraph;
      int echelle_de_temps;
-   
- 	public static void main(String[] args) {
- 		traitement_donnees t = new traitement_donnees("Consommation du moi ",testvect(),5000);
- 	}
- 	
+    	
     public traitement_donnees(){
         this.absMois = new Vector<Integer>();
         this.ordMois = new Vector<Integer>();
@@ -51,19 +47,6 @@ public class traitement_donnees{
     	 affiche_graph_conso(conso,valeur_max_ord);
      }
      
-     public static Vector<Integer> testvect(){
-  		Vector<Integer> cons =new Vector<Integer>(); 
-  		cons.add(1093);
-  		cons.add(2000);
-  		cons.add(1500);
-  		cons.add(1750); 		
-  		cons.add(700);
-  		cons.add(2000); 		
-  		cons.add(1800); 		
-  		cons.add(1500); 		
-  		cons.add(3000);
-  		return cons;
-     }
      /**
       * methode de création et de modification des graphique.
       * la premiere execution initialise les graphique.
