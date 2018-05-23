@@ -89,12 +89,16 @@ public class Interface implements ActionListener {
 				}
 				if( panelprec.equals("favoris") ) {
 					panelprec="objfavoris";
+					panelactu="favoris";
 					favorispanel.setVisible(true);
+					affiche_objet(donnee.ObjetFavoris,favorispanel);
 					infobjpanel.setVisible(false);
 				}
 				if( panelprec.equals("listobj") ) {
 					panelprec="objlistobj";
+					panelactu="listobj";
 					listobjpanel.setVisible(true);
+					affiche_objet(donnee.getObjet(),listobjpanel);
 					infobjpanel.setVisible(false);	
 				}			
 			}});
