@@ -1,4 +1,5 @@
 package fr.uvsq.pro.systemegestion;
+package projet.smarthome;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Canvas;
@@ -8,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.Font;
+import javax.swing.JProgressBar;
 
 
 public class traitement_donnees{
@@ -23,30 +25,33 @@ public class traitement_donnees{
     // abscisse et ordonnée d'un graphique contenant la consomation instantané sur une heure
     Vector<Integer> absHeure;
     Vector<Integer> ordHeure;
-	 JFrame frame = new JFrame();
-	 JPanel graphpanel = new JPanel();
-     String TitreGraph;
-     int echelle_de_temps;
-    	
-    public traitement_donnees(){
-        this.absMois = new Vector<Integer>();
-        this.ordMois = new Vector<Integer>();
-        this.absAns = new Vector<Integer>();
-        this.ordAns = new Vector<Integer>();
-        this.absJour = new Vector<Integer>();
-        this.ordJour = new Vector<Integer>();
-        this.absHeure = new Vector<Integer>();
-        this.ordHeure = new Vector<Integer>();
-    }
- 	
- 	
-     
+     JFrame frame = new JFrame();
+     JPanel graphpanel = new JPanel();
+     JPanel gradupanel = new JPanel();
+    String TitreGraph;
+    int nb_valeur;
+
+   
      public traitement_donnees(String TitreGraph ,Vector<Integer> conso,int valeur_max_ord){
-    	 this.TitreGraph=TitreGraph;   	 
+    	 this.TitreGraph=TitreGraph; 
+    	 this.nb_valeur=conso.size();
     	 init_affichage();
     	 affiche_graph_conso(conso,valeur_max_ord);
      }
      
+     public static Vector<Integer> testvect(){
+  		Vector<Integer> cons =new Vector<Integer>(); 
+  		cons.add(1093);
+  		cons.add(2000);
+  		cons.add(1500);
+  		cons.add(1750); 		
+  		cons.add(700);
+  		cons.add(2000); 		
+  		cons.add(1800); 		
+  		cons.add(1500); 		
+  		cons.add(3000);
+  		return cons;
+     }
      /**
       * methode de création et de modification des graphique.
       * la premiere execution initialise les graphique.
@@ -194,7 +199,7 @@ public class traitement_donnees{
      
      private void init_affichage() {
 
-  		frame.setBounds(100, 100,700,500);
+  		frame.setBounds(100, 100,775,500);
   		frame.setVisible(true);
   		frame.setTitle(this.TitreGraph);
   		frame.getContentPane().setLayout(null);		
@@ -208,6 +213,23 @@ public class traitement_donnees{
   		titregraph.setBounds(140, 13, 318, 30);
   		frame.getContentPane().add(titregraph);
   		
+  		JPanel gradupanel = new JPanel();
+  		gradupanel.setBackground(SystemColor.inactiveCaption);
+  		gradupanel.setBounds(60, 370, 550, 30);
+  		frame.getContentPane().add(gradupanel);
+  		gradupanel.setLayout(null);
+  		
+  		int x=0;
+	   	int w = (graphpanel.getWidth()/nb_valeur)-6; 	
+	   	if (nb_valeur<4) w = (graphpanel.getWidth()/4)-6;
+  		for(int i = 0; i<nb_valeur;i++) {
+  		JLabel lblNewLabel_1 = new JLabel(""+(i+1));
+  		lblNewLabel_1.setBounds(x-2, 5,w, 16);
+  		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+  		gradupanel.add(lblNewLabel_1);
+  		x+=graphpanel.getWidth()/nb_valeur;
+  		}
+  			
      }
 
      public void graphe_temps_reel(Simulateur S, int echelle_de_temps){
@@ -220,7 +242,7 @@ public class traitement_donnees{
    		for(int i= 0 ; i < 6; i++) {
    	   		Canvas canvas = new Canvas();
    	   		canvas.setBackground(SystemColor.controlHighlight);
-   	   		canvas.setBounds(0, 258-y, 505, 25);
+   	   		canvas.setBounds(0, 258-y, 550, 25);
    	   		graphpanel.add(canvas);
    	   		y+=50;
    		}  		
@@ -229,19 +251,23 @@ public class traitement_donnees{
      public void affiche_graph_conso(Vector<Integer>conso,int pic) {
     	 int x =0,h=0,h_max=290;
     	 int nb=conso.size();
-    	 int w = (graphpanel.getWidth()/nb)-6; 	
-    	 if (nb<4) w = (graphpanel.getWidth()/4)-6;
-    	 int ecart = w/5;
+    	 int lg = graphpanel.getWidth();
+    	 int w = (lg/nb)-6; 	
+    	 if (nb<4) w = (lg/4)-6;
+    	 int ecart = w/6;
     	 
     	for(int i= 0 ; i < conso.size(); i++) {
    		h= (conso.elementAt(i)*h_max)/pic;
+  		
    		Canvas canvas = new Canvas();
 		canvas.setBackground(new Color(100,150,0));
-   		canvas.setBounds(x+3,300-h,w-ecart,h);
+   		canvas.setBounds(x,300-h,w-ecart,h); 		
    		graphpanel.add(canvas);	
-   		x+=500/nb;
+   		x+=lg/nb;
    		}
     	aff_canvas_graph(nb);
      }
 }
+
+
 
