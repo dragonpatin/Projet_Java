@@ -134,8 +134,7 @@ public class Objet{
         if(this.Switch == false){
             return 0;
         }
-        Random r = new Random();
-        int a = 0 + r.nextInt(this.Consommation/4 - (-this.Consommation/4));   //genere un nb aleatoire entre -Consommation/4 et Consommation/4
+        int a = (int) (Math.random()*(this.Consommation/3)); //genere un nb aleatoire entre 0 et Consommation/3
         return (this.Consommation + a);
     }
 
