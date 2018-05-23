@@ -1,10 +1,4 @@
 #
-Lampe
-Salon
-0
-null
-0
-#
 Radiateur
 chambre
 65
@@ -47,8 +41,8 @@ Ventilateur
 -
 0
 -
-1093
+91
 %
-1234
+1235
 ?
-12345
+12346
