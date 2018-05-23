@@ -1,4 +1,4 @@
-package projet.smarthome;
+package fr.uvsq.pro.systemegestion;
 import java.awt.Color;
 import java.lang.Integer;
 import javax.swing.JButton;
