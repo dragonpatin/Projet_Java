@@ -35,13 +35,13 @@ public class Objet{
      * L'objet est éteint de base et à une priorité faible
      */
     public Objet(){
-        this.NomObjet = "Objet1";
-        this.PieceMaison = "Salon";
-        this.Consommation = 10;
+        this.NomObjet = "";
+        this.PieceMaison = "";
+        this.Consommation = 0;
         this.Switch = false;
         this.Duree_utilisation = 0;
         this.Priorite = 0;
-        this.AdresseMAC = "AA:00:BB";
+        this.AdresseMAC = "";
     }
 
     /**
