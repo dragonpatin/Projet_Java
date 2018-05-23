@@ -1,6 +1,5 @@
 package fr.uvsq.pro.systemegestion;
 import java.util.Calendar;
-import java.util.Random;
 
 /**
  * Classe Objet

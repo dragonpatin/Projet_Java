@@ -670,11 +670,11 @@ public class Interface implements ActionListener {
 		piece.setBounds(12,130, 200, 15);
 		infobjcontent.add(piece);
 		
-		JLabel priorite= new JLabel("Niveau de priorite : "+o.getPriorite());
+		JLabel priorite= new JLabel("Niveau de priorité : "+o.getPriorite());
 		priorite.setBounds(12,160, 200, 15);
 		infobjcontent.add(priorite);
 		
-		JLabel etat= new JLabel("Allumee: "+ o.getSwitch());
+		JLabel etat= new JLabel("Allumé: "+ o.getSwitch());
 		etat.setBounds(12,190, 200, 15);
 		infobjcontent.add(etat);		
 	}
