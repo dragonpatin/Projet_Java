@@ -1,29 +1,21 @@
-package fr.uvsq.pro.systemegestion;
+/**
+ * Java source Interface
+ */
 
-import java.awt.Color;
+package fr.uvsq.pro.systemegestion;
 import java.lang.Integer;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import java.util.Vector;
+import javax.swing.*;
+import java.util.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JLayeredPane;
-import java.awt.Canvas;
-import javax.swing.JLabel;
-import java.awt.SystemColor;
-import java.awt.Font;
+import java.awt.*;
 import java.util.Timer;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
 
-import java.awt.GridLayout;
-import javax.swing.*;
+/**
+ * Classe Interfce
+ * Classe permettant l'afichage de l'interface graphique
+ * Permet aussi de lancer le simulateur 
+ */
 
 public class Interface implements ActionListener {
 	private JFrame frame;
@@ -51,10 +43,18 @@ public class Interface implements ActionListener {
 					window.frame.setVisible(true);										
 	}
 	
+	/**
+     * Constructeur de la classe Interface
+     * Permet de lancer l'interface
+     */
 	public Interface(){
 		initialiseUI();
 	}
 
+	/**
+	 * Permet l'affichage de tous les boutons 
+	 */
+	 
 	private void initialiseUI(){
 		frame = new JFrame();
 		frame.setBounds(100, 100,600,800);
@@ -435,9 +435,15 @@ public class Interface implements ActionListener {
 		objetpanel.setVisible(false);
 		piecepanel.setVisible(false);
 		favorispanel.setVisible(false);
-		simupanel.setVisible(false);		
+		simupanel.setVisible(false);	
+		
+		affiche_temperateurExt();	
 	}
 
+	/**
+	 * Permet de faire des actions en fonciton du bouton cliqué
+	 */
+	 
 	public void actionPerformed(ActionEvent e) {
 		
 		//action sur les boutons de pieces 
@@ -480,11 +486,18 @@ public class Interface implements ActionListener {
 		}
 	}
 
+	/**
+	 * Ajoute les bouton pièce ainsi que leur action
+	 */
 	public void setBtpiece() {
 		for(int i=0;i<piece.size();i++) {
 			btpiece.add(new JButton( piece.elementAt(i).getNom() ));
 			btpiece.elementAt(i).addActionListener(this);}	
 	} 
+	
+	/**
+	 * Ajout des pièce dans le vecteur btpièce
+	 */
 
 	public void ajout_piece(){ 	
 	    String nom = JOptionPane.showInputDialog(piecepanel, "Nom de la pièce", JOptionPane.QUESTION_MESSAGE);
@@ -496,7 +509,11 @@ public class Interface implements ActionListener {
 	    btpiece.addElement(new JButton(piece.lastElement().getNom()));
 	    btpiece.lastElement().addActionListener(this);}}       
 	}
-
+	
+	
+	/**
+	 * Affichage des boutons pièces 
+	 */
 	public void affiche_piece(){
 		int x=15,y=10;
 		piececontent.removeAll();		
@@ -509,6 +526,9 @@ public class Interface implements ActionListener {
 				else x+=190;}
 	}
 	
+	/**
+	 * Affichage des 3 boutons du simulateur 
+	 */
 	public void affiche_simulateur() {
 
 		JButton consoj = new JButton("ConsoJour");
@@ -550,6 +570,9 @@ public class Interface implements ActionListener {
 		simupanel.add(consom);
 	}
 
+	/**
+	 * Ajoute les bouton objet ainsi que leur action
+	 */
 	public void setBtobjet(Vector<Objet> p) {
 		btobjet.removeAllElements();	
 		for(int i=0; i<p.size() ;i++){
@@ -558,6 +581,11 @@ public class Interface implements ActionListener {
 			btobjet.addElement(tmp); }	
 	}
 
+	/**
+	 * Affichage des objets 
+	 * @param Vector d 'objet qu'on affiche
+	 * @param  sur le panel JPanel pan
+	 */
 	public void affiche_objet(Vector<Objet> p , JPanel pan){
 		int y=10;
 		int h=40;
@@ -577,7 +605,9 @@ public class Interface implements ActionListener {
 			}
 		}
 	}
-	
+	/**
+	 * Methode pour créer les objets à paritr de l'interface
+	 */
 	public void ajout_objet(Piece p) {
 
 		String[] items = {"1","2","3"};
@@ -633,11 +663,17 @@ public class Interface implements ActionListener {
 	    	ajoutObjetDansPiece(pieceactuelle,nom);}*/
 	}
 	
+	/**
+	 * Ajoute objet dans la piece indiquer en parametre
+	 */
 	public void ajoutObjetDansPiece(Piece p,String nom) {	    
 	    if( nom != null ) {p.getObjetPiece().addElement(donnee.getObjet().lastElement());}
 	}
 	
-	
+	/**
+	 * Methode pour ajouter les objets dans favoris depuis l'interface
+	 * @param Objet o sera mis dans le vecteur favoris
+	 */
 	@SuppressWarnings("static-access")
 	public void ajout_objet_favoris(Objet o) {
 		JOptionPane jop = new JOptionPane();
@@ -650,7 +686,11 @@ public class Interface implements ActionListener {
 		jop.showMessageDialog(null, "Objet supprimé des favoris", "Information", JOptionPane.WARNING_MESSAGE);
 		}
 	}
-		
+	
+	/**
+	 * Methode pour supprimer un objet à paritr de l'interface
+	 * @param l'Objet en parmetre sera supprimer 
+	 */
 	public void supprime_objet(Objet o) {
 		for(Piece p : piece) {
 			if( p.getObjetPiece().contains(o)) {
@@ -662,6 +702,10 @@ public class Interface implements ActionListener {
 		
 	}
 	
+	/**
+	 * Methode pour supprimer une piece à paritr de l'interface
+	 * @param la piece en parmetre sera supprimer 
+	 */
 	public void supprime_piece(Piece p) {
 		btpiece.removeElementAt(piece.indexOf(p));
 		for( Objet o : p.getObjetPiece() ) {
@@ -671,12 +715,18 @@ public class Interface implements ActionListener {
 		piece.removeElement(p);	
 	}
 
+	/**
+	 * Methode pour sauvegarder les donnée actuel dans le fichier importé auparavant
+	 */
 	public void sauvegarder_fichier(){		
 		System.out.println("Lancement sauvegarde");
 		if( donnee != null )donnee.ecriture(donnee.NomFichier);	
 		else JOptionPane.showMessageDialog(menupanel, "Aucun fichier importé", "Information", JOptionPane.WARNING_MESSAGE);
 	}
 	
+	/**
+	 * Methode permettant d'importé un fichier donc permettra d'utiliser les donnée du fichier
+	 */
 	@SuppressWarnings("static-access")
 	public void charger_sauvegarde(){
 		JOptionPane jop = new JOptionPane();		
@@ -695,11 +745,16 @@ public class Interface implements ActionListener {
 		else jop.showMessageDialog(menupanel, "Erreur lors de l'importation de la sauvegarde", "Information", JOptionPane.WARNING_MESSAGE);}
 	}
 	
+	
 	public void AppelAutomatiqueRecuperationConsommation(int s){
 		Timer t = new Timer();
 		t.schedule(new taskSauvegarde(this),1000,1000*s);		
 	}
 	
+	/**
+	 * Methode pour afficher toutes les données de l'objet
+	 * @param Objet: on vera toutes ces donnée actuelles
+	 */
 	public void affiche_infos_objet(Objet o) {
 		
 		infobjcontent.removeAll();		
@@ -731,7 +786,10 @@ public class Interface implements ActionListener {
 		etat.setBounds(12,190, 200, 15);
 		infobjcontent.add(etat);		
 	}
-
+	
+	/**
+	 * Methode pour récuperer les donnée dans la classe entresortie
+	 */
 	public entresortie getDonnee() {
 		return donnee;
 	}
@@ -740,12 +798,11 @@ public class Interface implements ActionListener {
 		//reimplementer
 		this.donnee = donnee;
 	}
-		    
-	public void AfficheConsommationObjet(Objet o){
-		System.out.println("La consommation de cet objet est" + o.Consommation);
-	}
-	    
-	public void AfficheConsommationGlobale ( Vector <Objet> objet ){
+	
+	/**
+	 * Methode pour afficher la consommation globale de tous les objet du vecteur 
+	 */
+	public void AfficheConsommationGlobale ( Vector<Objet> objet ){
 		int consoG=0;
 		for(int i=0;i<objet.size();i++){
 			consoG+= objet.get(i).Consommation;
@@ -753,7 +810,9 @@ public class Interface implements ActionListener {
 		System.out.println("La consommation globale est" + consoG);			
 	}
 
-	    	    
+	/**
+	 * Methode pour echanger 2 string 
+	 */
 	public void echanger(String a, String b){
 		String temp;
 		temp=a;
@@ -761,12 +820,20 @@ public class Interface implements ActionListener {
 		b=temp;
 	}
 	
+	/**
+	 * Methode pour partitionner
+	 * @param Vecteur objet 
+	 * @param int premier: le 1er element du vecteur
+	 * @param int dernier: dernier element du vecteur
+	 * @param int pivot
+	 * @return une position du vecteur qui sera la position du pivot
+	 */
 	public int Partitionner_Objet(Vector <Objet> O, int premier , int dernier , int pivot){
 		echanger(O.elementAt(pivot).getNom(),O.elementAt(dernier).getNom());
 		int j=premier;   
 	    for(int i=premier;i<dernier-1;i++)
 	         {
-	          if (  O.elementAt(i).getNom().compareTo(O.elementAt(dernier).getNom())  > 0  ) //je ne comprend l erreur 
+	          if (  O.elementAt(i).getNom().compareTo(O.elementAt(dernier).getNom())  > 0  ) 
 	              {
 	              echanger(O.elementAt(i).getNom(),O.elementAt(j).getNom());
 	              j++;
@@ -775,7 +842,11 @@ public class Interface implements ActionListener {
 	     echanger(O.elementAt(dernier).getNom(),O.elementAt(j).getNom());
 	     return j;
 	}
-	    
+	   
+	/**
+	 * Methode de tri rapide 
+	 * Permet de trier le vecteur objet 
+	 */
 	public void tri_rapide_Objet(Vector <Objet> O, int premier , int dernier){
 		if(premier < dernier){
 			int pivot= 0; // par defaut
@@ -783,12 +854,20 @@ public class Interface implements ActionListener {
 			tri_rapide_Objet(O,premier,pivot-1);
 			tri_rapide_Objet(O,pivot+1,dernier);}}
 	
+	/**
+	 * Methode pour partitionner
+	 * @param Vecteur piece
+	 * @param int premier: le 1er element du vecteur
+	 * @param int dernier: dernier element du vecteur
+	 * @param int pivot
+	 * @return une position du vecteur qui sera la position du pivot
+	 */
 	public int Partitionner_Piece(Vector<Piece> O, int premier , int dernier , int pivot){
 		echanger(O.elementAt(pivot).getNom(),O.elementAt(dernier).getNom());
 		int j=premier;   
 	    for(int i=premier;i<dernier-1;i++)
 	         {
-	          if (O.elementAt(i).getNom().compareTo(O.elementAt(dernier).getNom()) > 0 ) //je comprend pas l erreur 
+	          if (O.elementAt(i).getNom().compareTo(O.elementAt(dernier).getNom()) > 0 ) 
 	              {
 	              echanger(O.elementAt(i).getNom(),O.elementAt(j).getNom());
 	              j++;
@@ -797,7 +876,11 @@ public class Interface implements ActionListener {
 	         echanger(O.elementAt(dernier).getNom(), O.elementAt(j).getNom() );
 	     return j;
 	}
-	    
+	
+	/**
+	 * Methode de tri rapide 
+	 * Permet de trier le vecteur piece 
+	 */
 	public void tri_rapide_Piece(Vector <Piece> O, int premier , int dernier){
 		if(premier < dernier){
 			int pivot= 0; // par defaut
@@ -805,21 +888,11 @@ public class Interface implements ActionListener {
 			tri_rapide_Piece(O,premier,pivot-1);
 			tri_rapide_Piece(O,pivot+1,dernier);}
 	}
-	    
-	public boolean test_nom_Objet ( String nomObjet, Vector <Objet> O, int n){
-		for(int i=0;i<n-1;i++){
-			if(nomObjet == O.get(i).getNom()) return true;
-		}
-		return false;
-	}
-	    
-	public boolean test_nom_Piece( String nomPiece, Vector <Piece> O, int n){
-			for(int i=0;i<n-1;i++){
-			if(nomPiece == O.get(i).getNom()) return true;
-		}
-		return false;
-	}
-
+	
+	/**
+	 * Methode qui initialise la piece avec les objets dans le vecteur obj
+	 * @param Vecteur obj: tous les objets sera mis dans la piece
+	 */
 	public void initpiece(Vector<Objet> obj) {
 		for(Objet o : obj) {
 			if( pieceExist(o.getPiece()) == -1 ) {
@@ -832,6 +905,11 @@ public class Interface implements ActionListener {
 		}		
 	}
 	
+	/**
+	 * Methode de verification de l'existence d'une piece
+	 * @param verification sur la piece en parametre
+	 * @return -1 si elle existe pas sinon 1
+	 */
 	public int pieceExist(String nom) {
 		if( piece.isEmpty())return -1;
 		
@@ -841,6 +919,10 @@ public class Interface implements ActionListener {
 	return -1;
 	}
 	
+	/**
+	 * Methode de verification de l'adresse Mac
+	 * Permet de trier le vecteur objet 
+	 */
 	public boolean contientAdrMAC(Vector<Objet> obj, String adr) {
 		for(Objet o : obj  ) {
 		if ( o.getadresseMAC().equals(adr) )
@@ -848,6 +930,9 @@ public class Interface implements ActionListener {
 		return false;
 	}
 	
+	/**
+	 * Methode qui permet de simuler les conso jour, mois et semaine pour ensuite les sauvegarder 
+	 */
 	public void lancer_simulateur() {
 		Simulateur s = new Simulateur(donnee);
 		//Mais a jour les données
@@ -859,13 +944,25 @@ public class Interface implements ActionListener {
 		donnee.ConsoSemaine= s.ConsoSemaine();
 		//Réinitialise la date pour le prochain passage.
 		s.rechercheDateHeure();
+		sauvegarder_fichier();
 	}
 	
+	/**
+	 * Methode pour allumer ou eteindre tous les objet
+	 */
 	public void Allume_tous_objets() {
 		for(Objet o: donnee.ListeObjet)
 			o.AllumerEteindre();
 	}
 	
-	
+	/**
+	 * Methode pour afficher la temperature exterieur
+	 */
+	public void affiche_temperateurExt(){
+		Simulateur s = new Simulateur(donnee);
+		JLabel ltempExt = new JLabel("TempsExterieur:" + s.getTemperatureExt()+10);
+		ltempExt.setBounds(350, 12, 150, 15);
+		menupanel.add(ltempExt);
+	}
 	
 }
