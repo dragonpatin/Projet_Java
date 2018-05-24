@@ -99,6 +99,7 @@ public class ObjetTest {
 
     /**
      * Test du calcul de la durée d'utilisation d'un objet
+     * Il arrive que quelques fois le test bug pour des raisons inconnues, il faut juste le relancer
      */
     @Test
     public void TestDurée_utilisation(){
