@@ -21,13 +21,30 @@ public class SimulateurTest{
     private entresortie E;
     private entresortie E2;
 
+
+    /**
+     * Au démarage tout les objets sont éteint.
+     * Avec cette fonction nous les allumons tous
+     * @param e classe entresortie ou nous allumons tout les objets
+     */
+    private void AllumerObjet(entresortie e){
+        for(int i = 0;i<e.getObjet().size();i++){
+            e.getObjet().get(i).AllumerEteindre();
+        }
+    }
+
+    /**
+     * Appelé lors du démarage du test.
+     * Il crée deux classes entresortie avec deux fichiers test
+     */
     @Before
     public void Initialisation(){
         E = new entresortie(true);
         E2 = new entresortie(true);
         E.lecturefichier(new java.io.File("TestSimulateur1"));
         E2.lecturefichier(new java.io.File("TestSimulateur3"));
-
+        AllumerObjet(E);
+        AllumerObjet(E2);
     }
     /**
      * Lire Fichier 1

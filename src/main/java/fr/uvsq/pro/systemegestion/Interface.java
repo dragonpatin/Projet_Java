@@ -3,8 +3,10 @@
  */
 
 package fr.uvsq.pro.systemegestion;
+import java.io.IOException;
 import java.lang.Integer;
 import javax.swing.*;
+import javax.xml.bind.JAXBException;
 import java.util.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -61,7 +63,7 @@ public class Interface implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JButton btnRetour = new JButton("Retour");
-		btnRetour.setIcon(new ImageIcon(Interface.class.getResource("/com/sun/javafx/scene/web/skin/Undo_16x16_JFX.png")));
+		btnRetour.setIcon(new ImageIcon("src/main/resources/retour.png"));
 		btnRetour.setBounds(460, 703, 122, 28);
 		frame.getContentPane().add(btnRetour);
 		btnRetour.addActionListener(new ActionListener() {
@@ -435,9 +437,18 @@ public class Interface implements ActionListener {
 		objetpanel.setVisible(false);
 		piecepanel.setVisible(false);
 		favorispanel.setVisible(false);
-		simupanel.setVisible(false);	
-		
-		affiche_temperateurExt();	
+		simupanel.setVisible(false);
+
+
+
+		//Ajout Execption :
+		try {
+			affiche_temperateurExt();
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -958,9 +969,9 @@ public class Interface implements ActionListener {
 	/**
 	 * Méthode pour afficher la température exterieur
 	 */
-	public void affiche_temperateurExt(){
+	public void affiche_temperateurExt() throws JAXBException, IOException {
 		Simulateur s = new Simulateur(donnee);
-		JLabel ltempExt = new JLabel("TempsExterieur:" + s.getTemperatureExt()+10);
+		JLabel ltempExt = new JLabel("TempsExterieur:" + s.getTemperatureExt());
 		ltempExt.setBounds(350, 12, 150, 15);
 		menupanel.add(ltempExt);
 	}
