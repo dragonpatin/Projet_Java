@@ -18,8 +18,4 @@ mvn install
 ```
 2.Exécution 
    
-Puis Lancer le programme :
-```
- java -jar SystemeGestion-1.0.jar
-```
-ou lancer en double cliquant dessus
+Lancer en double cliquant sur le fichier SystemeGestion.jar
