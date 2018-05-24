@@ -1,4 +1,5 @@
 package fr.uvsq.pro.systemegestion;
+
 import java.awt.Color;
 import java.lang.Integer;
 import javax.swing.JButton;
@@ -21,6 +22,9 @@ import java.util.Timer;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
+import java.awt.GridLayout;
+import javax.swing.*;
+
 public class Interface implements ActionListener {
 	private JFrame frame;
 	private JPanel piecepanel = new JPanel();
@@ -40,7 +44,7 @@ public class Interface implements ActionListener {
 	private Objet objetactuel = new Objet();
 	private entresortie donnee;
 	private String panelprec="";
-	private String panelactu="menus";
+	private String panelactu="Menu";
 	
 	public static void main(String[] args){					
 					Interface window = new Interface();
@@ -107,7 +111,7 @@ public class Interface implements ActionListener {
 		frame.getContentPane().add(menupanel);
 		menupanel.setLayout(null);
 		
-		JButton PIECE = new JButton("Afficher pieces");
+		JButton PIECE = new JButton("Afficher pièces");
 		PIECE.setHorizontalAlignment(SwingConstants.LEFT);
 		PIECE.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -117,7 +121,7 @@ public class Interface implements ActionListener {
 				simupanel.setVisible(false);
 				panelactu="";
 				if(donnee !=null )affiche_piece();
-				else {JOptionPane.showMessageDialog(piecepanel, "Liste des pieces vide", "Information", JOptionPane.WARNING_MESSAGE);
+				else {JOptionPane.showMessageDialog(piecepanel, "Liste des pièces vide", "Information", JOptionPane.WARNING_MESSAGE);
 				menupanel.setVisible(true);
 				piecepanel.setVisible(false);
 				;}}}				
@@ -126,11 +130,11 @@ public class Interface implements ActionListener {
 		PIECE.setBounds(12, 39, 162, 25);
 		menupanel.add(PIECE);
 		
-		JLabel lblMenus = new JLabel("Menus");
+		JLabel lblMenus = new JLabel("Menu");
 		lblMenus.setBounds(12, 12, 70, 15);
 		menupanel.add(lblMenus);
 		
-		JButton btsimu = new JButton("Lancer simulateur");
+		JButton btsimu = new JButton("Lancer le simulateur");
 		btsimu.setHorizontalAlignment(SwingConstants.LEFT);
 		btsimu.setIcon(new ImageIcon("src/main/resources/play-256.png"));
 		btsimu.addActionListener(new ActionListener() {
@@ -233,7 +237,7 @@ public class Interface implements ActionListener {
 				String adr = JOptionPane.showInputDialog(piecepanel, "Changer l'adresse MAC", JOptionPane.QUESTION_MESSAGE);			
 				if( adr != null ) {
 				if (contientAdrMAC(donnee.getObjet(),adr)) {
-					JOptionPane.showMessageDialog(infobjcontent, "Adresse MAC déja utilisée", "Information", JOptionPane.WARNING_MESSAGE);}
+					JOptionPane.showMessageDialog(infobjcontent, "Adresse MAC déjà utilisée", "Information", JOptionPane.WARNING_MESSAGE);}
 				else {
 				objetactuel.ModifieAdresseMAC(adr);
 				infobjcontent.revalidate();
@@ -266,7 +270,7 @@ public class Interface implements ActionListener {
 		JButton btmodifpriorite = new JButton("modifier");
 		btmodifpriorite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String prt = JOptionPane.showInputDialog(piecepanel, "Changer priorite", JOptionPane.QUESTION_MESSAGE);
+				String prt = JOptionPane.showInputDialog(piecepanel, "Changer priorité", JOptionPane.QUESTION_MESSAGE);
 				if( prt != null) {
 					if(Integer.parseInt(prt)> -1 && Integer.parseInt(prt) < 4) {
 						objetactuel.ModifiePriorite(Integer.parseInt(prt));
@@ -323,7 +327,7 @@ public class Interface implements ActionListener {
 		
 		objetpanel.add(objetcontent);
 		
-		JButton btnaddObjet = new JButton("ajout objet ");
+		JButton btnaddObjet = new JButton("Ajouter objet ");
 		btnaddObjet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ajout_objet(pieceactuelle);
@@ -337,7 +341,7 @@ public class Interface implements ActionListener {
 		btnaddObjet.setBounds(353, 0, 117, 25);
 		objetpanel.add(btnaddObjet);
 		
-		JButton btsuppiece = new JButton("Supprimer piece");
+		JButton btsuppiece = new JButton("Supprimer pièce");
 		btsuppiece.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				supprime_piece(pieceactuelle);
@@ -353,7 +357,7 @@ public class Interface implements ActionListener {
 		JButton btmodpiece = new JButton("modifer nom");
 		btmodpiece.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String nom = JOptionPane.showInputDialog(piecepanel, "Modifier le nom de la piece", JOptionPane.QUESTION_MESSAGE);
+				String nom = JOptionPane.showInputDialog(piecepanel, "Modifier le nom de la pièce", JOptionPane.QUESTION_MESSAGE);
 				if(nom !=null) {
 				pieceactuelle.changerNom(nom);
 				btpiece.elementAt(piece.indexOf(pieceactuelle)).setText(nom);
@@ -370,14 +374,14 @@ public class Interface implements ActionListener {
 		
 		
 		
-		JButton btaddpiece = new JButton("ajout piece");
+		JButton btaddpiece = new JButton("Ajouter piece");
 		btaddpiece.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {			
 				ajout_piece();
 				piecepanel.revalidate();
 				piecepanel.repaint();
 				affiche_piece();
-				System.out.println("ajout piece");
+				System.out.println("ajout pièce");
 			}
 		});
 		btaddpiece.setBounds(344, 0, 117, 25);
@@ -483,10 +487,10 @@ public class Interface implements ActionListener {
 	} 
 
 	public void ajout_piece(){ 	
-	    String nom = JOptionPane.showInputDialog(piecepanel, "Nom de la piece", JOptionPane.QUESTION_MESSAGE);
+	    String nom = JOptionPane.showInputDialog(piecepanel, "Nom de la pièce", JOptionPane.QUESTION_MESSAGE);
 	    
 	    if( nom != null ) {
-	    if ( pieceExist(nom) != -1 )JOptionPane.showMessageDialog(piecepanel, "Piece déja existante", "Information", JOptionPane.WARNING_MESSAGE);
+	    if ( pieceExist(nom) != -1 )JOptionPane.showMessageDialog(piecepanel, "Pièce déja existante", "Information", JOptionPane.WARNING_MESSAGE);
 	    else {
 	    piece.add(new Piece(nom,0));	 
 	    btpiece.addElement(new JButton(piece.lastElement().getNom()));
@@ -511,8 +515,8 @@ public class Interface implements ActionListener {
 		consoj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(donnee != null )
-					new traitement_donnees("Consommation jours ",donnee.ConsoJour,5000);
-				else JOptionPane.showMessageDialog(simupanel, "Aucune donnée n'a été importée !", "Information", JOptionPane.WARNING_MESSAGE);	
+					new traitement_donnees("Consommation du jour ",donnee.ConsoJour,5000);
+				else JOptionPane.showMessageDialog(simupanel, "Aucune donnée n'a été importée !", "Information", JOptionPane.WARNING_MESSAGE);
 		}});
 		consoj.setBounds(12, 40, 160, 25);
 		consoj.setBackground(Color.BLACK);
@@ -575,13 +579,62 @@ public class Interface implements ActionListener {
 	}
 	
 	public void ajout_objet(Piece p) {
-	    String nom = JOptionPane.showInputDialog(piecepanel, "Nom objet :");	    
+
+		String[] items = {"1","2","3"};
+		JComboBox combo = new JComboBox(items);
+		JTextField field1 = new JTextField();
+		JTextField field2 = new JTextField();
+		JTextField field3 = new JTextField();
+		JPanel panel = new JPanel(new GridLayout(0, 1));
+		panel.add(new JLabel("Priorité Objet:"));
+		panel.add(combo);
+		panel.add(new JLabel("Nom Objet:"));
+		panel.add(field1);
+		panel.add(new JLabel("Consommation:"));
+		panel.add(field2);
+		panel.add(new JLabel("AdresseMAC:"));
+		panel.add(field3);
+
+		int conso = 0;
+		int prio = 0;
+
+		int result = JOptionPane.showConfirmDialog(null, panel, "Nouvel objet", JOptionPane.OK_CANCEL_OPTION);
+		if (result == JOptionPane.OK_OPTION) {
+			try {
+				conso = Integer.parseInt(field2.getText());
+				prio = Integer.parseInt((String) combo.getSelectedItem());
+				System.out.println(prio);
+			} catch (NumberFormatException nfe) {
+				System.out.println("Consommation not a number");
+				JOptionPane.showMessageDialog(piecepanel, "Consommation doit etre un nombre", "Information", JOptionPane.WARNING_MESSAGE);
+			}
+
+			if (contientAdrMAC(donnee.getObjet(), field3.getText())) {
+				System.out.println("AdresseMAC already used");
+				JOptionPane.showMessageDialog(infobjcontent, "Adresse MAC déjà utilisée", "Information", JOptionPane.WARNING_MESSAGE);
+			}
+			else {
+				if (field1.getText() != null && conso != 0) {
+					donnee.getObjet().addElement(new Objet(field1.getText(), pieceactuelle.getNom(), conso, field3.getText(), prio));
+					ajoutObjetDansPiece(pieceactuelle, field1.getText());
+				}
+			}
+		}
+		else {
+			System.out.println("Cancelled");
+		}
+
+
+	    /*String nom = JOptionPane.showInputDialog(piecepanel, "Nom objet :");
+	    String test = JOptionPane.showInputDialog(piecepanel,"Conso test :");
+	    int test2 = Integer.parseInt(test);
 	    if( nom != null ) {
-	    	donnee.getObjet().addElement(new Objet(nom,pieceactuelle.getNom(),0,"null",0));
-	    	ajoutObjetDansPiece(pieceactuelle,nom);} }
+	    	donnee.getObjet().addElement(new Objet(nom,pieceactuelle.getNom(),test2,"null",0));
+	    	ajoutObjetDansPiece(pieceactuelle,nom);}*/
+	}
 	
 	public void ajoutObjetDansPiece(Piece p,String nom) {	    
-	    if( nom != null ) {p.getObjetPiece().addElement(donnee.getObjet().lastElement());}	      
+	    if( nom != null ) {p.getObjetPiece().addElement(donnee.getObjet().lastElement());}
 	}
 	
 	
@@ -590,11 +643,11 @@ public class Interface implements ActionListener {
 		JOptionPane jop = new JOptionPane();
 		if( !donnee.ObjetFavoris.contains(o) ) {
 		donnee.ObjetFavoris.addElement(o);
-		jop.showMessageDialog(null, "Objet ajoute dans les favoris", "Information", JOptionPane.INFORMATION_MESSAGE);
+		jop.showMessageDialog(null, "Objet ajouté dans les favoris", "Information", JOptionPane.INFORMATION_MESSAGE);
 		}
 		else {
 		donnee.ObjetFavoris.removeElement(o);
-		jop.showMessageDialog(null, "Objet supprime des favoris", "Information", JOptionPane.WARNING_MESSAGE);
+		jop.showMessageDialog(null, "Objet supprimé des favoris", "Information", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 		
@@ -628,13 +681,13 @@ public class Interface implements ActionListener {
 	public void charger_sauvegarde(){
 		JOptionPane jop = new JOptionPane();		
 		if(donnee!=null ) {
-		jop.showMessageDialog(menupanel, "Sauvegarde déja importee", "Information", JOptionPane.WARNING_MESSAGE);}
+		jop.showMessageDialog(menupanel, "Sauvegarde déja importée", "Information", JOptionPane.WARNING_MESSAGE);}
 		else {
 			System.out.println("Charger sauvegarde");
 			donnee = new entresortie();
 			donnee.lecturefichier(donnee.NomFichier);			
 		if(donnee!=null ) {		
-		jop.showMessageDialog(menupanel, "Sauvegarde importee", "Information", JOptionPane.INFORMATION_MESSAGE);
+		jop.showMessageDialog(menupanel, "Sauvegarde importée", "Information", JOptionPane.INFORMATION_MESSAGE);
 		initpiece(donnee.getObjet());	
 		Allume_tous_objets();
 		setBtpiece();
@@ -650,7 +703,7 @@ public class Interface implements ActionListener {
 	public void affiche_infos_objet(Objet o) {
 		
 		infobjcontent.removeAll();		
-		JLabel infobj = new JLabel("Information objet");
+		JLabel infobj = new JLabel("Information de l'objet");
 		infobj.setBounds(12,10, 200, 15);
 		infobjcontent.add(infobj);
 			
@@ -666,7 +719,7 @@ public class Interface implements ActionListener {
 		conso.setBounds(12,100, 200, 15);
 		infobjcontent.add(conso);
 		
-		JLabel piece = new JLabel("Piece : "+ o.getPiece() );
+		JLabel piece = new JLabel("Pièce : "+ o.getPiece() );
 		piece.setBounds(12,130, 200, 15);
 		infobjcontent.add(piece);
 		
@@ -689,7 +742,7 @@ public class Interface implements ActionListener {
 	}
 		    
 	public void AfficheConsommationObjet(Objet o){
-		System.out.println("La consommation de cette objet est" + o.Consommation);
+		System.out.println("La consommation de cet objet est" + o.Consommation);
 	}
 	    
 	public void AfficheConsommationGlobale ( Vector <Objet> objet ){

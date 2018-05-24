@@ -119,6 +119,7 @@ public class ObjetTest {
         }
 
         test.AllumerEteindre();
+        System.out.println("Durée : " + test.getDuree_utilisation());
         if(test.getDuree_utilisation() != 1){
             fail("Erreur de la durée d'utilisation");
         }
