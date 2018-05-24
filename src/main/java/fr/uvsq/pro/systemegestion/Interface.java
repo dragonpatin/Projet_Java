@@ -14,9 +14,8 @@ import java.awt.*;
 import java.util.Timer;
 
 /**
- * Classe Interfce
- * Classe permettant l'afichage de l'interface graphique
- * Permet aussi de lancer le simulateur 
+ * Classe Interface :
+ * Classe permettant l'afichage de l'interface graphique et le simulateur
  */
 
 public class Interface implements ActionListener {
@@ -622,7 +621,7 @@ public class Interface implements ActionListener {
 	public void ajout_objet(Piece p) {
 
 		String[] items = {"1","2","3"};
-		JComboBox combo = new JComboBox(items);
+		JComboBox<String> combo = new JComboBox<String>(items);
 		JTextField field1 = new JTextField();
 		JTextField field2 = new JTextField();
 		JTextField field3 = new JTextField();
@@ -971,9 +970,10 @@ public class Interface implements ActionListener {
 	 */
 	public void affiche_temperateurExt() throws JAXBException, IOException {
 		Simulateur s = new Simulateur(donnee);
-		JLabel ltempExt = new JLabel("TempsExterieur:" + s.getTemperatureExt());
+		JLabel ltempExt = new JLabel("TempsExterieur: " + s.getTemperatureExt());
 		ltempExt.setBounds(350, 12, 150, 15);
 		menupanel.add(ltempExt);
 	}
 	
 }
+
