@@ -87,6 +87,16 @@ public class entresortie{
     }
 
     /**
+     * Permet d'inverser les valeurs des consommation pour pouvoir les écrires.
+     */
+    public Vector<Integer> inversion_Objet(Vector<Integer> conso ){
+        Vector<Integer> tmp = new Vector<Integer>();
+        for(int i = conso.size()-1;i >= 0;i--){
+            tmp.add(conso.get(i));
+        }
+        return tmp;
+    }
+    /**
      * Elle permet de lire le fichier choisi au préalable
      * @param NomFichier Elle prend en paramètre le fichier en question
      * Elle va lire le fichier d'une façon bien précise, si le fichier a été modifier ou corrompu de manière délibéré
@@ -280,21 +290,23 @@ public class entresortie{
                 e.printStackTrace();
             }
         }
-
-        for(int i =0;i<this.ConsoJour.size();i++) {
+        System.out.println(ConsoJour);
+        Vector<Integer> tmp1 = inversion_Objet(ConsoJour);
+        System.out.println(tmp1);
+        for(int i =0;i<tmp1.size();i++) {
             test = enregistre(NomFichier);
-            if(i==this.ConsoJour.size()-1) {
+            if(i==tmp1.size()-1) {
                 acc = test.indexOf("-");
                 String before = fina.substring(0, acc + 1);
                 String after = fina.substring(acc + 2);
-                String code = ConsoJour.elementAt(i).toString();
+                String code = tmp1.elementAt(i).toString();
                 fina = before + "\n" + code + "\n" + after;
             }
             else{
                 acc = test.indexOf("-");
                 String before = fina.substring(0, acc + 1);
                 String after = fina.substring(acc + 2);
-                String code = "-" + "\n" + ConsoJour.elementAt(i).toString();
+                String code = "-" + "\n" + tmp1.elementAt(i).toString();
                 fina = before + "\n" + code + "\n" + after;
             }
             try {
@@ -307,21 +319,21 @@ public class entresortie{
                 e.printStackTrace();
             }
         }
-
-        for(int i =0;i<this.ConsoSemaine.size();i++) {
+        Vector<Integer> tmp2 = inversion_Objet(ConsoSemaine);
+        for(int i =0;i<tmp2.size();i++) {
             test = enregistre(NomFichier);
-            if (i == this.ConsoSemaine.size() - 1) {
+            if (i == tmp2.size() - 1) {
                 acc = test.indexOf("%");
                 String before = fina.substring(0, acc + 1);
                 String after = fina.substring(acc + 2);
-                String code = ConsoSemaine.elementAt(i).toString();
+                String code = tmp2.elementAt(i).toString();
                 fina = before + "\n" + code + "\n" + after;
             }
             else {
                 acc = test.indexOf("%");
                 String before = fina.substring(0, acc + 1);
                 String after = fina.substring(acc + 2);
-                String code = "%" + "\n" + ConsoSemaine.elementAt(i).toString();
+                String code = "%" + "\n" + tmp2.elementAt(i).toString();
                 fina = before + "\n" + code + "\n" + after;
             }
             try {
@@ -334,19 +346,19 @@ public class entresortie{
                 e.printStackTrace();
             }
         }
-
-        for(int i =0;i<this.ConsoMois.size();i++) {
+        Vector<Integer> tmp3 = inversion_Objet(ConsoMois);
+        for(int i =0;i<tmp3.size();i++) {
             test = enregistre(NomFichier);
-            if(i==this.ConsoMois.size()-1) {
+            if(i==tmp3.size()-1) {
                 acc = test.indexOf("?");
                 String before = fina.substring(0, acc + 1);
-                String code = ConsoMois.elementAt(i).toString();
+                String code = tmp3.elementAt(i).toString();
                 fina = before + "\n" + code + "\n";
             }
             else{
                 acc = test.indexOf("?");
                 String before = fina.substring(0, acc + 1);
-                String code = "?" + "\n" + ConsoMois.elementAt(i).toString();
+                String code = "?" + "\n" + tmp3.elementAt(i).toString();
                 fina = before + "\n" + code + "\n";
             }
             try {
