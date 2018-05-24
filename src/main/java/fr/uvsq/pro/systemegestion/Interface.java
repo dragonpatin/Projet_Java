@@ -498,7 +498,7 @@ public class Interface implements ActionListener {
 	}
 
 	/**
-	 * Ajoute les bouton pièce ainsi que leur action
+	 * Ajoute les boutons pièce ainsi que leurs actions
 	 */
 	public void setBtpiece() {
 		for(int i=0;i<piece.size();i++) {
@@ -507,7 +507,7 @@ public class Interface implements ActionListener {
 	} 
 	
 	/**
-	 * Ajout des pièce dans le vecteur btpièce
+	 * Ajout des pièces dans le vecteur btpièce
 	 */
 
 	public void ajout_piece(){ 	
@@ -538,7 +538,7 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Affichage des 3 boutons du simulateur 
+	 * Affichage des 3 boutons du simulateur : consoJour, consoSemaine et consMois
 	 */
 	public void affiche_simulateur() {
 
@@ -582,7 +582,7 @@ public class Interface implements ActionListener {
 	}
 
 	/**
-	 * Ajoute les bouton objet ainsi que leur action
+	 * Ajoute les boutons objet ainsi que leurs actions
 	 */
 	public void setBtobjet(Vector<Objet> p) {
 		btobjet.removeAllElements();	
@@ -594,8 +594,8 @@ public class Interface implements ActionListener {
 
 	/**
 	 * Affichage des objets 
-	 * @param Vector d 'objet qu'on affiche
-	 * @param  sur le panel JPanel pan
+	 * @param p : Vecteur d'objet que l'on affiche
+	 * @param pan le panel JPanel sur lequel on affiche les objets
 	 */
 	public void affiche_objet(Vector<Objet> p , JPanel pan){
 		int y=10;
@@ -617,7 +617,7 @@ public class Interface implements ActionListener {
 		}
 	}
 	/**
-	 * Methode pour créer les objets à paritr de l'interface
+	 * Méthode pour créer les objets à partir de l'interface
 	 */
 	public void ajout_objet(Piece p) {
 
@@ -675,15 +675,15 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Ajoute objet dans la piece indiquer en parametre
+	 * Ajoute objet dans la pièce indiquée en paramètre
 	 */
 	public void ajoutObjetDansPiece(Piece p,String nom) {	    
 	    if( nom != null ) {p.getObjetPiece().addElement(donnee.getObjet().lastElement());}
 	}
 	
 	/**
-	 * Methode pour ajouter les objets dans favoris depuis l'interface
-	 * @param Objet o sera mis dans le vecteur favoris
+	 * Méthode pour ajouter les objets dans favoris depuis l'interface
+	 * @param o : l'objet sera mis dans le vecteur favoris
 	 */
 	@SuppressWarnings("static-access")
 	public void ajout_objet_favoris(Objet o) {
@@ -699,8 +699,8 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Methode pour supprimer un objet à paritr de l'interface
-	 * @param l'Objet en parmetre sera supprimer 
+	 * Méthode pour supprimer un objet à partir de l'interface
+	 * @param o : l'Objet en paramètre sera supprimé
 	 */
 	public void supprime_objet(Objet o) {
 		for(Piece p : piece) {
@@ -714,8 +714,8 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Methode pour supprimer une piece à paritr de l'interface
-	 * @param la piece en parmetre sera supprimer 
+	 * Méthode pour supprimer une pi§ce à partir de l'interface
+	 * @param p : la pièce en paramètre sera supprimée
 	 */
 	public void supprime_piece(Piece p) {
 		btpiece.removeElementAt(piece.indexOf(p));
@@ -727,7 +727,7 @@ public class Interface implements ActionListener {
 	}
 
 	/**
-	 * Methode pour sauvegarder les donnée actuel dans le fichier importé auparavant
+	 * Méthode pour sauvegarder les données actuelles dans le fichier importé auparavant
 	 */
 	public void sauvegarder_fichier(){		
 		System.out.println("Lancement sauvegarde");
@@ -736,7 +736,7 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Methode permettant d'importé un fichier donc permettra d'utiliser les donnée du fichier
+	 * Méthode permettant d'importer un fichier et permettra donc d'utiliser les données du fichier
 	 */
 	@SuppressWarnings("static-access")
 	public void charger_sauvegarde(){
@@ -763,8 +763,8 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Methode pour afficher toutes les données de l'objet
-	 * @param Objet: on vera toutes ces donnée actuelles
+	 * Méthode pour afficher toutes les données de l'objet
+	 * @param o : on vera toutes ces données actuelles
 	 */
 	public void affiche_infos_objet(Objet o) {
 		
@@ -799,7 +799,7 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Methode pour récuperer les donnée dans la classe entresortie
+	 * Méthode pour récuperer les données dans la classe entresortie
 	 */
 	public entresortie getDonnee() {
 		return donnee;
@@ -811,7 +811,7 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Methode pour afficher la consommation globale de tous les objet du vecteur 
+	 * Méthode pour afficher la consommation globale de tous les objets du vecteur
 	 */
 	public void AfficheConsommationGlobale ( Vector<Objet> objet ){
 		int consoG=0;
@@ -822,7 +822,7 @@ public class Interface implements ActionListener {
 	}
 
 	/**
-	 * Methode pour echanger 2 string 
+	 * Méthode pour échanger 2 string
 	 */
 	public void echanger(String a, String b){
 		String temp;
@@ -832,11 +832,11 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Methode pour partitionner
-	 * @param Vecteur objet 
-	 * @param int premier: le 1er element du vecteur
-	 * @param int dernier: dernier element du vecteur
-	 * @param int pivot
+	 * Méthode pour partitionner
+	 * @param O : Vecteur objet
+	 * @param premier: le 1er élément du vecteur
+	 * @param dernier: dernier élément du vecteur
+	 * @param pivot
 	 * @return une position du vecteur qui sera la position du pivot
 	 */
 	public int Partitionner_Objet(Vector <Objet> O, int premier , int dernier , int pivot){
@@ -855,7 +855,7 @@ public class Interface implements ActionListener {
 	}
 	   
 	/**
-	 * Methode de tri rapide 
+	 * Méthode de tri rapide
 	 * Permet de trier le vecteur objet 
 	 */
 	public void tri_rapide_Objet(Vector <Objet> O, int premier , int dernier){
@@ -866,11 +866,11 @@ public class Interface implements ActionListener {
 			tri_rapide_Objet(O,pivot+1,dernier);}}
 	
 	/**
-	 * Methode pour partitionner
-	 * @param Vecteur piece
-	 * @param int premier: le 1er element du vecteur
-	 * @param int dernier: dernier element du vecteur
-	 * @param int pivot
+	 * Méthode pour partitionner
+	 * @param O : Vecteur pièce
+	 * @param premier: le 1er élément du vecteur
+	 * @param dernier: dernier élément du vecteur
+	 * @param pivot
 	 * @return une position du vecteur qui sera la position du pivot
 	 */
 	public int Partitionner_Piece(Vector<Piece> O, int premier , int dernier , int pivot){
@@ -889,8 +889,8 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Methode de tri rapide 
-	 * Permet de trier le vecteur piece 
+	 * Méthode de tri rapide
+	 * Permet de trier le vecteur pièce
 	 */
 	public void tri_rapide_Piece(Vector <Piece> O, int premier , int dernier){
 		if(premier < dernier){
@@ -901,8 +901,8 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Methode qui initialise la piece avec les objets dans le vecteur obj
-	 * @param Vecteur obj: tous les objets sera mis dans la piece
+	 * Méthode qui initialise la pièce avec les objets dans le vecteur obj
+	 * @param obj : vecteur d'Objet, tous les objets seront mis dans la pièce
 	 */
 	public void initpiece(Vector<Objet> obj) {
 		for(Objet o : obj) {
@@ -917,8 +917,8 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Methode de verification de l'existence d'une piece
-	 * @param verification sur la piece en parametre
+	 * Méthode de vérification de l'existence d'une pièce
+	 * @param nom de la piece
 	 * @return -1 si elle existe pas sinon 1
 	 */
 	public int pieceExist(String nom) {
@@ -931,7 +931,7 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Methode de verification de l'adresse Mac
+	 * Méthode de vérification de l'adresse Mac
 	 * Permet de trier le vecteur objet 
 	 */
 	public boolean contientAdrMAC(Vector<Objet> obj, String adr) {
@@ -942,7 +942,7 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Methode qui permet de simuler les conso jour, mois et semaine pour ensuite les sauvegarder 
+	 * Méthode qui permet de simuler les conso jour, mois et semaine pour ensuite les sauvegarder
 	 */
 	public void lancer_simulateur() {
 		Simulateur s = new Simulateur(donnee);
@@ -959,7 +959,7 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Methode pour allumer ou eteindre tous les objet
+	 * Méthode pour allumer ou éteindre tous les objets
 	 */
 	public void Allume_tous_objets() {
 		for(Objet o: donnee.ListeObjet)
@@ -967,7 +967,7 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Methode pour afficher la temperature exterieur
+	 * Méthode pour afficher la température exterieur
 	 */
 	public void affiche_temperateurExt() throws JAXBException, IOException {
 		Simulateur s = new Simulateur(donnee);
