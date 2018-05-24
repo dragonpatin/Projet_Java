@@ -61,7 +61,7 @@ public class Interface implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JButton btnRetour = new JButton("Retour");
-		btnRetour.setIcon(new ImageIcon(Interface.class.getResource("/com/sun/javafx/scene/web/skin/Undo_16x16_JFX.png")));
+		btnRetour.setIcon(new ImageIcon("src/main/resources/retour.png"));
 		btnRetour.setBounds(460, 703, 122, 28);
 		frame.getContentPane().add(btnRetour);
 		btnRetour.addActionListener(new ActionListener() {
