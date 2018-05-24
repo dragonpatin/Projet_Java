@@ -377,6 +377,10 @@ public class entresortie{
         }
     }
 
+    public void modifieObjet (Vector<Objet> obj ){
+        ListeObjet = obj;
+    }
+
     /**
      * Cette fonction permet de mettre à jour les préférences d'un objet en particulier.
      * @param pref c'est l'objet préférence que l'on aura créer ou modifier au préalable

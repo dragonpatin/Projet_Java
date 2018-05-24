@@ -1,7 +1,9 @@
 package fr.uvsq.pro.systemegestion;
+/*
 import com.github.fedy2.weather.YahooWeatherService;
 import com.github.fedy2.weather.data.Channel;
 import com.github.fedy2.weather.data.unit.DegreeUnit;
+*/
 import javax.xml.bind.JAXBException;
 import java.util.*;
 import java.io.*;
@@ -197,12 +199,13 @@ public class Simulateur{
             }
         }
     }
-
+/*
     /**
      * Récupère la température Extérieure ressentie a Versailles
      * @throws JAXBException Necesaire pour le fonctionnement de la bibliothèque
      * @throws IOException Exception
      */
+/*
     public void recupereTemperatureExt () throws JAXBException, IOException {
         YahooWeatherService service = null;
         try {
@@ -215,6 +218,7 @@ public class Simulateur{
         assert channel != null;
         temperatureExterieur = channel.getItem().getCondition().getTemp();
     }
+    */
 
     /**
      * Récupère la date au moment t. Il récupère la date et l'heure
@@ -273,11 +277,12 @@ public class Simulateur{
     public Vector ConsommationObjet (){
         return ConsommationObjet;
     }
-
+    /*
     /**
      *
      * @return retourne la température extérieure de Versailles
      */
+    /*
     public int getTemperatureExt () throws JAXBException, IOException {
         try {
             recupereTemperatureExt();
@@ -287,13 +292,13 @@ public class Simulateur{
             e.printStackTrace();
         }
         return temperatureExterieur;
-    }
+    }*/
 
     /**
      *
      * @return Le vector objet contenant les Objets
      */
-    public Vector getObjet (){
+    public Vector<Objet> getObjet (){
         return objet;
     }
 

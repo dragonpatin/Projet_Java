@@ -38,7 +38,11 @@ public class Interface implements ActionListener {
 	private entresortie donnee;
 	private String panelprec="";
 	private String panelactu="Menu";
-	
+	//----------------------------------------------
+	//----------------------------------------------
+	//----------------------------------------------
+	//Création d'un seule Simulateur car plusieur engendre un conflit
+	Simulateur s;
 	public static void main(String[] args){					
 					Interface window = new Interface();
 					window.frame.setVisible(true);										
@@ -441,13 +445,7 @@ public class Interface implements ActionListener {
 
 
 		//Ajout Execption :
-		try {
-			affiche_temperateurExt();
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		affiche_temperateurExt();
 	}
 
 	/**
@@ -578,6 +576,36 @@ public class Interface implements ActionListener {
 		consom.setBackground(Color.BLACK);
 		consom.setForeground(Color.LIGHT_GRAY);
 		simupanel.add(consom);
+
+		//----------------------------------------------
+		//----------------------------------------------
+		//----------------------------------------------
+		//----------------------------------------------
+		//Ajout Exctinction auto :
+		JButton exctinction = new JButton("ExctinctionAutomatique");
+		exctinction.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(donnee != null ){
+					System.out.println(donnee.getObjet().size());
+					s.recupereObjet();
+					s.miseAJourObjet();
+					s.calculConsommation();
+					s.ExtinctionAutomatique(1000);
+					donnee.modifieObjet(s.getObjet());
+					//On mais à jour les données dans.
+					lancer_simulateur();
+				}
+				else JOptionPane.showMessageDialog(simupanel, "Aucune donnée n'a été importée !", "Information", JOptionPane.WARNING_MESSAGE);
+			}
+		});
+		exctinction.setBounds(12,190, 160, 25);
+		exctinction.setBackground(Color.BLACK);
+		exctinction.setForeground(Color.LIGHT_GRAY);
+		simupanel.add(exctinction);
+		//----------------------------------------------
+		//----------------------------------------------
+		//----------------------------------------------
+		//----------------------------------------------
 	}
 
 	/**
@@ -751,6 +779,7 @@ public class Interface implements ActionListener {
 		initpiece(donnee.getObjet());	
 		Allume_tous_objets();
 		setBtpiece();
+		s = new Simulateur(donnee);
 		AppelAutomatiqueRecuperationConsommation(10);}
 		else jop.showMessageDialog(menupanel, "Erreur lors de l'importation de la sauvegarde", "Information", JOptionPane.WARNING_MESSAGE);}
 	}
@@ -944,8 +973,11 @@ public class Interface implements ActionListener {
 	 * Méthode qui permet de simuler les conso jour, mois et semaine pour ensuite les sauvegarder
 	 */
 	public void lancer_simulateur() {
-		Simulateur s = new Simulateur(donnee);
-		//Mais a jour les données
+		//Mais à jour les données
+		//----------------------------------------------
+		//----------------------------------------------
+		//----------------------------------------------
+		//Suppresion Simulateur s = new Simulateur(donnee);
 		s.recupereObjet();
 		s.miseAJourObjet();
 		s.calculConsommation();
@@ -968,9 +1000,9 @@ public class Interface implements ActionListener {
 	/**
 	 * Méthode pour afficher la température exterieur
 	 */
-	public void affiche_temperateurExt() throws JAXBException, IOException {
-		Simulateur s = new Simulateur(donnee);
-		JLabel ltempExt = new JLabel("TempsExterieur: " + s.getTemperatureExt());
+	public void affiche_temperateurExt() {
+		//Simulateur s = new Simulateur(donnee);
+		JLabel ltempExt = new JLabel("TempsExterieur: ");
 		ltempExt.setBounds(350, 12, 150, 15);
 		menupanel.add(ltempExt);
 	}
