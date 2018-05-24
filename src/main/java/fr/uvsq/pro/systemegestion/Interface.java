@@ -1,12 +1,9 @@
 /**
  * Java source Interface
  */
-
 package fr.uvsq.pro.systemegestion;
-import java.io.IOException;
 import java.lang.Integer;
 import javax.swing.*;
-import javax.xml.bind.JAXBException;
 import java.util.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -112,6 +109,7 @@ public class Interface implements ActionListener {
 				}			
 			}});
 		
+		
 		menupanel.setBounds(0, 0, 582, 697);
 		frame.getContentPane().add(menupanel);
 		menupanel.setLayout(null);
@@ -132,7 +130,7 @@ public class Interface implements ActionListener {
 				;}}}				
 		); 
 		
-		PIECE.setBounds(12, 39, 162, 25);
+		PIECE.setBounds(12, 39, 182, 25);
 		menupanel.add(PIECE);
 		
 		JLabel lblMenus = new JLabel("Menu");
@@ -155,7 +153,7 @@ public class Interface implements ActionListener {
 				JOptionPane.showMessageDialog(simupanel, "Impossible de lancer le simulateur", "Information", JOptionPane.WARNING_MESSAGE);
 			}
 		});
-		btsimu.setBounds(12, 115, 162, 25);
+		btsimu.setBounds(12, 115, 182, 25);
 		menupanel.add(btsimu);
 		
 		JButton btfav = new JButton("Objets favoris");
@@ -172,7 +170,7 @@ public class Interface implements ActionListener {
 			menupanel.setVisible(true);
 			listobjpanel.setVisible(false);}}
 		});
-		btfav.setBounds(12, 77, 162, 25);
+		btfav.setBounds(12, 77, 182, 25);
 		menupanel.add(btfav);
 		
 		JButton btlistobj = new JButton("Liste objets ");
@@ -190,7 +188,7 @@ public class Interface implements ActionListener {
 				}
 			}
 		});
-		btlistobj.setBounds(12, 153, 162, 25);
+		btlistobj.setBounds(12, 153, 182, 25);
 		menupanel.add(btlistobj);
 		infobjpanel.setBounds(0, 0, 594, 697);
 		frame.getContentPane().add(infobjpanel);
@@ -422,6 +420,11 @@ public class Interface implements ActionListener {
 		mnFichier.add(mntmImporterFichier);
 		frame.getContentPane().setLayout(null);
 		
+		simupanel.setBounds(0, 0, 594, 697);
+		frame.getContentPane().add(simupanel);
+		simupanel.setLayout(null);
+		simupanel.setVisible(false);
+		
 		
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setBounds(0, 744, 594, -743); 
@@ -431,17 +434,11 @@ public class Interface implements ActionListener {
 		frame.getContentPane().add(favorispanel);
 		favorispanel.setLayout(null);
 		
-		simupanel.setBounds(0, 0, 594, 697);
-		frame.getContentPane().add(simupanel);
-		simupanel.setLayout(null);
-		
 		infobjpanel.setVisible(false);
 		listobjpanel.setVisible(false);
 		objetpanel.setVisible(false);
 		piecepanel.setVisible(false);
 		favorispanel.setVisible(false);
-		simupanel.setVisible(false);
-
 
 
 		//Ajout Execption :
@@ -535,9 +532,29 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Affichage des 3 boutons du simulateur : consoJour, consoSemaine et consMois
+	 * Affichage les boutons du simulateur : consoJour, consoSemaine , consMois ,Extinction automatique
 	 */
 	public void affiche_simulateur() {
+		simupanel.removeAll();
+		
+		JButton modextinction = new JButton("modifier");
+		modextinction.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String conso=JOptionPane.showInputDialog(piecepanel, "Changer la consommation limite", JOptionPane.QUESTION_MESSAGE);	
+				if( conso != null) {
+				s.SetConsommationANePasDepasser(Integer.parseInt(conso));
+				simupanel.revalidate();
+				simupanel.repaint();
+				affiche_simulateur();
+				}
+			}
+		});
+		modextinction.setBounds(247, 0, 97, 25);
+		simupanel.add(modextinction);
+		JLabel lblNewLabel = new JLabel("Consommation limite : "+s.ConsommationANePasDepasser()+" Kwh");
+		lblNewLabel.setBounds(12, 4, 231, 16);
+		simupanel.add(lblNewLabel);
+
 
 		JButton consoj = new JButton("ConsoJour");
 		consoj.addActionListener(new ActionListener() {
@@ -546,7 +563,7 @@ public class Interface implements ActionListener {
 					new traitement_donnees("Consommation du jour ",donnee.ConsoJour,5000);
 				else JOptionPane.showMessageDialog(simupanel, "Aucune donnée n'a été importée !", "Information", JOptionPane.WARNING_MESSAGE);
 		}});
-		consoj.setBounds(12, 40, 160, 25);
+		consoj.setBounds(12, 40, 185, 25);
 		consoj.setBackground(Color.BLACK);
 		consoj.setForeground(Color.LIGHT_GRAY);
 		simupanel.add(consoj);
@@ -559,7 +576,7 @@ public class Interface implements ActionListener {
 				else JOptionPane.showMessageDialog(simupanel, "Aucune donnée n'a été importée !", "Information", JOptionPane.WARNING_MESSAGE);
 			}
 		});
-		consos.setBounds(12,90, 160, 25);
+		consos.setBounds(12,90, 185, 25);
 		consos.setBackground(Color.BLACK);
 		consos.setForeground(Color.LIGHT_GRAY);
 		simupanel.add(consos);
@@ -572,17 +589,12 @@ public class Interface implements ActionListener {
 				else JOptionPane.showMessageDialog(simupanel, "Aucune donnée n'a été importée !", "Information", JOptionPane.WARNING_MESSAGE);
 			}
 		});
-		consom.setBounds(12,140, 160, 25);
+		consom.setBounds(12,140, 185, 25);
 		consom.setBackground(Color.BLACK);
 		consom.setForeground(Color.LIGHT_GRAY);
 		simupanel.add(consom);
 
-		//----------------------------------------------
-		//----------------------------------------------
-		//----------------------------------------------
-		//----------------------------------------------
-		//Ajout Exctinction auto :
-		JButton exctinction = new JButton("ExctinctionAutomatique");
+		JButton exctinction = new JButton("Exctinction Automatique");
 		exctinction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(donnee != null ){
@@ -590,22 +602,20 @@ public class Interface implements ActionListener {
 					s.recupereObjet();
 					s.miseAJourObjet();
 					s.calculConsommation();
-					s.ExtinctionAutomatique(1000);
+					s.ExtinctionAutomatique(s.ConsommationANePasDepasser());
 					donnee.modifieObjet(s.getObjet());
 					//On mais à jour les données dans.
 					lancer_simulateur();
+					JOptionPane.showMessageDialog(simupanel, "Extinction automatique lancée", "Information", JOptionPane.WARNING_MESSAGE);
 				}
 				else JOptionPane.showMessageDialog(simupanel, "Aucune donnée n'a été importée !", "Information", JOptionPane.WARNING_MESSAGE);
 			}
 		});
-		exctinction.setBounds(12,190, 160, 25);
+		exctinction.setBounds(12,190, 185, 25);
 		exctinction.setBackground(Color.BLACK);
 		exctinction.setForeground(Color.LIGHT_GRAY);
 		simupanel.add(exctinction);
-		//----------------------------------------------
-		//----------------------------------------------
-		//----------------------------------------------
-		//----------------------------------------------
+
 	}
 
 	/**
@@ -780,6 +790,7 @@ public class Interface implements ActionListener {
 		Allume_tous_objets();
 		setBtpiece();
 		s = new Simulateur(donnee);
+		s.SetConsommationANePasDepasser(1000);
 		AppelAutomatiqueRecuperationConsommation(10);}
 		else jop.showMessageDialog(menupanel, "Erreur lors de l'importation de la sauvegarde", "Information", JOptionPane.WARNING_MESSAGE);}
 	}
@@ -1003,7 +1014,7 @@ public class Interface implements ActionListener {
 	public void affiche_temperateurExt() {
 		//Simulateur s = new Simulateur(donnee);
 		JLabel ltempExt = new JLabel("TempsExterieur: ");
-		ltempExt.setBounds(350, 12, 150, 15);
+		ltempExt.setBounds(350, 12, 200, 15);
 		menupanel.add(ltempExt);
 	}
 	
