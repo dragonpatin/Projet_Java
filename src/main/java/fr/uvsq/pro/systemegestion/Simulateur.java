@@ -253,6 +253,13 @@ public class Simulateur{
     public int ConsommationANePasDepasser ( ){
         return consommationANePasDepasser;
     }
+    
+     /**
+      * Modifie la valeur de la consommation a ne pas dépasser
+      */
+      public void SetConsommationANePasDepasser (int c ){
+         this.consommationANePasDepasser=c;
+      }
 
     /**
      * Somme de la consommation de tous les objets
