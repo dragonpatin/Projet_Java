@@ -697,14 +697,6 @@ public class Interface implements ActionListener {
 		else {
 			System.out.println("Cancelled");
 		}
-
-
-	    /*String nom = JOptionPane.showInputDialog(piecepanel, "Nom objet :");
-	    String test = JOptionPane.showInputDialog(piecepanel,"Conso test :");
-	    int test2 = Integer.parseInt(test);
-	    if( nom != null ) {
-	    	donnee.getObjet().addElement(new Objet(nom,pieceactuelle.getNom(),test2,"null",0));
-	    	ajoutObjetDansPiece(pieceactuelle,nom);}*/
 	}
 	
 	/**
@@ -980,7 +972,7 @@ public class Interface implements ActionListener {
 	 * Méthode qui permet de simuler les conso jour, mois et semaine pour ensuite les sauvegarder
 	 */
 	public void lancer_simulateur() {
-		//Mais à jour les données
+		//Met à jour les données
 		//----------------------------------------------
 		//----------------------------------------------
 		//----------------------------------------------
