@@ -278,7 +278,14 @@ public class Simulateur{
      *
      * @return retourne la température extérieur de Versailles
      */
-    public int getTemperatureExt (){
+    public int getTemperatureExt () throws JAXBException, IOException {
+        try {
+            recupereTemperatureExt();
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return temperatureExterieur;
     }
 
