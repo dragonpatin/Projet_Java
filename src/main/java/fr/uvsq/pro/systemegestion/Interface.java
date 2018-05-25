@@ -1011,19 +1011,3 @@ public class Interface implements ActionListener {
 	}
 	
 }
-
-
-	
-	/**
-	 * Méthode pour afficher la température exterieur
-	 * Ne fonctionne pas
-	 */
-	public void affiche_temperateurExt() {
-		//Simulateur s = new Simulateur(donnee);
-		JLabel ltempExt = new JLabel("TempsExterieur: ");
-		ltempExt.setBounds(350, 12, 200, 15);
-		menupanel.add(ltempExt);
-	}
-	
-}
-
