@@ -1,7 +1,10 @@
 /**
  * Java source Entrée Sortie
  */
-package fr.uvsq.pro.systemegestion;
+/**
+ * Java source Entrée Sortie
+ */
+package fr.uvsq.pro.systemegestion; 
 import java.io.*;
 import java.util.*;
 import javax.swing.*;
@@ -432,7 +435,7 @@ public class entresortie{
      * Elle va return la la liste des préférences stockés dans le vecteur préférence
      * @return
      */
-    public Vector getPreference (){
+    public Vector<preference> getPreference (){
         return Preference;
     }
 
@@ -453,7 +456,7 @@ public class entresortie{
      * Elle va return le vecteur consoJour
      * @return
      */
-    public Vector consoJour (){
+    public Vector<Integer> consoJour (){
         return this.ConsoJour;
     }
 
@@ -461,7 +464,7 @@ public class entresortie{
      * Elle va return le vecteur ConsoMois
      * @return
      */
-    public Vector consoMois (){
+    public Vector<Integer> consoMois (){
         return this.ConsoMois;
     }
 
@@ -469,7 +472,7 @@ public class entresortie{
      *Elle va return le vecteur Consosemaine
      * @return
      */
-    public Vector consoSemaine (){
+    public Vector<Integer> consoSemaine (){
         return this.ConsoSemaine;
     }
 
