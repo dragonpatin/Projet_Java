@@ -1,9 +1,6 @@
 /**
  * Java source Interface
  */
-/**
- * Java source Interface
- */
 package fr.uvsq.pro.systemegestion;
 import java.lang.Integer;
 import javax.swing.*;
@@ -252,20 +249,7 @@ public class Interface implements ActionListener {
 				donnee.modifieObjet(objetactuel);
 				infobjcontent.revalidate();
 				infobjcontent.repaint();
-				
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					_objet(objetactuel);
+				affiche_infos_objet(objetactuel);
 				}
 			}
 		});
@@ -380,7 +364,7 @@ public class Interface implements ActionListener {
 						
 			}
 		});
-		btnaddObjet.setBounds(353, 0, 117, 25);
+		btnaddObjet.setBounds(353, 0, 150, 25);
 		objetpanel.add(btnaddObjet);
 		
 		JButton btsuppiece = new JButton("Supprimer pièce");
@@ -393,7 +377,7 @@ public class Interface implements ActionListener {
 				affiche_piece();
 			}
 		});
-		btsuppiece.setBounds(431, 666, 127, 25);
+		btsuppiece.setBounds(431, 666, 150, 25);
 		objetpanel.add(btsuppiece);
 		
 		JButton btmodpiece = new JButton("modifer nom");
@@ -406,7 +390,7 @@ public class Interface implements ActionListener {
 				}
 			}
 		});
-		btmodpiece.setBounds(301, 666, 117, 25);
+		btmodpiece.setBounds(200, 666, 200, 25);
 		objetpanel.add(btmodpiece);
 		frame.setResizable(false);
 		
@@ -427,9 +411,7 @@ public class Interface implements ActionListener {
 		mntmSauvegarder.setForeground(new Color(46, 139, 87));
 		mnFichier.add(mntmSauvegarder);
 		
-		JMenuItem mntmImporterFichier = new JMenuItem("
-							      
-							      sauvegarde");
+		JMenuItem mntmImporterFichier = new JMenuItem("Charger sauvegarde");
 		mntmImporterFichier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				charger_sauvegarde();
@@ -799,9 +781,7 @@ public class Interface implements ActionListener {
         s.SetConsommationANePasDepasser(1000);
         AppelAutomatiqueRecuperationConsommation(10);}
         else {
-            if(donnee.NomFichier==null)
-                jop.showMessageDialog(menupanel, "Annulé", "Information", JOptionPane.WARNING_MESSAGE);
-            else
+            if(donnee.NomFichier!=null)
                 jop.showMessageDialog(menupanel, "Erreur lors de l'importation de la sauvegarde", "Information", JOptionPane.WARNING_MESSAGE);
             donnee = null;
             }
@@ -814,10 +794,6 @@ public class Interface implements ActionListener {
 		t.schedule(new taskSauvegarde(this),1000,1000*s);		
 	}
 	
-	/**
-	 * Méthode pour afficher toutes les données de l'objet
-	 * @param o : on vera toutes ces données actuelles
-	 */
 	/**
 	 * Méthode pour afficher toutes les données de l'objet
 	 * @param o : on vera toutes ces données actuelles
@@ -866,7 +842,7 @@ public class Interface implements ActionListener {
         infobjcontent.add(heure_fin);}}
            
          }
-	
+
 	/**
 	 * Méthode pour récuperer les données dans la classe entresortie
 	 */
@@ -1015,10 +991,6 @@ public class Interface implements ActionListener {
 	 */
 	public void lancer_simulateur() {
 		//Met à jour les données
-		//----------------------------------------------
-		//----------------------------------------------
-		//----------------------------------------------
-		//Suppresion Simulateur s = new Simulateur(donnee);
 		s.recupereObjet();
 		s.miseAJourObjet();
 		s.calculConsommation();
@@ -1035,18 +1007,10 @@ public class Interface implements ActionListener {
 	 */
 	public void Allume_tous_objets() {
 		for(Objet o: donnee.ListeObjet)
-			o.AllumerEteindre();
+			if( o.Switch == false )o.AllumerEteindre();
 	}
 	
-	/**
-	 * Méthode pour afficher la température exterieur
-	 * Ne fonctionne pas
-	 */
-	public void affiche_temperateurExt() {
-		//Simulateur s = new Simulateur(donnee);
-		JLabel ltempExt = new JLabel("TempsExterieur: ");
-		ltempExt.setBounds(350, 12, 200, 15);
-		menupanel.add(ltempExt);
-	}
+
 	
 }
+
