@@ -1,6 +1,9 @@
 /**
  * Java source Interface
  */
+/**
+ * Java source Interface
+ */
 package fr.uvsq.pro.systemegestion;
 import java.lang.Integer;
 import javax.swing.*;
@@ -190,6 +193,29 @@ public class Interface implements ActionListener {
 		});
 		btlistobj.setBounds(12, 153, 182, 25);
 		menupanel.add(btlistobj);
+		
+		piecepanel.setBounds(12, 0, 570, 697);
+		frame.getContentPane().add(piecepanel);
+		piecepanel.setLayout(null);
+		
+		
+		
+		JButton btaddpiece = new JButton("Ajouter piece");
+		btaddpiece.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {			
+				ajout_piece();
+				piecepanel.revalidate();
+				piecepanel.repaint();
+				affiche_piece();
+				System.out.println("ajout pièce");
+			}
+		});
+		btaddpiece.setBounds(388, 0, 182, 25);
+		piecepanel.add(btaddpiece);
+		piececontent.setBounds(-13, 25, 583, 672);
+		piecepanel.add(piececontent);
+		piececontent.setLayout(null);		
+		piecepanel.setVisible(false);
 		infobjpanel.setBounds(0, 0, 594, 697);
 		frame.getContentPane().add(infobjpanel);
 		infobjpanel.setLayout(null);
@@ -371,28 +397,6 @@ public class Interface implements ActionListener {
 		objetpanel.add(btmodpiece);
 		frame.setResizable(false);
 		
-		piecepanel.setBounds(12, 0, 570, 697);
-		frame.getContentPane().add(piecepanel);
-		piecepanel.setLayout(null);
-		
-		
-		
-		JButton btaddpiece = new JButton("Ajouter piece");
-		btaddpiece.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {			
-				ajout_piece();
-				piecepanel.revalidate();
-				piecepanel.repaint();
-				affiche_piece();
-				System.out.println("ajout pièce");
-			}
-		});
-		btaddpiece.setBounds(344, 0, 117, 25);
-		piecepanel.add(btaddpiece);
-		piececontent.setBounds(-13, 25, 583, 672);
-		piecepanel.add(piececontent);
-		piececontent.setLayout(null);		
-		
 
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -437,7 +441,6 @@ public class Interface implements ActionListener {
 		infobjpanel.setVisible(false);
 		listobjpanel.setVisible(false);
 		objetpanel.setVisible(false);
-		piecepanel.setVisible(false);
 		favorispanel.setVisible(false);
 	}
 
@@ -547,7 +550,7 @@ public class Interface implements ActionListener {
 		});
 		modextinction.setBounds(247, 0, 97, 25);
 		simupanel.add(modextinction);
-		JLabel lblNewLabel = new JLabel("Consommation limite : "+s.ConsommationANePasDepasser()+" Kwh");
+		JLabel lblNewLabel = new JLabel("Consommation limite : "+s.ConsommationANePasDepasser()+" Wh");
 		lblNewLabel.setBounds(12, 4, 231, 16);
 		simupanel.add(lblNewLabel);
 
@@ -995,6 +998,21 @@ public class Interface implements ActionListener {
 		for(Objet o: donnee.ListeObjet)
 			o.AllumerEteindre();
 	}
+	
+	/**
+	 * Méthode pour afficher la température exterieur
+	 * Ne fonctionne pas
+	 */
+	public void affiche_temperateurExt() {
+		//Simulateur s = new Simulateur(donnee);
+		JLabel ltempExt = new JLabel("TempsExterieur: ");
+		ltempExt.setBounds(350, 12, 200, 15);
+		menupanel.add(ltempExt);
+	}
+	
+}
+
+
 	
 	/**
 	 * Méthode pour afficher la température exterieur
