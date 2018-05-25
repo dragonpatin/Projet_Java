@@ -845,17 +845,22 @@ public class Interface implements ActionListener {
 		etat.setBounds(12,190, 200, 15);
 		infobjcontent.add(etat);
 		
+		int hd=0,hf=0;
 		Vector<preference> pref= new Vector<preference>();
         pref = donnee.getPreference();
         for(int i=0;i<pref.size();i++){
             if(pref.elementAt(i).getObjet().getNom()== o.getNom()){
-        JLabel heure_debut= new JLabel("Heure de debut : "+ pref.elementAt(i).getHeuredebut());
+            hd=pref.elementAt(i).getHeuredebut();
+            hf=pref.elementAt(i).getHeureFin();
+        }
+        }
+        if(hd != 0 && hf != 0) {
+        JLabel heure_debut= new JLabel("Heure de debut : "+ hd);
         heure_debut.setBounds(12,220, 300, 15);
         infobjcontent.add(heure_debut);
-
-        JLabel heure_fin= new JLabel("Heure de fin: "+ pref.elementAt(i).getHeureFin());
+        JLabel heure_fin= new JLabel("Heure de fin: "+ hf);
         heure_fin.setBounds(12,250, 300, 15);
-        infobjcontent.add(heure_fin);}}
+        infobjcontent.add(heure_fin);}
            
          }
 
@@ -1040,7 +1045,7 @@ public class Interface implements ActionListener {
         JPanel panel = new JPanel(new GridLayout(0, 1));
         panel.add(new JLabel("Nom preference:"));
         panel.add(field1);
-        panel.add(new JLabel("instructuction:"));
+        panel.add(new JLabel("Instruction:"));
         panel.add(combo);
         panel.add(new JLabel("Heure debut:"));
         panel.add(field2);
