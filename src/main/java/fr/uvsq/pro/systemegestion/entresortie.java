@@ -108,6 +108,7 @@ public class entresortie{
 
 
     public void lecturefichier(File NomFichier){
+        if( this.NomFichier != null) {
         try{
             String str;
             BufferedReader fichier = new BufferedReader(new FileReader(NomFichier));
@@ -185,7 +186,7 @@ public class entresortie{
             fichier.close();
         }catch (IOException e) {
             e.printStackTrace();
-        }
+        }}
     }
 
     /**
