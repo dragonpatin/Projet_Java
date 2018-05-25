@@ -105,83 +105,77 @@ public class entresortie{
 
 
     public void lecturefichier(File NomFichier){
-        try{
-            String str;
-            BufferedReader fichier = new BufferedReader(new FileReader(NomFichier));
-            Objet obj = new Objet();
+        if(NomFichier != null) {
+            try {
+                String str;
+                BufferedReader fichier = new BufferedReader(new FileReader(NomFichier));
+                Objet obj = new Objet();
 
-            //Création de l'objet de lecture
-            while ((str = fichier.readLine()) != null) {
-                if(str.equals("#")){
-                    str = fichier.readLine();
-                    String NomObjet = str;
-                    str = fichier.readLine();
-                    String PieceMaison=str;
-                    str = fichier.readLine();
-                    int Consommation = Integer.parseInt(str);
-                    str = fichier.readLine();
-                    String AdresseMAC = str;
-                    str = fichier.readLine();
-                    int priorite = Integer.parseInt(str);
-
-                    obj = new Objet(NomObjet,PieceMaison,Consommation,AdresseMAC,priorite);
-                    ListeObjet.addElement(obj);
-
-                    if(priorite==3){
-                        ObjetFavoris.addElement(obj);
-                    }
-                }
-
-                else if (str.equals("+")){
-                    str = fichier.readLine();
-                    if(!(str.equals("-") || str .equals("%") || str.equals("?"))){
-                        String Nom = str;
+                //Création de l'objet de lecture
+                while ((str = fichier.readLine()) != null) {
+                    if (str.equals("#")) {
                         str = fichier.readLine();
-                        for(int j=0; j<ListeObjet.size();j++){
-                            if(ListeObjet.elementAt(j).getNom().equals(str)){
-                                obj = ListeObjet.elementAt(j);
-                            }
+                        String NomObjet = str;
+                        str = fichier.readLine();
+                        String PieceMaison = str;
+                        str = fichier.readLine();
+                        int Consommation = Integer.parseInt(str);
+                        str = fichier.readLine();
+                        String AdresseMAC = str;
+                        str = fichier.readLine();
+                        int priorite = Integer.parseInt(str);
+
+                        obj = new Objet(NomObjet, PieceMaison, Consommation, AdresseMAC, priorite);
+                        ListeObjet.addElement(obj);
+
+                        if (priorite == 3) {
+                            ObjetFavoris.addElement(obj);
                         }
+                    } else if (str.equals("+")) {
                         str = fichier.readLine();
-                        int instruction = Integer.parseInt(str);
+                        if (!(str.equals("-") || str.equals("%") || str.equals("?"))) {
+                            String Nom = str;
+                            str = fichier.readLine();
+                            for (int j = 0; j < ListeObjet.size(); j++) {
+                                if (ListeObjet.elementAt(j).getNom().equals(str)) {
+                                    obj = ListeObjet.elementAt(j);
+                                }
+                            }
+                            str = fichier.readLine();
+                            int instruction = Integer.parseInt(str);
+                            str = fichier.readLine();
+                            int heure_debut = Integer.parseInt(str);
+                            str = fichier.readLine();
+                            int heure_fin = Integer.parseInt(str);
+
+                            preference P = new preference(Nom, obj, instruction, heure_debut, heure_fin);
+                            Preference.addElement(P);
+                        }
+
+                    } else if (str.equals("-")) {
                         str = fichier.readLine();
-                        int heure_debut = Integer.parseInt(str);
+                        if (!(str.equals("%") || str.equals("?"))) {
+                            int consojour = Integer.parseInt(str);
+                            ConsoJour.addElement(consojour);
+                        }
+
+                    } else if (str.equals("%")) {
                         str = fichier.readLine();
-                        int heure_fin = Integer.parseInt(str);
+                        if (!str.equals("?")) {
+                            int consosemaine = Integer.parseInt(str);
+                            ConsoSemaine.addElement(consosemaine);
+                        }
 
-                        preference P = new preference(Nom,obj,instruction,heure_debut,heure_fin);
-                        Preference.addElement(P);
+                    } else if (str.equals("?")) {
+                        str = fichier.readLine();
+                        int consomois = Integer.parseInt(str);
+                        ConsoMois.addElement(consomois);
                     }
-
                 }
-
-                else if(str.equals("-")){
-                    str = fichier.readLine();
-                    if(!(str .equals("%") || str.equals("?"))){
-                        int consojour = Integer.parseInt(str);
-                        ConsoJour.addElement(consojour);
-                    }
-
-                }
-
-                else if(str.equals("%")){
-                    str = fichier.readLine();
-                    if(!str.equals("?")){
-                        int consosemaine = Integer.parseInt(str);
-                        ConsoSemaine.addElement(consosemaine);
-                    }
-
-                }
-
-                else if(str.equals("?")){
-                    str = fichier.readLine();
-                    int consomois = Integer.parseInt(str);
-                    ConsoMois.addElement(consomois);
-                }
+                fichier.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            fichier.close();
-        }catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

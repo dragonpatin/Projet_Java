@@ -11,7 +11,7 @@ public class PieceTest {
     @Before
     public void Initialisation(){
         E = new entresortie(true);
-        E.lecturefichier(new java.io.File("TestPiece"));
+        E.lecturefichier(new java.io.File("src/test/ressources/TestPiece"));
     }
 
     @Test

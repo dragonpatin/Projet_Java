@@ -18,7 +18,7 @@ public class entresortieTest {
 
     @Before
     public void Initialisation(){
-        File file  = new java.io.File("testentreesortie");
+        File file  = new java.io.File("src/test/ressources/testentreesortie");
         testentre = new entresortie(true);
         testentre.lecturefichier(file);
 
@@ -50,7 +50,7 @@ public class entresortieTest {
      */
     @Test
     public void testecriture(){
-        File file  = new java.io.File("testentreesortie2");
+        File file  = new java.io.File("src/test/ressources/testentreesortie2");
         //System.out.println(file);
         Objet E = new Objet("frigo","salon",15,"AA:BB:89",3);
         testentre.getObjet().addElement(E);

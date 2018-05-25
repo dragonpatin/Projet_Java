@@ -772,7 +772,7 @@ public class Interface implements ActionListener {
 			System.out.println("Charger sauvegarde");
 			donnee = new entresortie();
 			donnee.lecturefichier(donnee.NomFichier);			
-		if(donnee!=null ) {		
+		if(donnee!=null && donnee.NomFichier != null) {
 		jop.showMessageDialog(menupanel, "Sauvegarde importée", "Information", JOptionPane.INFORMATION_MESSAGE);
 		initpiece(donnee.getObjet());	
 		Allume_tous_objets();
@@ -780,7 +780,14 @@ public class Interface implements ActionListener {
 		s = new Simulateur(donnee);
 		s.SetConsommationANePasDepasser(1000);
 		AppelAutomatiqueRecuperationConsommation(10);}
-		else jop.showMessageDialog(menupanel, "Erreur lors de l'importation de la sauvegarde", "Information", JOptionPane.WARNING_MESSAGE);}
+		else {
+			if(donnee.NomFichier==null)
+				jop.showMessageDialog(menupanel, "Annulé", "Information", JOptionPane.WARNING_MESSAGE);
+			else
+				jop.showMessageDialog(menupanel, "Erreur lors de l'importation de la sauvegarde", "Information", JOptionPane.WARNING_MESSAGE);
+			donnee = null;
+			}
+		}
 	}
 	
 	

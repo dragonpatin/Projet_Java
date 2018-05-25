@@ -43,8 +43,8 @@ public class SimulateurTest{
     public void Initialisation(){
         E = new entresortie(true);
         E2 = new entresortie(true);
-        E.lecturefichier(new java.io.File("TestSimulateur1"));
-        E2.lecturefichier(new java.io.File("TestSimulateur3"));
+        E.lecturefichier(new java.io.File("src/test/ressources/TestSimulateur1"));
+        E2.lecturefichier(new java.io.File("src/test/ressources/TestSimulateur3"));
         AllumerObjet(E);
         AllumerObjet(E2);
     }

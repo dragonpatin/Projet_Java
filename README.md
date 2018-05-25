@@ -16,6 +16,8 @@ Aller dans le dossier SystemeGestion puis Exécuté la commande :
 ```
 mvn install
 ```
+Cela nécessité 2 minutes.  
+
 2.Exécution 
    
 Lancer en double cliquant sur le fichier SystemeGestion.jar
