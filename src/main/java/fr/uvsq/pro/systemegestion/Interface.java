@@ -1071,7 +1071,7 @@ public class Interface implements ActionListener {
 				JOptionPane.showMessageDialog(piecepanel, "Heure doit être inférieure à 24 et supérieure à 0", "Information", JOptionPane.WARNING_MESSAGE);
 			}
 			else {
-            	if(heure_debut < heure_fin){
+            	if(heure_debut > heure_fin){
 					System.out.println("Heure de debut supérieure à Heure de fin");
 					JOptionPane.showMessageDialog(piecepanel, "Heure de fin doit etre supérieure à Heure de début", "Information", JOptionPane.WARNING_MESSAGE);
 				}
