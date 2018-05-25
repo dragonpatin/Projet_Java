@@ -5,7 +5,7 @@
  * Java source Interface
  */
 package fr.uvsq.pro.systemegestion;
-import java.lang.Integer;
+ import java.lang.Integer;
 import javax.swing.*;
 import java.util.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +15,7 @@ import java.util.Timer;
 
 /**
  * Classe Interface :
- * Classe permettant l'afichage de l'interface graphique et le simulateur
+ * Classe permettant l'affichage de l'interface graphique et le simulateur
  */
 
 public class Interface implements ActionListener {
@@ -38,10 +38,8 @@ public class Interface implements ActionListener {
 	private entresortie donnee;
 	private String panelprec="";
 	private String panelactu="Menu";
-	//----------------------------------------------
-	//----------------------------------------------
-	//----------------------------------------------
-	//Création d'un seule Simulateur car plusieur engendre un conflit
+
+	//Création d'un seul Simulateur car plusieurs engendrent un conflit
 	Simulateur s;
 	public static void main(String[] args){					
 					Interface window = new Interface();
@@ -445,12 +443,12 @@ public class Interface implements ActionListener {
 	}
 
 	/**
-	 * Permet de faire des actions en fonciton du bouton cliqué
+	 * Permet de faire des actions en fonction du bouton cliqué
 	 */
 	 
 	public void actionPerformed(ActionEvent e) {
 		
-		//action sur les boutons de pieces 
+		//action sur les boutons de pièces
 		for(int i=0 ; i< btpiece.size() ; i++) {
 			if(e.getSource() ==  btpiece.elementAt(i) ) {						
 				System.out.println( piece.elementAt(i).getNom());
@@ -593,7 +591,7 @@ public class Interface implements ActionListener {
 		consom.setForeground(Color.LIGHT_GRAY);
 		simupanel.add(consom);
 
-		JButton exctinction = new JButton("Exctinction Automatique");
+		JButton exctinction = new JButton("Extinction Automatique");
 		exctinction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(donnee != null ){
@@ -683,7 +681,7 @@ public class Interface implements ActionListener {
 				System.out.println(prio);
 			} catch (NumberFormatException nfe) {
 				System.out.println("Consommation not a number");
-				JOptionPane.showMessageDialog(piecepanel, "Consommation doit etre un nombre", "Information", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(piecepanel, "Consommation doit être un nombre", "Information", JOptionPane.WARNING_MESSAGE);
 			}
 
 			if (contientAdrMAC(donnee.getObjet(), field3.getText())) {
@@ -742,7 +740,7 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Méthode pour supprimer une pi§ce à partir de l'interface
+	 * Méthode pour supprimer une pièce à partir de l'interface
 	 * @param p : la pièce en paramètre sera supprimée
 	 */
 	public void supprime_piece(Piece p) {
@@ -764,13 +762,13 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Méthode permettant d'importer un fichier et permettra donc d'utiliser les données du fichier
+	 * Méthode permettant d'importer un fichier qui permettra donc d'utiliser les données du fichier
 	 */
 	@SuppressWarnings("static-access")
 	public void charger_sauvegarde(){
 		JOptionPane jop = new JOptionPane();		
 		if(donnee!=null ) {
-		jop.showMessageDialog(menupanel, "Sauvegarde déja importé", "Information", JOptionPane.WARNING_MESSAGE);}
+		jop.showMessageDialog(menupanel, "Sauvegarde déja importée", "Information", JOptionPane.WARNING_MESSAGE);}
 		else {
 			System.out.println("Charger sauvegarde");
 			donnee = new entresortie();
@@ -800,7 +798,7 @@ public class Interface implements ActionListener {
 	
 	/**
 	 * Méthode pour afficher toutes les données de l'objet
-	 * @param o : on vera toutes ces données actuelles
+	 * @param o : on verra toutes ces données actuelles
 	 */
 	public void affiche_infos_objet(Objet o) {
 		
@@ -835,7 +833,7 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Méthode pour récuperer les données dans la classe entresortie
+	 * Méthode pour récupérer les données dans la classe entresortie
 	 */
 	public entresortie getDonnee() {
 		return donnee;
@@ -872,7 +870,7 @@ public class Interface implements ActionListener {
 	 * @param O : Vecteur objet
 	 * @param premier: le 1er élément du vecteur
 	 * @param dernier: dernier élément du vecteur
-	 * @param pivot
+	 * @param pivot : le pivot
 	 * @return une position du vecteur qui sera la position du pivot
 	 */
 	public int Partitionner_Objet(Vector <Objet> O, int premier , int dernier , int pivot){
@@ -906,7 +904,7 @@ public class Interface implements ActionListener {
 	 * @param O : Vecteur pièce
 	 * @param premier: le 1er élément du vecteur
 	 * @param dernier: dernier élément du vecteur
-	 * @param pivot
+	 * @param pivot: le pivot
 	 * @return une position du vecteur qui sera la position du pivot
 	 */
 	public int Partitionner_Piece(Vector<Piece> O, int premier , int dernier , int pivot){
@@ -982,10 +980,6 @@ public class Interface implements ActionListener {
 	 */
 	public void lancer_simulateur() {
 		//Met à jour les données
-		//----------------------------------------------
-		//----------------------------------------------
-		//----------------------------------------------
-		//Suppresion Simulateur s = new Simulateur(donnee);
 		s.recupereObjet();
 		s.miseAJourObjet();
 		s.calculConsommation();
@@ -1006,7 +1000,7 @@ public class Interface implements ActionListener {
 	}
 	
 	/**
-	 * Méthode pour afficher la température exterieur
+	 * Méthode pour afficher la température extérieure
 	 * Ne fonctionne pas
 	 */
 	public void affiche_temperateurExt() {

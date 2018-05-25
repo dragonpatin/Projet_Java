@@ -2,7 +2,7 @@ package fr.uvsq.pro.systemegestion;
 
 /**
  * Classe CapteurTemperature
- * Cette classe est une sous-classe de la classe Objet, elle reprend les memes attributs et méthodes en y ajoutant des spécificités propres a cette classe
+ * Cette classe est une sous-classe de la classe Objet, elle reprend les mêmes attributs et méthodes en y ajoutant des spécificités propres à cette classe
  */
 
 public class CapteurTemperature extends Objet{
@@ -16,7 +16,7 @@ public class CapteurTemperature extends Objet{
      * Constructeur de la classe
      * @param temperature une température pour le capteur
      * @param Nom un nom pour le capteur
-     * @param Piece la pièce où le capteur ce trouve
+     * @param Piece la pièce où le capteur se trouve
      * @param AdresseMAC son identifiant unique
      */
     public CapteurTemperature(int temperature, String Nom, String Piece, String AdresseMAC){
@@ -30,7 +30,7 @@ public class CapteurTemperature extends Objet{
     }
 
     /**
-     * @return retourne la temperature du capteur
+     * @return retourne la température du capteur
      */
     public int getTemperature(){
         if(this.Switch == false){

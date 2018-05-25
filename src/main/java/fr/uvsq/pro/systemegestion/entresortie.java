@@ -14,11 +14,11 @@ public class entresortie{
 
     /**
      * @param NomFichier est l'attribut qui permet de garder en sauvegarde le fichier de sauvegarde des données
-     * @param ObjetFavoris C'est une liste qui permet de garder les objets favoris demandé par l'utilisateur
+     * @param ObjetFavoris C'est une liste qui permet de garder les objets favoris demandés par l'utilisateur
      * @param Preference C'est une liste qui permet de sauvegarder toutes les préférences sur chaque objet
-     * @param ConsoJour C'est une liste qui permet de donner la consommation journalière de tous les jours déjà sauvegarder ou en calcule
-     * @param ConsoMois C'est une liste qui permet de donner la consommation de chaque Mois déjà en sauvegarde ou en calcule
-     * @param ConsoSemaine C'est une liste qui permet de donner la consommation de chaque Semaine déjà en sauvegarde ou en calcule
+     * @param ConsoJour C'est une liste qui permet de donner la consommation journalière de tous les jours déjà sauvegardés ou en calcul
+     * @param ConsoMois C'est une liste qui permet de donner la consommation de chaque Mois déjà en sauvegarde ou en calcul
+     * @param ConsoSemaine C'est une liste qui permet de donner la consommation de chaque Semaine déjà en sauvegarde ou en calcul
      */
 
     File NomFichier;
@@ -31,7 +31,7 @@ public class entresortie{
 
     /**
      * C'est le premier constructeur de la classe entresortie.
-     * Il est ici pour créer un fichier avec les différentes disposition de la page qui permettront de le lire et d'écrire correctement
+     * Il est ici pour créer un fichier avec les différentes dispositions de la page qui permettront de le lire et d'écrire correctement
      * @param nomfichier Il va prendre en paramètre un nom de fichier
      * @throws IOException Si jamais il y a une erreur dans la création du fichier
      */
@@ -57,7 +57,7 @@ public class entresortie{
 
     /**
      * C'est le deuxième constructeur de la classe entresortie.
-     * Il ne prend aucun paramètre car nous utilisons un JfileChooser qui permet d'ouvrire un Jframe pour choisir son fichier
+     * Il ne prend aucun paramètre car nous utilisons un JfileChooser qui permet d'ouvrir un Jframe pour choisir son fichier
      * S'il n'a pas de fichier alors le code s'arrête
      */
 
@@ -77,8 +77,8 @@ public class entresortie{
 
     /**
      * C'est le troisième constructeur de la classe entresortie.
-     * Celui ci est utilisé uniquement pour les tests.
-     * Il initialise toute les variables sauf NomFichier qui sera transmis plus tard par les tests
+     * Celui-ci est utilisé uniquement pour les tests.
+     * Il initialise toutes les variables sauf NomFichier qui sera transmis plus tard par les tests
      */
     public entresortie(boolean b){
         this.ListeObjet = new Vector<Objet>();
@@ -90,7 +90,7 @@ public class entresortie{
     }
 
     /**
-     * Permet d'inverser les valeurs des consommation pour pouvoir les écrires.
+     * Permet d'inverser les valeurs des consommations pour pouvoir les écrire.
      */
     public Vector<Integer> inversion_Objet(Vector<Integer> conso ){
         Vector<Integer> tmp = new Vector<Integer>();
@@ -102,13 +102,13 @@ public class entresortie{
     /**
      * Elle permet de lire le fichier choisi au préalable
      * @param NomFichier Elle prend en paramètre le fichier en question
-     * Elle va lire le fichier d'une façon bien précise, si le fichier a été modifier ou corrompu de manière délibéré
+     * Elle va lire le fichier d'une façon bien précise, si le fichier a été modifié ou corrompu de manière délibérée
      * ou accidentellement alors il ne pourra plus le lire et une erreur apparaitra.
      */
 
 
     public void lecturefichier(File NomFichier){
-        if( this.NomFichier != null) {
+        if( NomFichier != null) {
         try{
             String str;
             BufferedReader fichier = new BufferedReader(new FileReader(NomFichier));
@@ -201,12 +201,91 @@ public class entresortie{
         }catch (IOException e) {
             e.printStackTrace();
         }}
+        if( this.NomFichier != null) {
+            try{
+                String str;
+                BufferedReader fichier = new BufferedReader(new FileReader(NomFichier));
+                Objet obj = new Objet();
+
+                //Création de l'objet de lecture
+                while ((str = fichier.readLine()) != null) {
+                    if(str.equals("#")){
+                        str = fichier.readLine();
+                        String NomObjet = str;
+                        str = fichier.readLine();
+                        String PieceMaison=str;
+                        str = fichier.readLine();
+                        int Consommation = Integer.parseInt(str);
+                        str = fichier.readLine();
+                        String AdresseMAC = str;
+                        str = fichier.readLine();
+                        int priorite = Integer.parseInt(str);
+
+                        obj = new Objet(NomObjet,PieceMaison,Consommation,AdresseMAC,priorite);
+                        ListeObjet.addElement(obj);
+
+                        if(priorite==3){
+                            ObjetFavoris.addElement(obj);
+                        }
+                    }
+
+                    else if (str.equals("+")){
+                        str = fichier.readLine();
+                        if(!(str.equals("-") || str .equals("%") || str.equals("?"))){
+                            String Nom = str;
+                            str = fichier.readLine();
+                            for(int j=0; j<ListeObjet.size();j++){
+                                if(ListeObjet.elementAt(j).getNom().equals(str)){
+                                    obj = ListeObjet.elementAt(j);
+                                }
+                            }
+                            str = fichier.readLine();
+                            int instruction = Integer.parseInt(str);
+                            str = fichier.readLine();
+                            int heure_debut = Integer.parseInt(str);
+                            str = fichier.readLine();
+                            int heure_fin = Integer.parseInt(str);
+
+                            preference P = new preference(Nom,obj,instruction,heure_debut,heure_fin);
+                            Preference.addElement(P);
+                        }
+
+                    }
+
+                    else if(str.equals("-")){
+                        str = fichier.readLine();
+                        if(!(str .equals("%") || str.equals("?"))){
+                            int consojour = Integer.parseInt(str);
+                            ConsoJour.addElement(consojour);
+                        }
+
+                    }
+
+                    else if(str.equals("%")){
+                        str = fichier.readLine();
+                        if(!str.equals("?")){
+                            int consosemaine = Integer.parseInt(str);
+                            ConsoSemaine.addElement(consosemaine);
+                        }
+
+                    }
+
+                    else if(str.equals("?")){
+                        str = fichier.readLine();
+                        int consomois = Integer.parseInt(str);
+                        ConsoMois.addElement(consomois);
+                    }
+                }
+                fichier.close();
+            }catch (IOException e) {
+                e.printStackTrace();
+            }}
     }
 
     /**
-     * Cette fonction permet d'enregistrer le nom du fichier et le fichier en entier dans un string pour pouvoir le modifier a souhait
-     * @param f Elle prends en paramètre le nom du fichier
-     * @return Elle return le string qui contient tout fichier lu
+     * Cette fonction permet d'enregistrer le nom du fichier et le fichier en entier dans un string pour pouvoir le modifier à souhait
+     * @param f Elle prend en paramètre le nom du fichier
+     * @return Elle retourne le string qui contient tout fichier lu
      */
     public static String enregistre(File f) {
         try {
@@ -394,7 +473,7 @@ public class entresortie{
     /**
      * La modification d'un objet peut intervenir lors de l'utilisation de l'interface avec l'utilisateur. Par exemple on veut modifier si l'on
      * veut qu'il soit éteint ou allumé.
-     * @param obj C'est l'objet que l'on à modifié.
+     * @param obj C'est l'objet que l'on a modifié.
      */
 
     public void modifieObjet (Objet obj ){
@@ -413,7 +492,7 @@ public class entresortie{
 
     /**
      * Cette fonction permet de mettre à jour les préférences d'un objet en particulier.
-     * @param pref c'est l'objet préférence que l'on aura créer ou modifier au préalable
+     * @param pref c'est l'objet préférence que l'on aura créé ou modifié au préalable
      */
     public void modifiePreference(preference pref){
         for(int i =0 ; i<Preference.size();i++){
@@ -426,7 +505,7 @@ public class entresortie{
     }
 
     /**
-     *Elle va return la liste des objets stockés
+     *Elle va retourner la liste des objets stockés
      * @return
      */
     public Vector<Objet> getObjet (){
@@ -434,7 +513,7 @@ public class entresortie{
     }
 
     /**
-     * Elle va return la consommation de l'objet en question.
+     * Elle va retourner la consommation de l'objet en question.
      * @return
      */
     public int getConsommation (){
@@ -447,7 +526,7 @@ public class entresortie{
     }
 
     /**
-     * Elle va return la la liste des préférences stockés dans le vecteur préférence
+     * Elle va retourner la liste des préférences stockées dans le vecteur préférence
      * @return
      */
     public Vector<preference> getPreference (){
@@ -455,7 +534,7 @@ public class entresortie{
     }
 
     /**
-     * Elle va return la pièce où se trouve l'objet stocké
+     * Elle va retourner la pièce où se trouve l'objet stocké
      * @return
      */
     public String getPiece (){
@@ -468,7 +547,7 @@ public class entresortie{
     }
 
     /**
-     * Elle va return le vecteur consoJour
+     * Elle va retourner le vecteur consoJour
      * @return
      */
     public Vector<Integer> consoJour (){
@@ -476,7 +555,7 @@ public class entresortie{
     }
 
     /**
-     * Elle va return le vecteur ConsoMois
+     * Elle va retourner le vecteur ConsoMois
      * @return
      */
     public Vector<Integer> consoMois (){
@@ -484,7 +563,7 @@ public class entresortie{
     }
 
     /**
-     *Elle va return le vecteur Consosemaine
+     *Elle va retourner le vecteur Consosemaine
      * @return
      */
     public Vector<Integer> consoSemaine (){

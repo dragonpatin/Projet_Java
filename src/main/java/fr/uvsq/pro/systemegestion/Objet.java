@@ -10,13 +10,13 @@ public class Objet{
 
     /**
      * @param NomObjet est l'attribut pour nommer l'objet
-     * @param PieceMaison est l'attribut pour préciser la pièce où ce trouve l'objet
+     * @param PieceMaison est l'attribut pour préciser la pièce où se trouve l'objet
      * @param Consommation est l'attribut qui précise la consommation de l'objet, elle pourra varier
      * @param Switch est l'attibut pour savoir si l'objet est allumé ou éteint
      * @param Duree_utilisation est l'attribut permettant de savoir la durée d'utilisation de l'objet, elle est en minute
      * @param AdresseMAC est l'attribut permettant d'identifier l'objet, elle est unique pour chaque objet
      * @param Date_allumage est l'attribut qui précise la date à laquelle l'objet à été allumé, pour pouvoir ensuite calculer la durée d'utilisation
-     * @param Priorite est l'attribut qui indique la priorité de l'objet qui servira lors de l'extinction automatique des objets par ordre de priorité (0 : priorité faible, 3 ; priorité forte)
+     * @param Priorite est l'attribut qui indique la priorité de l'objet qui servira lors de l'extinction automatique des objets par ordre de priorité (0 : priorité forte, 3 ; priorité faible)
      */
     protected String NomObjet;
     protected String PieceMaison;
@@ -50,7 +50,7 @@ public class Objet{
      * @param PieceMaison la pièce de la maison où l'objet est situé
      * @param Consommation la consommation de l'objet
      * @param AdresseMAC une adresse MAC unique
-     * @param priorite la priorité de l'objet, compris entre 0 et 3
+     * @param priorite la priorité de l'objet, comprise entre 0 et 3
      */
     public Objet(String NomObjet,String PieceMaison, int Consommation, String AdresseMAC, int priorite){
         this.NomObjet = NomObjet;
@@ -160,7 +160,7 @@ public class Objet{
     }
 
     /**
-     * Méthode pour modifier la pièce où ce trouve l'objet
+     * Méthode pour modifier la pièce où se trouve l'objet
      * @param PieceMaison la nouvelle pièce
      */
     public void ModifiePieceMaison(String PieceMaison){

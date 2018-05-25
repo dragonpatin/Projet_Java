@@ -8,8 +8,8 @@ import static junit.framework.TestCase.fail;
 
 /**
  * Fonction de test de la classe entree sortie
- * Il n'a pas d'effet sur le programme en lui même, il est juste ici pour éviter que le programme est des erreurs quelconques.
- * Donc il ne faut pas modifier les fichiers suivant sous peinne de test fail : entreesortie et entresortie2
+ * Il n'a pas d'effet sur le programme en lui même, il est juste ici pour éviter que le programme ait des erreurs quelconques.
+ * Donc il ne faut pas modifier les fichiers suivants sous peine de test fail : entreesortie et entresortie2
  */
 public class entresortieTest {
 
@@ -46,7 +46,7 @@ public class entresortieTest {
 
     /**
      * Il va écrire dans le fichier entresortie2
-     * Il va écrire de tel façon que lors qu'il va le relire, que le vecteur possède ce qu'il a écrit
+     * Puis le relire pour vérifier que l'objet créé est bien écrit
      */
     @Test
     public void testecriture(){
@@ -60,7 +60,7 @@ public class entresortieTest {
         if(!(testentre.getObjet().elementAt(2).getNom().equals("frigo") || testentre.getObjet().elementAt(2).getadresseMAC().equals("AA:BB:89") || testentre.getObjet().elementAt(2).getPiece().equals("salon"))
                 || testentre.getObjet().elementAt(2).getConsommation() != 0 || testentre.getObjet().elementAt(2).getPriorite() != 3
                 ){
-            fail("Erreur l'objet lu n'est pas le bon, l'écritue a échoué");
+            fail("Erreur l'objet lu n'est pas le bon, l'écriture a échoué");
         }
         System.out.println("Test de écriture  : OK");
     }

@@ -14,16 +14,16 @@ import java.awt.Font;
 
 
 public class traitement_donnees{
-    // abscisse et ordonnée d'un graphique contenant la consomation global  sur un Ans
+    // abscisse et ordonnée d'un graphique contenant la consommation globale  sur un Ans
     Vector<Integer> absMois;
     Vector<Integer> ordMois;
-    // abscisse et ordonnée d'un graphique contenant la consomation global  sur un Ans
+    // abscisse et ordonnée d'un graphique contenant la consommation globale  sur un Ans
     Vector<Integer> absAns;
     Vector<Integer> ordAns;
-    // abscisse et ordonnée d'un graphique contenant la consomation global  sur un Jour
+    // abscisse et ordonnée d'un graphique contenant la consommation globale  sur un Jour
     Vector<Integer> absJour;
     Vector<Integer> ordJour;
-    // abscisse et ordonnée d'un graphique contenant la consomation instantané sur une heure
+    // abscisse et ordonnée d'un graphique contenant la consommation instantanée sur une heure
     Vector<Integer> absHeure;
     Vector<Integer> ordHeure;
 	JFrame frame = new JFrame();
@@ -55,10 +55,10 @@ public class traitement_donnees{
      }
 
      /**
-      * methode de création et de modification des graphique.
-      * la premiere execution initialise les graphique.
-      * les execution suivante update les graphique pendant que l'application tourne en arriere plan
-      * @param S contient les données de consomation utilisé pour faire les graphiques
+      * méthode de création et de modification des graphiques.
+      * la premiere execution initialise les graphiques.
+      * les exécutions suivantes updatent les graphiques pendant que l'application tourne en arrière plan
+      * @param S contient les données de consommation utilisée pour faire les graphiques
       */
      @SuppressWarnings("static-access")
 	public void Creer_un_Graphe(Simulateur S)
@@ -123,7 +123,7 @@ public class traitement_donnees{
      }
 
      /**
-      * retour l'abscisse du graphique donnant l'évolution de la consomation sur un mois
+      * retourne l'abscisse du graphique donnant l'évolution de la consommation sur un mois
       * @return tableau de l'abscisse d'un graphique
       */
      public Vector<Integer> get_absMois()
@@ -132,8 +132,8 @@ public class traitement_donnees{
      }
 
      /**
-      * retour l'ordonnée du graphique donnant l'évolution de la consomation sur un mois
-      * la donné est en kW
+      * retourne l'ordonnée du graphique donnant l'évolution de la consommation sur un mois
+      * la donnée est en W
       * @return tableau de l'ordonnée d'un graphique
       */
      public Vector<Integer> get_ordMois()
@@ -142,7 +142,7 @@ public class traitement_donnees{
      }
 
      /**
-      * retour l'abscisse du graphique donnant l'évolution de la consomation sur un an
+      * retourne l'abscisse du graphique donnant l'évolution de la consommation sur un an
       * @return tableau de l'abscisse d'un graphique
       */
      public Vector<Integer> get_absAns()
@@ -151,8 +151,8 @@ public class traitement_donnees{
      }
 
      /**
-      * retour l'ordonnée du graphique donnant l'évolution de la consomation sur un an
-      * la donné est en kW
+      * retourne l'ordonnée du graphique donnant l'évolution de la consommation sur un an
+      * la donnée est en W
       * @return tableau de l'ordonnée d'un graphique
       */
      public Vector<Integer> get_ordAns()
@@ -161,7 +161,7 @@ public class traitement_donnees{
      }
 
      /**
-      * retour l'abscisse du graphique donnant l'évolution de la consomation sur un jour
+      * retourne l'abscisse du graphique donnant l'évolution de la consommation sur un jour
       * @return tableau de l'abscisse d'un graphique
       */
      public Vector<Integer> get_absJour()
@@ -170,8 +170,8 @@ public class traitement_donnees{
      }
 
      /**
-      * retour l'ordonnée du graphique donnant l'évolution de la consomation sur un Jour
-      * la donné est en kW
+      * retourne l'ordonnée du graphique donnant l'évolution de la consommation sur un Jour
+      * la donnée est en W
       * @return tableau de l'ordonnée d'un graphique
       */
      public Vector<Integer> get_ordJour()
@@ -180,7 +180,7 @@ public class traitement_donnees{
      }
 
      /**
-      * retour l'abscisse du graphique donnant l'évolution de la consomation sur une heure
+      * retourne l'abscisse du graphique donnant l'évolution de la consommation sur une heure
       * @return tableau de l'abscisse d'un graphique
       */
      public Vector<Integer> get_absHeure()
@@ -189,8 +189,8 @@ public class traitement_donnees{
      }
 
      /**
-      * retour l'ordonnée du graphique donnant l'évolution de la consomation instantané sur une heure
-      * la donné est en kW
+      * retourne l'ordonnée du graphique donnant l'évolution de la consommation instantanée sur une heure
+      * la donnée est en W
       * @return tableau de l'ordonnée d'un graphique
       */
      public Vector<Integer> get_ordHeure()

@@ -15,7 +15,7 @@ import static java.lang.Thread.sleep;
 /**
  * Classe Simulateur
  * Il gère les objets.
- * Utilisation de consoMois, ConsoJour, ConsoSemaine : Il est conseillé de faire appel au 3 pour la sauvegarde
+ * Utilisation de consoMois, ConsoJour, ConsoSemaine : il est conseillé de faire appel aux 3 pour la sauvegarde
  * Pour le module interface, il faut demander les 3 et utiliser la fonction rechercheDateHeure pour mettre à jour le temps
  */
 public class Simulateur{
@@ -32,7 +32,7 @@ public class Simulateur{
     /**
      * Constructeur de la classe Simulateur
      * Initialisation de la classe simulateur
-     * @param e La classe entresortie : elle contient tout les objets et les préférences.
+     * @param e La classe entresortie : elle contient tous les objets et les préférences.
      */
     public Simulateur( entresortie e){
         //initialisation de tout.
@@ -45,7 +45,7 @@ public class Simulateur{
     }
 
     /**
-     * Recherche sur internet le prix de l'electricité chez edf avec une puissance de 9 kWa.
+     * Recherche sur internet du prix de l'electricité chez EDF avec une puissance de 9 kWa.
      * Il récupère le prix en heure creuse et heure de pointe
      * @throws IOException Exception lancée s'il y a une erreur lors de la connexion au site Web
      */
@@ -63,7 +63,7 @@ public class Simulateur{
         while( (tmp = bis.read(bytes) ) != -1 ) {
             String chaine = new String(bytes,0,tmp);
             //Pour une raison étrange cela peut ne pas bien fonctionner
-            //Nous devons utilisé les deux écritures possibles de la ligne
+            //Nous devons donc utiliser les deux écritures possibles de la ligne
             if(chaine.contains("<h4>Option Heures creuses en 2018</h4>")|| chaine.contains("<h4 style=\"text-align: left\">Option Heures creuses en 2018</h4>")) {
                 if (chaine.contains(("\n"))) {
                     int i = 0;
@@ -128,8 +128,8 @@ public class Simulateur{
     }
 
     /**
-     * Calcul La consommation de tout les objets.
-     * Il utilise le vecteur Consommation qui contient la consommation de chaque objets.
+     * Calcule La consommation de tous les objets.
+     * Il utilise le vecteur Consommation qui contient la consommation de chaque objet.
      */
     public void calculConsommation (){
         consommationTotale = 0;
@@ -147,7 +147,7 @@ public class Simulateur{
 
     /**
      * On réinitialise le vecteur ConsommationObjet puis nous récupérons la consommation de
-     * chaque objets que nous stockons dans ConsommationObjet.
+     * chaque objet que nous stockons dans ConsommationObjet.
      */
     public void miseAJourObjet (){
         rechercheDateHeure();
@@ -159,8 +159,8 @@ public class Simulateur{
 
     /**
      * Explication rapide : Nous trions les objets en fonction de leur consommation.
-     * Ensuite nous parcourons chaque priotité de 1 à 3 et nous éteignons tous les objets jusqu'à ce que la ConsommationTotal soit inférieure à ConsoMax
-     * @param ConsoMax Entier qui représente la limite a ne pas dépasser
+     * Ensuite nous parcourons chaque priorité de 3 à 1 et nous éteignons tous les objets jusqu'à ce que la ConsommationTotal soit inférieure à ConsoMax
+     * @param ConsoMax Entier qui représente la limite à ne pas dépasser
      */
     public void ExtinctionAutomatique (int ConsoMax){
             consommationANePasDepasser = ConsoMax;
@@ -187,7 +187,7 @@ public class Simulateur{
             }
         objet = tmp;
         ConsommationObjet = tmpConsoO;
-            //Tant que la consommation est supérieur
+            //Tant que la consommation est supérieure
         for(int j = 3;j>=1;j--) {
             int i =0;
             while (consommationTotale >= consommationANePasDepasser && i < objet.size()) {
@@ -201,7 +201,7 @@ public class Simulateur{
     }
 /*
     /**
-     * Récupère la température Extérieure ressentie a Versailles
+     * Récupère la température Extérieure ressentie à Versailles
      * @throws JAXBException Necesaire pour le fonctionnement de la bibliothèque
      * @throws IOException Exception
      */
@@ -231,7 +231,7 @@ public class Simulateur{
     //}
 
     /**
-     * Retourne Le prix en heure creuse de edf
+     * Retourne Le prix en heure creuse de EDF
      * @return le prix en heure creuse
      */
     public Float getPrixHC (){
@@ -239,7 +239,7 @@ public class Simulateur{
     }
 
     /**
-     * Retourne Le prix en heure de pic de edf
+     * Retourne Le prix en heure de pic de EDF
      * @return le prix en heure de pic de consommation
      */
     public Float getPrixHP (){
@@ -248,14 +248,14 @@ public class Simulateur{
 
     /**
      *
-     * @return La consommation a ne pas dépasser
+     * @return La consommation à ne pas dépasser
      */
     public int ConsommationANePasDepasser ( ){
         return consommationANePasDepasser;
     }
     
      /**
-      * Modifie la valeur de la consommation a ne pas dépasser
+      * Modifie la valeur de la consommation à ne pas dépasser
       */
       public void SetConsommationANePasDepasser (int c ){
          this.consommationANePasDepasser=c;
@@ -279,7 +279,7 @@ public class Simulateur{
 
     /**
      *
-     * @return Retourne le vecteur qui contient la consommation de tous les Objets
+     * @return Retourne le vecteur qui contient la consommation de tous les objets
      */
     public Vector ConsommationObjet (){
         return ConsommationObjet;
@@ -303,14 +303,14 @@ public class Simulateur{
 
     /**
      *
-     * @return Le vector objet contenant les Objets
+     * @return Le vector objet contenant les objets
      */
     public Vector<Objet> getObjet (){
         return objet;
     }
 
     /**
-     * On récupère la consommation avec la classe engtresortie, on le met à jour avec la consommation actuelle puis grâce au préférence de l'utilisateur et de la consommation actuelle nous faisont une simulation sur 12h
+     * On récupère la consommation avec la classe engtresortie, on le met à jour avec la consommation actuelle puis grâce aux préférences de l'utilisateur et de la consommation actuelle nous faisons une simulation sur 12h
      * @return La consommation heure par heure avec 12 heures de simulation + les anciennes données sauvegardées
      */
     public Vector<Integer> consoJour (){
@@ -320,7 +320,7 @@ public class Simulateur{
         minute = minute/60;
         if(minute==0){minute = 60;}
         if(Newdate.get(Calendar.HOUR_OF_DAY) != date.get(Calendar.HOUR_OF_DAY)){
-            if(Conso.size() == 24){          //On supprime les anciennes consommations si nous en avons suffisaments
+            if(Conso.size() == 24){          //On supprime les anciennes consommations si nous en avons suffisament
                 for(int i = 23;i>=12;i++)
                     Conso.remove(i);
                 Conso.remove(0);
@@ -516,21 +516,21 @@ public class Simulateur{
 
     /**
      * On récupére la consommation avec la classe engtresortie, on le met à jour avec la consommation actuelle
-     * @return La consomation des mois
+     * @return La consommation des mois
      */
     public Vector<Integer> ConsoMois (){
         Calendar Newdate = Calendar.getInstance();
         Vector<Integer> Conso = S.consoMois();
 
-        //On calcule le temps qui c'est écoulé.
-        //consommation total étant en Watt/heure
-        //Il nous faut savoir la consommation utilisé entre les deux temps
+        //On calcule le temps qui s'est écoulé.
+        //consommation totale étant en Watt/heure
+        //Il nous faut savoir la consommation utilisée entre les deux temps
         int minute = Newdate.get(Calendar.MINUTE) - date.get(Calendar.MINUTE);
         minute = minute/60;
         //divisiopn zero impossible;
         if(minute==0){minute = 60;}
         if(Newdate.get(Calendar.MONTH) != date.get(Calendar.MONTH)){
-            if(Conso.size() == 6){          //On supprime les anciennes consommations si nous en avons suffisaments
+            if(Conso.size() == 6){          //On supprime les anciennes consommations si nous en avons suffisament
                 Conso.remove(0);
             }
             Conso.add(consommationTotale/minute);
@@ -550,19 +550,19 @@ public class Simulateur{
 
     /**
      * On récupère la consommation avec la classe entresortie, on le met à jour avec la consommation actuelle
-     * @return La consomation des mois
+     * @return La consommation des Semaines
      */
     public Vector<Integer> ConsoSemaine (){
         Calendar Newdate = Calendar.getInstance();
         Vector<Integer> Conso = S.consoSemaine();
-        //On calcule le temps qui c'est écoulé.
-        //consommation total étant en Watt/heure
-        //Il nous faut savoir la consommation utilisé entre les deux temps
+        //On calcule le temps qui s'est écoulé.
+        //consommation totale étant en Watt/heure
+        //Il nous faut savoir la consommation utilisée entre les deux temps
         int minute = Newdate.get(Calendar.MINUTE) - date.get(Calendar.MINUTE);
         minute = minute/60;
         if(minute==0){minute = 60;}
         if(Newdate.get(Calendar.WEEK_OF_YEAR) != date.get(Calendar.WEEK_OF_YEAR)){
-            if(Conso.size() == 4){          //On supprime les anciennes consommations si nous en avons suffisaments
+            if(Conso.size() == 4){          //On supprime les anciennes consommations si nous en avons suffisament
                 Conso.remove(0);
             }
             Conso.add(consommationTotale/minute);

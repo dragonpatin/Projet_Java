@@ -10,7 +10,7 @@ public class PriseElectrique extends Objet{
      * Constructeur de la classe
      * @param Switch paramètre pour gérer si la prise est allumée ou éteinte
      * @param Nom le nom de la prise
-     * @param Piece la pièce où elle ce trouve
+     * @param Piece la pièce où elle se trouve
      * @param AdresseMAC son identifiant unique
      */
     public PriseElectrique(boolean Switch, String Nom, String Piece, String AdresseMAC){

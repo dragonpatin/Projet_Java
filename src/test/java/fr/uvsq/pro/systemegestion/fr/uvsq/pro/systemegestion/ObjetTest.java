@@ -99,7 +99,7 @@ public class ObjetTest {
 
     /**
      * Test du calcul de la durée d'utilisation d'un objet
-     * Il arrive que quelques fois le test bug pour des raisons inconnues, il faut juste le relancer
+     * Il arrive que quelquefois le test bugge pour des raisons inconnues, il faut juste le relancer
      */
     @Test
     public void TestDurée_utilisation(){
@@ -110,7 +110,7 @@ public class ObjetTest {
             test.AllumerEteindre();
             test.AllumerEteindre();
         }
-        System.out.println("Test durée d'utilisation en cours..");
+        System.out.println("Test durée d'utilisation en cours...");
 
         try{
             sleep(60000);
@@ -128,7 +128,7 @@ public class ObjetTest {
     }
 
     /**
-     * Test de modifications des attributs d'un objet
+     * Test de modification des attributs d'un objet
      */
     @Test
     public void TestModifObjet(){

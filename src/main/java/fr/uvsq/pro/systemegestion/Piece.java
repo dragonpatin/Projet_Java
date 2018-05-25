@@ -10,10 +10,10 @@ public class Piece{
 
     /**
      * @param nom le nom de la pièce
-     * @param etage l'étage où ce situe la pièce
-     * @param NombreObjet le nombre d'objet présent dans la pièce
+     * @param etage l'étage où se situe la pièce
+     * @param NombreObjet le nombre d'objets présents dans la pièce
      * @param ObjetPiece c'est une liste des objets présents dans la pièce
-     * @param consoPiece la consommation total des objets présents dans la pièce
+     * @param consoPiece la consommation totals des objets présents dans la pièce
      */
     String nom;
     int etage;
@@ -51,7 +51,7 @@ public class Piece{
     }
 
     /**
-     * Méthode pour la calculer la consommation de la pièce, cad la consommation de tous les objets de la pièce
+     * Méthode pour calculer la consommation de la pièce, cad la consommation de tous les objets de la pièce
      */
     public void calculConsoPiece(){
         int i = 0;
@@ -95,7 +95,7 @@ public class Piece{
     }
 
     /**
-     * @return retourne le nombre d'objet de la pièce
+     * @return retourne le nombre d'objets de la pièce
      */
     public int  getNombreObjet(){
         return this.NombreObjet;
@@ -109,7 +109,7 @@ public class Piece{
     }
 
     /**
-     * @return retourne la consommation de la pièce, cad celle de la totalité des objet de la pièce
+     * @return retourne la consommation de la pièce, cad celle de la totalité des objets de la pièce
      */
     public int getConsoPiece(){
         return this.consoPiece;

@@ -2,7 +2,7 @@ package fr.uvsq.pro.systemegestion;
 
 /**
  * Classe Radiateur
- * Cette classe est une sous-classe de la classe Objet, elle reprend les memes attributs et méthodes en y ajoutant des spécificités propres a cette classe
+ * Cette classe est une sous-classe de la classe Objet, elle reprend les mêmes attributs et méthodes en y ajoutant des spécificités propres à cette classe
  */
 public class Radiateur extends Objet{
 
@@ -16,9 +16,9 @@ public class Radiateur extends Objet{
     /**
      * Constructeur de la classe
      * @param thermostat un thermostat pour le radiateur
-     * @param temperature une temperature pour le radiateur
+     * @param temperature une température pour le radiateur
      * @param Nom le nom du radiateur
-     * @param Piece la pièce où il ce trouve
+     * @param Piece la pièce où il se trouve
      * @param AdresseMAC son identifiant
      * @param priorite la priorité du radiateur
      * @param consommation la consommation du radiateur
@@ -45,7 +45,7 @@ public class Radiateur extends Objet{
     }
 
     /**
-     * @return retourne la temperature du radiateur
+     * @return retourne la température du radiateur
      */
     public int getTemperature(){
         if(this.Switch == false){
@@ -63,8 +63,8 @@ public class Radiateur extends Objet{
     }
 
     /**
-     * Méthode pour modifier la temperature du radiateur
-     * @param temperature la nouvelle temperature
+     * Méthode pour modifier la température du radiateur
+     * @param temperature la nouvelle température
      */
     public void ModifieTemperature(int temperature){
         this.temperature = temperature;
