@@ -767,13 +767,13 @@ public class Interface implements ActionListener {
 	public void charger_sauvegarde(){
 		JOptionPane jop = new JOptionPane();		
 		if(donnee!=null ) {
-		jop.showMessageDialog(menupanel, "Sauvegarde déja importée", "Information", JOptionPane.WARNING_MESSAGE);}
+		jop.showMessageDialog(menupanel, "Sauvegarde déja importé", "Information", JOptionPane.WARNING_MESSAGE);}
 		else {
 			System.out.println("Charger sauvegarde");
 			donnee = new entresortie();
 			donnee.lecturefichier(donnee.NomFichier);			
 		if(donnee!=null ) {		
-		jop.showMessageDialog(menupanel, "Sauvegarde importée", "Information", JOptionPane.INFORMATION_MESSAGE);
+		jop.showMessageDialog(menupanel, "Sauvegarde importé", "Information", JOptionPane.INFORMATION_MESSAGE);
 		initpiece(donnee.getObjet());	
 		Allume_tous_objets();
 		setBtpiece();
