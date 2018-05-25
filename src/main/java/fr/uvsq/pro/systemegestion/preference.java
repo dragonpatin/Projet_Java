@@ -7,8 +7,8 @@ package fr.uvsq.pro.systemegestion;
 public class preference {
 
      /**
-      * @param nom de la préférence
-      * @param O Objet
+      * @param nom le nom de la préférence
+      * @param O Objet de la préférence
       * @param instruction l'utilisateur peut choisir si l'objet sera allumé ou éteint : 0 pour allumer et 1 pour éteindre
       * @param heure_debut heure de début de l'instruction
       * @param heure_fin heure de fin de l'instruction
