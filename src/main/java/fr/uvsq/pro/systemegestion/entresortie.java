@@ -108,7 +108,7 @@ public class entresortie{
 
 
     public void lecturefichier(File NomFichier){
-        if( this.NomFichier != null) {
+        if(NomFichier != null) {
         try{
             String str;
             BufferedReader fichier = new BufferedReader(new FileReader(NomFichier));
