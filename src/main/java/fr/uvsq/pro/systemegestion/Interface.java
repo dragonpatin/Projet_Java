@@ -393,17 +393,20 @@ public class Interface implements ActionListener {
 		btsuppiece.setBounds(431, 666, 150, 25);
 		objetpanel.add(btsuppiece);
 		
-		JButton btmodpiece = new JButton("modifer nom");
+		JButton btmodpiece = new JButton("modifier nom de la piece");
 		btmodpiece.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nom = JOptionPane.showInputDialog(piecepanel, "Modifier le nom de la pièce", JOptionPane.QUESTION_MESSAGE);
 				if(nom !=null) {
 				pieceactuelle.changerNom(nom);
 				btpiece.elementAt(piece.indexOf(pieceactuelle)).setText(nom);
+				for (Objet o : pieceactuelle.ObjetPiece) {
+					o.ModifiePieceMaison(nom);
+				}
 				}
 			}
 		});
-		btmodpiece.setBounds(200, 666, 200, 25);
+		btmodpiece.setBounds(200, 666, 210, 25);
 		objetpanel.add(btmodpiece);
 		frame.setResizable(false);
 		
