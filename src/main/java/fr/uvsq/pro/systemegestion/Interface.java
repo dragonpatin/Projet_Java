@@ -252,7 +252,20 @@ public class Interface implements ActionListener {
 				donnee.modifieObjet(objetactuel);
 				infobjcontent.revalidate();
 				infobjcontent.repaint();
-				affiche_infos_objet(objetactuel);
+				
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					_objet(objetactuel);
 				}
 			}
 		});
@@ -414,7 +427,9 @@ public class Interface implements ActionListener {
 		mntmSauvegarder.setForeground(new Color(46, 139, 87));
 		mnFichier.add(mntmSauvegarder);
 		
-		JMenuItem mntmImporterFichier = new JMenuItem("Charger sauvegarde");
+		JMenuItem mntmImporterFichier = new JMenuItem("
+							      
+							      sauvegarde");
 		mntmImporterFichier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				charger_sauvegarde();
@@ -768,23 +783,30 @@ public class Interface implements ActionListener {
 	 */
 	@SuppressWarnings("static-access")
 	public void charger_sauvegarde(){
-		JOptionPane jop = new JOptionPane();		
-		if(donnee!=null ) {
-		jop.showMessageDialog(menupanel, "Sauvegarde déja importé", "Information", JOptionPane.WARNING_MESSAGE);}
-		else {
-			System.out.println("Charger sauvegarde");
-			donnee = new entresortie();
-			donnee.lecturefichier(donnee.NomFichier);			
-		if(donnee!=null ) {		
-		jop.showMessageDialog(menupanel, "Sauvegarde importé", "Information", JOptionPane.INFORMATION_MESSAGE);
-		initpiece(donnee.getObjet());	
-		Allume_tous_objets();
-		setBtpiece();
-		s = new Simulateur(donnee);
-		s.SetConsommationANePasDepasser(1000);
-		AppelAutomatiqueRecuperationConsommation(10);}
-		else jop.showMessageDialog(menupanel, "Erreur lors de l'importation de la sauvegarde", "Information", JOptionPane.WARNING_MESSAGE);}
-	}
+        JOptionPane jop = new JOptionPane();
+        if(donnee!=null ) {
+        jop.showMessageDialog(menupanel, "Sauvegarde déja importée", "Information", JOptionPane.WARNING_MESSAGE);}
+        else {
+            System.out.println("Charger sauvegarde");
+            donnee = new entresortie();
+            donnee.lecturefichier(donnee.NomFichier);
+        if(donnee!=null && donnee.NomFichier != null) {
+        jop.showMessageDialog(menupanel, "Sauvegarde importée", "Information", JOptionPane.INFORMATION_MESSAGE);
+        initpiece(donnee.getObjet());
+        Allume_tous_objets();
+        setBtpiece();
+        s = new Simulateur(donnee);
+        s.SetConsommationANePasDepasser(1000);
+        AppelAutomatiqueRecuperationConsommation(10);}
+        else {
+            if(donnee.NomFichier==null)
+                jop.showMessageDialog(menupanel, "Annulé", "Information", JOptionPane.WARNING_MESSAGE);
+            else
+                jop.showMessageDialog(menupanel, "Erreur lors de l'importation de la sauvegarde", "Information", JOptionPane.WARNING_MESSAGE);
+            donnee = null;
+            }
+        }
+    }
 	
 	
 	public void AppelAutomatiqueRecuperationConsommation(int s){
@@ -792,6 +814,10 @@ public class Interface implements ActionListener {
 		t.schedule(new taskSauvegarde(this),1000,1000*s);		
 	}
 	
+	/**
+	 * Méthode pour afficher toutes les données de l'objet
+	 * @param o : on vera toutes ces données actuelles
+	 */
 	/**
 	 * Méthode pour afficher toutes les données de l'objet
 	 * @param o : on vera toutes ces données actuelles
@@ -825,8 +851,21 @@ public class Interface implements ActionListener {
 		
 		JLabel etat= new JLabel("Allumé: "+ o.getSwitch());
 		etat.setBounds(12,190, 200, 15);
-		infobjcontent.add(etat);		
-	}
+		infobjcontent.add(etat);
+		
+		Vector<preference> pref= new Vector<preference>();
+        pref = donnee.getPreference();
+        for(int i=0;i<pref.size();i++){
+            if(pref.elementAt(i).getObjet().getNom()== o.getNom()){
+        JLabel heure_debut= new JLabel("Heure de debut : "+ pref.elementAt(i).getHeuredebut());
+        heure_debut.setBounds(12,220, 300, 15);
+        infobjcontent.add(heure_debut);
+
+        JLabel heure_fin= new JLabel("Heure de fin: "+ pref.elementAt(i).getHeureFin());
+        heure_fin.setBounds(12,250, 300, 15);
+        infobjcontent.add(heure_fin);}}
+           
+         }
 	
 	/**
 	 * Méthode pour récuperer les données dans la classe entresortie
