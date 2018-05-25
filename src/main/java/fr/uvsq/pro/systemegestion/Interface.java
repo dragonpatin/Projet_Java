@@ -1,6 +1,9 @@
 /**
  * Java source Interface
  */
+/**
+ * Java source Interface
+ */
 package fr.uvsq.pro.systemegestion;
 import java.lang.Integer;
 import javax.swing.*;
@@ -190,6 +193,29 @@ public class Interface implements ActionListener {
 		});
 		btlistobj.setBounds(12, 153, 182, 25);
 		menupanel.add(btlistobj);
+		
+		piecepanel.setBounds(12, 0, 570, 697);
+		frame.getContentPane().add(piecepanel);
+		piecepanel.setLayout(null);
+		
+		
+		
+		JButton btaddpiece = new JButton("Ajouter piece");
+		btaddpiece.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {			
+				ajout_piece();
+				piecepanel.revalidate();
+				piecepanel.repaint();
+				affiche_piece();
+				System.out.println("ajout pièce");
+			}
+		});
+		btaddpiece.setBounds(388, 0, 182, 25);
+		piecepanel.add(btaddpiece);
+		piececontent.setBounds(-13, 25, 583, 672);
+		piecepanel.add(piececontent);
+		piececontent.setLayout(null);		
+		piecepanel.setVisible(false);
 		infobjpanel.setBounds(0, 0, 594, 697);
 		frame.getContentPane().add(infobjpanel);
 		infobjpanel.setLayout(null);
@@ -371,28 +397,6 @@ public class Interface implements ActionListener {
 		objetpanel.add(btmodpiece);
 		frame.setResizable(false);
 		
-		piecepanel.setBounds(12, 0, 570, 697);
-		frame.getContentPane().add(piecepanel);
-		piecepanel.setLayout(null);
-		
-		
-		
-		JButton btaddpiece = new JButton("Ajouter piece");
-		btaddpiece.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {			
-				ajout_piece();
-				piecepanel.revalidate();
-				piecepanel.repaint();
-				affiche_piece();
-				System.out.println("ajout pièce");
-			}
-		});
-		btaddpiece.setBounds(344, 0, 117, 25);
-		piecepanel.add(btaddpiece);
-		piececontent.setBounds(-13, 25, 583, 672);
-		piecepanel.add(piececontent);
-		piececontent.setLayout(null);		
-		
 
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -437,7 +441,6 @@ public class Interface implements ActionListener {
 		infobjpanel.setVisible(false);
 		listobjpanel.setVisible(false);
 		objetpanel.setVisible(false);
-		piecepanel.setVisible(false);
 		favorispanel.setVisible(false);
 	}
 
@@ -547,7 +550,7 @@ public class Interface implements ActionListener {
 		});
 		modextinction.setBounds(247, 0, 97, 25);
 		simupanel.add(modextinction);
-		JLabel lblNewLabel = new JLabel("Consommation limite : "+s.ConsommationANePasDepasser()+" Kwh");
+		JLabel lblNewLabel = new JLabel("Consommation limite : "+s.ConsommationANePasDepasser()+" Wh");
 		lblNewLabel.setBounds(12, 4, 231, 16);
 		simupanel.add(lblNewLabel);
 
@@ -767,14 +770,13 @@ public class Interface implements ActionListener {
 	public void charger_sauvegarde(){
 		JOptionPane jop = new JOptionPane();		
 		if(donnee!=null ) {
-		jop.showMessageDialog(menupanel, "Sauvegarde déja importée", "Information", JOptionPane.WARNING_MESSAGE);}
+		jop.showMessageDialog(menupanel, "Sauvegarde déja importé", "Information", JOptionPane.WARNING_MESSAGE);}
 		else {
 			System.out.println("Charger sauvegarde");
 			donnee = new entresortie();
-			donnee.lecturefichier(donnee.NomFichier);			
+			donnee.lecturefichier(donnee.NomFichier);
 		if(donnee!=null && donnee.NomFichier != null) {
 		jop.showMessageDialog(menupanel, "Sauvegarde importée", "Information", JOptionPane.INFORMATION_MESSAGE);
-		initpiece(donnee.getObjet());	
 		Allume_tous_objets();
 		setBtpiece();
 		s = new Simulateur(donnee);
@@ -1015,4 +1017,3 @@ public class Interface implements ActionListener {
 	}
 	
 }
-

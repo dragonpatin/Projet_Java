@@ -1,7 +1,10 @@
 /**
  * Java source Entrée Sortie
  */
-package fr.uvsq.pro.systemegestion;
+/**
+ * Java source Entrée Sortie
+ */
+package fr.uvsq.pro.systemegestion; 
 import java.io.*;
 import java.util.*;
 import javax.swing.*;
@@ -105,12 +108,33 @@ public class entresortie{
 
 
     public void lecturefichier(File NomFichier){
-        if(NomFichier != null) {
-            try {
-                String str;
-                BufferedReader fichier = new BufferedReader(new FileReader(NomFichier));
-                Objet obj = new Objet();
+        if( this.NomFichier != null) {
+        try{
+            String str;
+            BufferedReader fichier = new BufferedReader(new FileReader(NomFichier));
+            Objet obj = new Objet();
 
+            //Création de l'objet de lecture
+            while ((str = fichier.readLine()) != null) {
+                if (str.equals("#")) {
+                    str = fichier.readLine();
+                    String NomObjet = str;
+                    str = fichier.readLine();
+                    String PieceMaison = str;
+                    str = fichier.readLine();
+                    int Consommation = Integer.parseInt(str);
+                    str = fichier.readLine();
+                    String AdresseMAC = str;
+                    str = fichier.readLine();
+                    int priorite = Integer.parseInt(str);
+
+                    obj = new Objet(NomObjet, PieceMaison, Consommation, AdresseMAC, priorite);
+                    ListeObjet.addElement(obj);
+
+                    if (priorite == 3) {
+                        ObjetFavoris.addElement(obj);
+                    }
+                }
                 //Création de l'objet de lecture
                 while ((str = fichier.readLine()) != null) {
                     if (str.equals("#")) {
@@ -172,11 +196,11 @@ public class entresortie{
                         ConsoMois.addElement(consomois);
                     }
                 }
-                fichier.close();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        }
+            fichier.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }}
     }
 
     /**
@@ -426,7 +450,7 @@ public class entresortie{
      * Elle va return la la liste des préférences stockés dans le vecteur préférence
      * @return
      */
-    public Vector getPreference (){
+    public Vector<preference> getPreference (){
         return Preference;
     }
 
@@ -447,7 +471,7 @@ public class entresortie{
      * Elle va return le vecteur consoJour
      * @return
      */
-    public Vector consoJour (){
+    public Vector<Integer> consoJour (){
         return this.ConsoJour;
     }
 
@@ -455,7 +479,7 @@ public class entresortie{
      * Elle va return le vecteur ConsoMois
      * @return
      */
-    public Vector consoMois (){
+    public Vector<Integer> consoMois (){
         return this.ConsoMois;
     }
 
@@ -463,7 +487,7 @@ public class entresortie{
      *Elle va return le vecteur Consosemaine
      * @return
      */
-    public Vector consoSemaine (){
+    public Vector<Integer> consoSemaine (){
         return this.ConsoSemaine;
     }
 
