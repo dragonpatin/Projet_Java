@@ -313,7 +313,7 @@ public class Simulateur{
      * On récupère la consommation avec la classe engtresortie, on le met à jour avec la consommation actuelle puis grâce au préférence de l'utilisateur et de la consommation actuelle nous faisont une simulation sur 12h
      * @return La consommation heure par heure avec 12 heures de simulation + les anciennes données sauvegardées
      */
-    public Vector consoJour (){
+    public Vector<Integer> consoJour (){
         Calendar Newdate = Calendar.getInstance();
         Vector<Integer> Conso = S.consoJour();
         int minute = Newdate.get(Calendar.MINUTE) - date.get(Calendar.MINUTE);
@@ -518,7 +518,7 @@ public class Simulateur{
      * On récupére la consommation avec la classe engtresortie, on le met à jour avec la consommation actuelle
      * @return La consomation des mois
      */
-    public Vector ConsoMois (){
+    public Vector<Integer> ConsoMois (){
         Calendar Newdate = Calendar.getInstance();
         Vector<Integer> Conso = S.consoMois();
 
@@ -552,7 +552,7 @@ public class Simulateur{
      * On récupère la consommation avec la classe entresortie, on le met à jour avec la consommation actuelle
      * @return La consomation des mois
      */
-    public Vector ConsoSemaine (){
+    public Vector<Integer> ConsoSemaine (){
         Calendar Newdate = Calendar.getInstance();
         Vector<Integer> Conso = S.consoSemaine();
         //On calcule le temps qui c'est écoulé.
