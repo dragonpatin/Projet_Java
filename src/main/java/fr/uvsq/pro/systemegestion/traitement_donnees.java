@@ -33,7 +33,7 @@ public class traitement_donnees{
     int nb_valeur;
     int val_max_ord;
 
- 	
+
     public traitement_donnees(){
         this.absMois = new Vector<Integer>();
         this.ordMois = new Vector<Integer>();
@@ -44,10 +44,10 @@ public class traitement_donnees{
         this.absHeure = new Vector<Integer>();
         this.ordHeure = new Vector<Integer>();
     }
- 	
-    
+
+
      public traitement_donnees(String TitreGraph,Vector<Integer> conso,int valeur_max){
-    	 this.TitreGraph=TitreGraph+" (Kwh)"; 
+    	 this.TitreGraph=TitreGraph+" (Kwh)";
     	 this.nb_valeur=conso.size();
     	 this.val_max_ord = valeur_max;
     	 init_affichage();
@@ -63,7 +63,7 @@ public class traitement_donnees{
      @SuppressWarnings("static-access")
 	public void Creer_un_Graphe(Simulateur S)
      {
-         
+
           int conso =0;
           conso = S.consommationTotale();
 //          for(i=0;i<S.ConsommationObjet().size();i++)
@@ -197,50 +197,52 @@ public class traitement_donnees{
      {
           return ordHeure;
      }
-     
-     
+
+    /**
+     * Initialise l'affichage du graphe
+     */
      private void init_affichage() {
 
   		frame.setBounds(100, 100,775,500);
   		frame.setVisible(true);
   		frame.setTitle(this.TitreGraph);
-  		frame.getContentPane().setLayout(null);		
+  		frame.getContentPane().setLayout(null);
   		graphpanel.setBounds(105, 67, 550, 300);
   		frame.getContentPane().add(graphpanel);
-  		graphpanel.setLayout(null);	
-  		
+  		graphpanel.setLayout(null);
 
-  		
+
+
   		JLabel titregraph = new JLabel(TitreGraph);
   		titregraph.setFont(new Font("Verdana", Font.BOLD,16));
   		titregraph.setHorizontalAlignment(SwingConstants.CENTER);
   		titregraph.setBounds(105, 13, 550, 30);
   		frame.getContentPane().add(titregraph);
-  		
+
   		JPanel gradupanel = new JPanel();
   		gradupanel.setBackground(SystemColor.inactiveCaption);
   		gradupanel.setBounds(105, 370, 550, 30);
   		frame.getContentPane().add(gradupanel);
   		gradupanel.setLayout(null);
-  		
+
   		JLabel consomax = new JLabel(""+val_max_ord);
   		consomax.setBounds(70, 70, 56, 16);
   		frame.getContentPane().add(consomax);
-  		
+
   		JLabel cons2 = new JLabel(""+val_max_ord/2);
   		cons2.setBounds(70, 209, 56, 16);
   		frame.getContentPane().add(cons2);
-  		
+
   		JLabel cons1 = new JLabel(""+((val_max_ord/2)+val_max_ord/4));
   		cons1.setBounds(70, 132, 56, 16);
   		frame.getContentPane().add(cons1);
-  		
+
   		JLabel cons3 = new JLabel(""+val_max_ord/4);
   		cons3.setBounds(70, 284, 56, 16);
   		frame.getContentPane().add(cons3);
-  		
+
   		int x=0;
-	   	int w = (graphpanel.getWidth()/nb_valeur)-6; 	
+	   	int w = (graphpanel.getWidth()/nb_valeur)-6;
 	   	if (nb_valeur<4) w = (graphpanel.getWidth()/4)-6;
   		for(int i = 0; i<nb_valeur;i++) {
   		JLabel lblNewLabel_1 = new JLabel(""+(i+1));
@@ -249,62 +251,70 @@ public class traitement_donnees{
   		gradupanel.add(lblNewLabel_1);
   		x+=graphpanel.getWidth()/nb_valeur;
   		}
-  			
+
      }
 
      public void graphe_temps_reel(Simulateur S, int echelle_de_temps){
 
      }
-     
-     
+
+    /**
+     * Trace le graphe
+     * @param nb le nombre de consommations à afficher
+     */
      public void aff_canvas_graph(int nb) {
    		int y=0;
   		Canvas canvas_0 = new Canvas();
   		canvas_0.setBackground(Color.GRAY);
   		canvas_0.setBounds(0, 150, 550, 1);
   		graphpanel.add(canvas_0);
-  		
+
   		Canvas canvas_1 = new Canvas();
   		canvas_1.setBackground(Color.GRAY);
   		canvas_1.setEnabled(false);
   		canvas_1.setBounds(0, 75, 550, 1);
   		graphpanel.add(canvas_1);
-  		
+
   		Canvas canvas_2 = new Canvas();
   		canvas_2.setBackground(Color.GRAY);
   		canvas_2.setBounds(0, 225, 550, 1);
   		graphpanel.add(canvas_2);
-  		
+
   		Canvas canvas_3 = new Canvas();
   		canvas_3.setBackground(Color.GRAY);
   		canvas_3.setBounds(0, 1, 550, 1);
   		graphpanel.add(canvas_3);
-  		
+
    		for(int i= 0 ; i < 6; i++) {
    	   		Canvas canvas = new Canvas();
    	   		canvas.setBackground(SystemColor.controlHighlight);
    	   		canvas.setBounds(0, 250-y, 550, 25);
    	   		graphpanel.add(canvas);
    	   		y+=50;
-   		}  
+   		}
 
      }
-     
+
+    /**
+     * Affiche le graphe
+     * @param conso Le vecteur de consommation que nous voulons afficher
+     * @param pic une consommation pic
+     */
      public void affiche_graph_conso(Vector<Integer>conso,int pic) {
     	 int x =0,h=0,h_max=290;
     	 int nb=conso.size();
     	 int lg = graphpanel.getWidth();
-    	 int w = (lg/nb)-6; 	
+    	 int w = (lg/nb)-6;
     	 if (nb<4) w = (lg/4)-6;
     	 int ecart = w/6;
-    	 
+
     	for(int i= 0 ; i < conso.size(); i++) {
    		h= (conso.elementAt(i)*h_max)/pic;
-  		
+
    		Canvas canvas = new Canvas();
 		canvas.setBackground(new Color(100,150,0));
-   		canvas.setBounds(x,300-h,w-ecart,h); 		
-   		graphpanel.add(canvas);	
+   		canvas.setBounds(x,300-h,w-ecart,h);
+   		graphpanel.add(canvas);
    		x+=lg/nb;
    		}
     	aff_canvas_graph(nb);

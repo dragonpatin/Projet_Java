@@ -1,9 +1,6 @@
 /**
  * Java source Interface
  */
-/**
- * Java source Interface
- */
 package fr.uvsq.pro.systemegestion;
  import java.lang.Integer;
 import javax.swing.*;
@@ -31,9 +28,9 @@ public class Interface implements ActionListener {
 	private JPanel favorispanel = new JPanel();
 	private JPanel simupanel = new JPanel();
 	private Vector<JButton> btpiece = new Vector<JButton>();
-	private Vector<JButton> btobjet = new Vector<JButton>();	
-	private Vector<Piece> piece = new Vector<Piece>(); 
-	private Piece pieceactuelle;	
+	private Vector<JButton> btobjet = new Vector<JButton>();
+	private Vector<Piece> piece = new Vector<Piece>();
+	private Piece pieceactuelle;
 	private Objet objetactuel = new Objet();
 	private entresortie donnee;
 	private String panelprec="";
@@ -41,11 +38,11 @@ public class Interface implements ActionListener {
 
 	//Création d'un seul Simulateur car plusieurs engendrent un conflit
 	Simulateur s;
-	public static void main(String[] args){					
+	public static void main(String[] args){
 					Interface window = new Interface();
-					window.frame.setVisible(true);										
+					window.frame.setVisible(true);
 	}
-	
+
 	/**
      * Constructeur de la classe Interface
      * Permet de lancer l'interface
@@ -55,14 +52,14 @@ public class Interface implements ActionListener {
 	}
 
 	/**
-	 * Permet l'affichage de tous les boutons 
+	 * Permet l'affichage de tous les boutons
 	 */
-	 
+
 	private void initialiseUI(){
 		frame = new JFrame();
 		frame.setBounds(100, 100,600,800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		JButton btnRetour = new JButton("Retour");
 		btnRetour.setIcon(new ImageIcon("src/main/resources/retour.png"));
 		btnRetour.setBounds(460, 703, 122, 28);
@@ -106,15 +103,15 @@ public class Interface implements ActionListener {
 					panelactu="listobj";
 					listobjpanel.setVisible(true);
 					affiche_objet(donnee.getObjet(),listobjpanel);
-					infobjpanel.setVisible(false);	
-				}			
+					infobjpanel.setVisible(false);
+				}
 			}});
-		
-		
+
+
 		menupanel.setBounds(0, 0, 582, 697);
 		frame.getContentPane().add(menupanel);
 		menupanel.setLayout(null);
-		
+
 		JButton PIECE = new JButton("Afficher pièces");
 		PIECE.setHorizontalAlignment(SwingConstants.LEFT);
 		PIECE.addActionListener(new ActionListener() {
@@ -128,35 +125,35 @@ public class Interface implements ActionListener {
 				else {JOptionPane.showMessageDialog(piecepanel, "Liste des pièces vide", "Information", JOptionPane.WARNING_MESSAGE);
 				menupanel.setVisible(true);
 				piecepanel.setVisible(false);
-				;}}}				
-		); 
-		
+				;}}}
+		);
+
 		PIECE.setBounds(12, 39, 182, 25);
 		menupanel.add(PIECE);
-		
+
 		JLabel lblMenus = new JLabel("Menu");
 		lblMenus.setBounds(12, 12, 70, 15);
 		menupanel.add(lblMenus);
-		
+
 		JButton btsimu = new JButton("Lancer le simulateur");
 		btsimu.setHorizontalAlignment(SwingConstants.LEFT);
 		btsimu.setIcon(new ImageIcon("src/main/resources/play-256.png"));
 		btsimu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				piecepanel.setVisible(false);
-				objetpanel.setVisible(false);			
+				objetpanel.setVisible(false);
 				if(donnee !=null ) {
 				menupanel.setVisible(false);
 				simupanel.setVisible(true);
 				lancer_simulateur();
 				affiche_simulateur();}
-				else 
+				else
 				JOptionPane.showMessageDialog(simupanel, "Impossible de lancer le simulateur", "Information", JOptionPane.WARNING_MESSAGE);
 			}
 		});
 		btsimu.setBounds(12, 115, 182, 25);
 		menupanel.add(btsimu);
-		
+
 		JButton btfav = new JButton("Objets favoris");
 		btfav.setHorizontalAlignment(SwingConstants.LEFT);
 		btfav.setIcon(new ImageIcon("src/main/resources/fa1v.png"));
@@ -173,7 +170,7 @@ public class Interface implements ActionListener {
 		});
 		btfav.setBounds(12, 77, 182, 25);
 		menupanel.add(btfav);
-		
+
 		JButton btlistobj = new JButton("Liste objets ");
 		btlistobj.setHorizontalAlignment(SwingConstants.LEFT);
 		btlistobj.addActionListener(new ActionListener() {
@@ -191,16 +188,16 @@ public class Interface implements ActionListener {
 		});
 		btlistobj.setBounds(12, 153, 182, 25);
 		menupanel.add(btlistobj);
-		
+
 		piecepanel.setBounds(12, 0, 570, 697);
 		frame.getContentPane().add(piecepanel);
 		piecepanel.setLayout(null);
-		
-		
-		
+
+
+
 		JButton btaddpiece = new JButton("Ajouter piece");
 		btaddpiece.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {			
+			public void actionPerformed(ActionEvent e) {
 				ajout_piece();
 				piecepanel.revalidate();
 				piecepanel.repaint();
@@ -212,23 +209,23 @@ public class Interface implements ActionListener {
 		piecepanel.add(btaddpiece);
 		piececontent.setBounds(-13, 25, 583, 672);
 		piecepanel.add(piececontent);
-		piececontent.setLayout(null);		
+		piececontent.setLayout(null);
 		piecepanel.setVisible(false);
 		infobjpanel.setBounds(0, 0, 594, 697);
 		frame.getContentPane().add(infobjpanel);
 		infobjpanel.setLayout(null);
-		
-		
+
+
 		infobjcontent.setBounds(12, 64, 484, 517);
 		infobjpanel.add(infobjcontent);
 		infobjcontent.setLayout(null);
-		
+
 		JButton btnSupprimerObjet = new JButton("");
 		btnSupprimerObjet.setIcon(new ImageIcon("src/main/resources/corb.png"));
 		btnSupprimerObjet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				supprime_objet(objetactuel);
-				infobjpanel.setVisible(false);				
+				infobjpanel.setVisible(false);
 				if( pieceactuelle != null ) {
 				affiche_objet(pieceactuelle.getObjetPiece(),objetcontent);
 				objetpanel.setVisible(true);}
@@ -239,7 +236,7 @@ public class Interface implements ActionListener {
 		});
 		btnSupprimerObjet.setBounds(517, 13, 65, 38);
 		infobjpanel.add(btnSupprimerObjet);
-		
+
 		JButton btmodifnom = new JButton("modifier");
 		btmodifnom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -257,11 +254,11 @@ public class Interface implements ActionListener {
 		btmodifnom.setFont(new Font("Dialog", Font.BOLD, 10));
 		btmodifnom.setBounds(500, 100, 82, 20);
 		infobjpanel.add(btmodifnom);
-		
+
 		JButton btmodifadr = new JButton("modifier");
 		btmodifadr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String adr = JOptionPane.showInputDialog(piecepanel, "Changer l'adresse MAC", JOptionPane.QUESTION_MESSAGE);			
+				String adr = JOptionPane.showInputDialog(piecepanel, "Changer l'adresse MAC", JOptionPane.QUESTION_MESSAGE);
 				if( adr != null ) {
 				if (contientAdrMAC(donnee.getObjet(),adr)) {
 					JOptionPane.showMessageDialog(infobjcontent, "Adresse MAC déjà utilisée", "Information", JOptionPane.WARNING_MESSAGE);}
@@ -276,12 +273,12 @@ public class Interface implements ActionListener {
 		btmodifadr.setFont(new Font("Dialog", Font.BOLD, 10));
 		btmodifadr.setBounds(500, 132, 82, 20);
 		infobjpanel.add(btmodifadr);
-		
+
 		JButton btmodifconso = new JButton("modifier");
 		btmodifconso.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {			
+			public void actionPerformed(ActionEvent e) {
 				String conso=JOptionPane.showInputDialog(piecepanel, "Changer la consommation de l'objet", JOptionPane.QUESTION_MESSAGE);
-				
+
 				if( conso != null) {
 				objetactuel.ModifieConsommation(Integer.parseInt(conso));
 				infobjcontent.revalidate();
@@ -293,7 +290,7 @@ public class Interface implements ActionListener {
 		btmodifconso.setFont(new Font("Dialog", Font.BOLD, 10));
 		btmodifconso.setBounds(500, 164, 82, 20);
 		infobjpanel.add(btmodifconso);
-		
+
 		JButton btmodifpriorite = new JButton("modifier");
 		btmodifpriorite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -309,23 +306,23 @@ public class Interface implements ActionListener {
 		btmodifpriorite.setFont(new Font("Dialog", Font.BOLD, 10));
 		btmodifpriorite.setBounds(500, 220, 82, 20);
 		infobjpanel.add(btmodifpriorite);
-		
+
 		JButton btonoff = new JButton("on/off");
 		btonoff.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				objetactuel.AllumerEteindre();		
+				objetactuel.AllumerEteindre();
 				objetcontent.revalidate();
 				objetcontent.repaint();
 				infobjpanel.revalidate();
 				infobjpanel.repaint();
 				affiche_infos_objet(objetactuel);
 				System.out.println(objetactuel.getSwitch());
-				
+
 			}
 		});
 		btonoff.setBounds(500, 256, 82, 20);
 		infobjpanel.add(btonoff);
-		
+
 		JButton btaddfavoris = new JButton("");
 		btaddfavoris.setIcon(new ImageIcon("src/main/resources/fa1v.png"));
 		btaddfavoris.addActionListener(new ActionListener() {
@@ -334,53 +331,53 @@ public class Interface implements ActionListener {
 			}
 		});
 		btaddfavoris.setBounds(12, 13, 65, 38);
-		
+
 		infobjpanel.add(btaddfavoris);
-				
+
 		listobjpanel.setBounds(0, 0, 594, 697);
 		frame.getContentPane().add(listobjpanel);
-		
+
 		listobjpanel.setLayout(null);
 		objetpanel.setBounds(0, 0, 594, 697);
 		frame.getContentPane().add(objetpanel);
 		objetpanel.setLayout(null);
-		
-		
-		
+
+
+
 		objetcontent.setBackground(SystemColor.control);
 		objetcontent.setBounds(0, 38, 570, 618);
 		objetpanel.add(objetcontent);
 		objetcontent.setLayout(null);
-		
+
 		objetpanel.add(objetcontent);
-		
+
 		JButton btnaddObjet = new JButton("Ajouter objet ");
 		btnaddObjet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ajout_objet(pieceactuelle);
 				objetpanel.revalidate();
-				objetpanel.repaint();	
+				objetpanel.repaint();
 				System.out.println("ajout objet");
 				affiche_objet(pieceactuelle.getObjetPiece(),objetcontent);
-						
+
 			}
 		});
-		btnaddObjet.setBounds(353, 0, 117, 25);
+		btnaddObjet.setBounds(353, 0, 150, 25);
 		objetpanel.add(btnaddObjet);
-		
+
 		JButton btsuppiece = new JButton("Supprimer pièce");
 		btsuppiece.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				supprime_piece(pieceactuelle);
 				piecepanel.setVisible(true);
 				menupanel.setVisible(false);
-				objetpanel.setVisible(false);			
+				objetpanel.setVisible(false);
 				affiche_piece();
 			}
 		});
-		btsuppiece.setBounds(431, 666, 127, 25);
+		btsuppiece.setBounds(431, 666, 150, 25);
 		objetpanel.add(btsuppiece);
-		
+
 		JButton btmodpiece = new JButton("modifer nom");
 		btmodpiece.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -391,18 +388,18 @@ public class Interface implements ActionListener {
 				}
 			}
 		});
-		btmodpiece.setBounds(301, 666, 117, 25);
+		btmodpiece.setBounds(200, 666, 200, 25);
 		objetpanel.add(btmodpiece);
 		frame.setResizable(false);
-		
+
 
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
-		
+
 		JMenu mnFichier = new JMenu("Fichier");
 		mnFichier.setForeground(new Color(0, 128, 0));
 		menuBar.add(mnFichier);
-		
+
 		JMenuItem mntmSauvegarder = new JMenuItem("Sauvegarder");
 		mntmSauvegarder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -411,7 +408,7 @@ public class Interface implements ActionListener {
 		});
 		mntmSauvegarder.setForeground(new Color(46, 139, 87));
 		mnFichier.add(mntmSauvegarder);
-		
+
 		JMenuItem mntmImporterFichier = new JMenuItem("Charger sauvegarde");
 		mntmImporterFichier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -421,21 +418,21 @@ public class Interface implements ActionListener {
 		mntmImporterFichier.setForeground(new Color(46, 139, 87));
 		mnFichier.add(mntmImporterFichier);
 		frame.getContentPane().setLayout(null);
-		
+
 		simupanel.setBounds(0, 0, 594, 697);
 		frame.getContentPane().add(simupanel);
 		simupanel.setLayout(null);
 		simupanel.setVisible(false);
-		
-		
+
+
 		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setBounds(0, 744, 594, -743); 
-		frame.getContentPane().add(layeredPane);			
-		
+		layeredPane.setBounds(0, 744, 594, -743);
+		frame.getContentPane().add(layeredPane);
+
 		favorispanel.setBounds(0, 0, 594, 690);
 		frame.getContentPane().add(favorispanel);
 		favorispanel.setLayout(null);
-		
+
 		infobjpanel.setVisible(false);
 		listobjpanel.setVisible(false);
 		objetpanel.setVisible(false);
@@ -445,46 +442,46 @@ public class Interface implements ActionListener {
 	/**
 	 * Permet de faire des actions en fonction du bouton cliqué
 	 */
-	 
+
 	public void actionPerformed(ActionEvent e) {
-		
+
 		//action sur les boutons de pièces
 		for(int i=0 ; i< btpiece.size() ; i++) {
-			if(e.getSource() ==  btpiece.elementAt(i) ) {						
+			if(e.getSource() ==  btpiece.elementAt(i) ) {
 				System.out.println( piece.elementAt(i).getNom());
 				menupanel.setVisible(false);
 				objetpanel.setVisible(true);
 				piecepanel.setVisible(false);
 				affiche_objet( piece.elementAt(i).getObjetPiece(),objetcontent);
-			    pieceactuelle= piece.elementAt(i);	
-				}			
-		}		
+			    pieceactuelle= piece.elementAt(i);
+				}
+		}
 		//action sur les boutons d'objets
 		for( int i=0 ; i< btobjet.size() ; i++) {
-			if(e.getSource() ==  btobjet.elementAt(i) ) {		
+			if(e.getSource() ==  btobjet.elementAt(i) ) {
 				if(pieceactuelle != null) {
 				objetactuel =  pieceactuelle.getObjetPiece().elementAt(i);
 				objetpanel.setVisible(false);
 				infobjpanel.setVisible(true);
 				}
-				
+
 				else if (panelactu.equals("favoris"))
 				{objetactuel = donnee.ObjetFavoris.elementAt(i);
 				 panelprec = panelactu;
 				 panelactu="objfavoris";
 				 favorispanel.setVisible(false);
 				 infobjpanel.setVisible(true);
-				}	
+				}
 
-				else if (panelactu.equals("listobj")) 
+				else if (panelactu.equals("listobj"))
 				{ objetactuel = donnee.getObjet().elementAt(i);
 				panelprec = panelactu;
 				panelactu="objlistobj";
 				listobjpanel.setVisible(false);
 				infobjpanel.setVisible(true);
-				}						
+				}
 				affiche_infos_objet(objetactuel);
-			}		
+			}
 		}
 	}
 
@@ -494,50 +491,50 @@ public class Interface implements ActionListener {
 	public void setBtpiece() {
 		for(int i=0;i<piece.size();i++) {
 			btpiece.add(new JButton( piece.elementAt(i).getNom() ));
-			btpiece.elementAt(i).addActionListener(this);}	
-	} 
-	
+			btpiece.elementAt(i).addActionListener(this);}
+	}
+
 	/**
 	 * Ajout des pièces dans le vecteur btpièce
 	 */
 
-	public void ajout_piece(){ 	
+	public void ajout_piece(){
 	    String nom = JOptionPane.showInputDialog(piecepanel, "Nom de la pièce", JOptionPane.QUESTION_MESSAGE);
-	    
+
 	    if( nom != null ) {
 	    if ( pieceExist(nom) != -1 )JOptionPane.showMessageDialog(piecepanel, "Pièce déja existante", "Information", JOptionPane.WARNING_MESSAGE);
 	    else {
-	    piece.add(new Piece(nom,0));	 
+	    piece.add(new Piece(nom,0));
 	    btpiece.addElement(new JButton(piece.lastElement().getNom()));
-	    btpiece.lastElement().addActionListener(this);}}       
+	    btpiece.lastElement().addActionListener(this);}}
 	}
-	
-	
+
+
 	/**
-	 * Affichage des boutons pièces 
+	 * Affichage des boutons pièces
 	 */
 	public void affiche_piece(){
 		int x=15,y=10;
-		piececontent.removeAll();		
-			for(int i=0;i<btpiece.size();i++){				
+		piececontent.removeAll();
+			for(int i=0;i<btpiece.size();i++){
 				btpiece.elementAt(i).setBounds(x, y, 180, 115);
 				btpiece.elementAt(i).setBackground(Color.BLACK);
 				btpiece.elementAt(i).setForeground(Color.LIGHT_GRAY);
-				piececontent.add(btpiece.elementAt(i));			
+				piececontent.add(btpiece.elementAt(i));
 				if(x >=395 ) {x=15;y+=125;}
 				else x+=190;}
 	}
-	
+
 	/**
 	 * Affichage les boutons du simulateur : consoJour, consoSemaine , consMois ,Extinction automatique
 	 */
 	public void affiche_simulateur() {
 		simupanel.removeAll();
-		
+
 		JButton modextinction = new JButton("modifier");
 		modextinction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String conso=JOptionPane.showInputDialog(piecepanel, "Changer la consommation limite", JOptionPane.QUESTION_MESSAGE);	
+				String conso=JOptionPane.showInputDialog(piecepanel, "Changer la consommation limite", JOptionPane.QUESTION_MESSAGE);
 				if( conso != null) {
 				s.SetConsommationANePasDepasser(Integer.parseInt(conso));
 				simupanel.revalidate();
@@ -564,10 +561,10 @@ public class Interface implements ActionListener {
 		consoj.setBackground(Color.BLACK);
 		consoj.setForeground(Color.LIGHT_GRAY);
 		simupanel.add(consoj);
-		
+
 		JButton consos = new JButton("ConsoSemaine");
 		consos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {			
+			public void actionPerformed(ActionEvent e) {
 				if(donnee != null )
 					new traitement_donnees("Consommation de la semaine ",donnee.ConsoSemaine,5000);
 				else JOptionPane.showMessageDialog(simupanel, "Aucune donnée n'a été importée !", "Information", JOptionPane.WARNING_MESSAGE);
@@ -577,10 +574,10 @@ public class Interface implements ActionListener {
 		consos.setBackground(Color.BLACK);
 		consos.setForeground(Color.LIGHT_GRAY);
 		simupanel.add(consos);
-		
+
 		JButton consom = new JButton("ConsoMois");
 		consom.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {			
+			public void actionPerformed(ActionEvent e) {
 				if(donnee != null )
 					new traitement_donnees("Consommation du mois ",donnee.ConsoMois,15000);
 				else JOptionPane.showMessageDialog(simupanel, "Aucune donnée n'a été importée !", "Information", JOptionPane.WARNING_MESSAGE);
@@ -619,34 +616,34 @@ public class Interface implements ActionListener {
 	 * Ajoute les boutons objet ainsi que leurs actions
 	 */
 	public void setBtobjet(Vector<Objet> p) {
-		btobjet.removeAllElements();	
+		btobjet.removeAllElements();
 		for(int i=0; i<p.size() ;i++){
 			JButton tmp= new JButton(p.elementAt(i).getNom() );
 			tmp.addActionListener(this);
-			btobjet.addElement(tmp); }	
+			btobjet.addElement(tmp); }
 	}
 
 	/**
-	 * Affichage des objets 
+	 * Affichage des objets
 	 * @param p : Vecteur d'objet que l'on affiche
 	 * @param pan le panel JPanel sur lequel on affiche les objets
 	 */
 	public void affiche_objet(Vector<Objet> p , JPanel pan){
 		int y=10;
 		int h=40;
-		
-		pan.removeAll();		
-		if ( p.isEmpty()  == false && donnee!=null ) {				
-			setBtobjet(p);			
-			for(int i=0;i<btobjet.size();i++) {	
+
+		pan.removeAll();
+		if ( p.isEmpty()  == false && donnee!=null ) {
+			setBtobjet(p);
+			for(int i=0;i<btobjet.size();i++) {
 				btobjet.elementAt(i).setBounds(20, y+5, 150, h-10);
-				pan.add(btobjet.elementAt(i));							
+				pan.add(btobjet.elementAt(i));
 				Canvas canvas = new Canvas();
 				if(i%2==0)canvas.setBackground(Color.LIGHT_GRAY);
-				else canvas.setBackground(Color.white);		
+				else canvas.setBackground(Color.white);
 				canvas.setBounds(12, y, 540, h);
-				pan.add(canvas);			
-				y += (h+5) ;					
+				pan.add(canvas);
+				y += (h+5) ;
 			}
 		}
 	}
@@ -699,14 +696,14 @@ public class Interface implements ActionListener {
 			System.out.println("Cancelled");
 		}
 	}
-	
+
 	/**
 	 * Ajoute objet dans la pièce indiquée en paramètre
 	 */
-	public void ajoutObjetDansPiece(Piece p,String nom) {	    
+	public void ajoutObjetDansPiece(Piece p,String nom) {
 	    if( nom != null ) {p.getObjetPiece().addElement(donnee.getObjet().lastElement());}
 	}
-	
+
 	/**
 	 * Méthode pour ajouter les objets dans favoris depuis l'interface
 	 * @param o : l'objet sera mis dans le vecteur favoris
@@ -723,7 +720,7 @@ public class Interface implements ActionListener {
 		jop.showMessageDialog(null, "Objet supprimé des favoris", "Information", JOptionPane.WARNING_MESSAGE);
 		}
 	}
-	
+
 	/**
 	 * Méthode pour supprimer un objet à partir de l'interface
 	 * @param o : l'Objet en paramètre sera supprimé
@@ -736,9 +733,9 @@ public class Interface implements ActionListener {
 		donnee.getObjet().remove(o);
 		if( donnee.ObjetFavoris.contains(o)  ) donnee.ObjetFavoris.remove(o);
 		if(pieceactuelle != null)pieceactuelle.getObjetPiece().remove(o);
-		
+
 	}
-	
+
 	/**
 	 * Méthode pour supprimer une pièce à partir de l'interface
 	 * @param p : la pièce en paramètre sera supprimée
@@ -747,26 +744,25 @@ public class Interface implements ActionListener {
 		btpiece.removeElementAt(piece.indexOf(p));
 		for( Objet o : p.getObjetPiece() ) {
 			if( donnee.getObjet().contains(o))donnee.getObjet().remove(o);
-			if( donnee.ObjetFavoris.contains(o))donnee.ObjetFavoris.remove(o);			
-		}	
-		piece.removeElement(p);	
+			if( donnee.ObjetFavoris.contains(o))donnee.ObjetFavoris.remove(o);
+		}
+		piece.removeElement(p);
 	}
 
 	/**
 	 * Méthode pour sauvegarder les données actuelles dans le fichier importé auparavant
 	 */
-	public void sauvegarder_fichier(){		
+	public void sauvegarder_fichier(){
 		System.out.println("Lancement sauvegarde");
-		if( donnee != null )donnee.ecriture(donnee.NomFichier);	
+		if( donnee != null )donnee.ecriture(donnee.NomFichier);
 		else JOptionPane.showMessageDialog(menupanel, "Aucun fichier importé", "Information", JOptionPane.WARNING_MESSAGE);
 	}
-	
+
 	/**
 	 * Méthode permettant d'importer un fichier qui permettra donc d'utiliser les données du fichier
 	 */
 	@SuppressWarnings("static-access")
-	public void charger_sauvegarde(){
-		JOptionPane jop = new JOptionPane();		
+	public void charger_sauvegarde(){JOptionPane jop = new JOptionPane();
 		if(donnee!=null ) {
 		jop.showMessageDialog(menupanel, "Sauvegarde déja importée", "Information", JOptionPane.WARNING_MESSAGE);}
 		else {
@@ -775,6 +771,7 @@ public class Interface implements ActionListener {
 			donnee.lecturefichier(donnee.NomFichier);
 		if(donnee!=null && donnee.NomFichier != null) {
 		jop.showMessageDialog(menupanel, "Sauvegarde importée", "Information", JOptionPane.INFORMATION_MESSAGE);
+		initpiece(donnee.getObjet());
 		Allume_tous_objets();
 		setBtpiece();
 		s = new Simulateur(donnee);
@@ -786,52 +783,65 @@ public class Interface implements ActionListener {
 			else
 				jop.showMessageDialog(menupanel, "Erreur lors de l'importation de la sauvegarde", "Information", JOptionPane.WARNING_MESSAGE);
 			donnee = null;
-			}
-		}
-	}
-	
-	
+            }
+        }
+    }
+
+
 	public void AppelAutomatiqueRecuperationConsommation(int s){
 		Timer t = new Timer();
-		t.schedule(new taskSauvegarde(this),1000,1000*s);		
+		t.schedule(new taskSauvegarde(this),1000,1000*s);
 	}
-	
+
 	/**
 	 * Méthode pour afficher toutes les données de l'objet
 	 * @param o : on verra toutes ces données actuelles
 	 */
 	public void affiche_infos_objet(Objet o) {
-		
-		infobjcontent.removeAll();		
+
+		infobjcontent.removeAll();
 		JLabel infobj = new JLabel("Information de l'objet");
 		infobj.setBounds(12,10, 200, 15);
 		infobjcontent.add(infobj);
-			
+
 		JLabel nom = new JLabel("Nom : "+o.getNom());
 		nom.setBounds(12,40, 200, 15);
 		infobjcontent.add(nom);
-		
+
 		JLabel adresse = new JLabel("Adresse MAC : "+o.getadresseMAC());
 		adresse.setBounds(12,70, 300, 15);
 		infobjcontent.add(adresse);
-		
+
 		JLabel conso = new JLabel("Consommation : "+o.getConsommation());
 		conso.setBounds(12,100, 200, 15);
 		infobjcontent.add(conso);
-		
+
 		JLabel piece = new JLabel("Pièce : "+ o.getPiece() );
 		piece.setBounds(12,130, 200, 15);
 		infobjcontent.add(piece);
-		
+
 		JLabel priorite= new JLabel("Niveau de priorité : "+o.getPriorite());
 		priorite.setBounds(12,160, 200, 15);
 		infobjcontent.add(priorite);
-		
+
 		JLabel etat= new JLabel("Allumé: "+ o.getSwitch());
 		etat.setBounds(12,190, 200, 15);
-		infobjcontent.add(etat);		
-	}
-	
+		infobjcontent.add(etat);
+
+		Vector<preference> pref= new Vector<preference>();
+        pref = donnee.getPreference();
+        for(int i=0;i<pref.size();i++){
+            if(pref.elementAt(i).getObjet().getNom()== o.getNom()){
+        JLabel heure_debut= new JLabel("Heure de debut : "+ pref.elementAt(i).getHeuredebut());
+        heure_debut.setBounds(12,220, 300, 15);
+        infobjcontent.add(heure_debut);
+
+        JLabel heure_fin= new JLabel("Heure de fin: "+ pref.elementAt(i).getHeureFin());
+        heure_fin.setBounds(12,250, 300, 15);
+        infobjcontent.add(heure_fin);}}
+
+         }
+
 	/**
 	 * Méthode pour récupérer les données dans la classe entresortie
 	 */
@@ -843,7 +853,7 @@ public class Interface implements ActionListener {
 		//reimplementer
 		this.donnee = donnee;
 	}
-	
+
 	/**
 	 * Méthode pour afficher la consommation globale de tous les objets du vecteur
 	 */
@@ -852,7 +862,7 @@ public class Interface implements ActionListener {
 		for(int i=0;i<objet.size();i++){
 			consoG+= objet.get(i).Consommation;
 		}
-		System.out.println("La consommation globale est" + consoG);			
+		System.out.println("La consommation globale est" + consoG);
 	}
 
 	/**
@@ -864,7 +874,7 @@ public class Interface implements ActionListener {
 		a=b;
 		b=temp;
 	}
-	
+
 	/**
 	 * Méthode pour partitionner
 	 * @param O : Vecteur objet
@@ -875,10 +885,10 @@ public class Interface implements ActionListener {
 	 */
 	public int Partitionner_Objet(Vector <Objet> O, int premier , int dernier , int pivot){
 		echanger(O.elementAt(pivot).getNom(),O.elementAt(dernier).getNom());
-		int j=premier;   
+		int j=premier;
 	    for(int i=premier;i<dernier-1;i++)
 	         {
-	          if (  O.elementAt(i).getNom().compareTo(O.elementAt(dernier).getNom())  > 0  ) 
+	          if (  O.elementAt(i).getNom().compareTo(O.elementAt(dernier).getNom())  > 0  )
 	              {
 	              echanger(O.elementAt(i).getNom(),O.elementAt(j).getNom());
 	              j++;
@@ -887,10 +897,10 @@ public class Interface implements ActionListener {
 	     echanger(O.elementAt(dernier).getNom(),O.elementAt(j).getNom());
 	     return j;
 	}
-	   
+
 	/**
 	 * Méthode de tri rapide
-	 * Permet de trier le vecteur objet 
+	 * Permet de trier le vecteur objet
 	 */
 	public void tri_rapide_Objet(Vector <Objet> O, int premier , int dernier){
 		if(premier < dernier){
@@ -898,7 +908,7 @@ public class Interface implements ActionListener {
 			pivot= Partitionner_Objet(O,premier,dernier,pivot);
 			tri_rapide_Objet(O,premier,pivot-1);
 			tri_rapide_Objet(O,pivot+1,dernier);}}
-	
+
 	/**
 	 * Méthode pour partitionner
 	 * @param O : Vecteur pièce
@@ -909,10 +919,10 @@ public class Interface implements ActionListener {
 	 */
 	public int Partitionner_Piece(Vector<Piece> O, int premier , int dernier , int pivot){
 		echanger(O.elementAt(pivot).getNom(),O.elementAt(dernier).getNom());
-		int j=premier;   
+		int j=premier;
 	    for(int i=premier;i<dernier-1;i++)
 	         {
-	          if (O.elementAt(i).getNom().compareTo(O.elementAt(dernier).getNom()) > 0 ) 
+	          if (O.elementAt(i).getNom().compareTo(O.elementAt(dernier).getNom()) > 0 )
 	              {
 	              echanger(O.elementAt(i).getNom(),O.elementAt(j).getNom());
 	              j++;
@@ -921,7 +931,7 @@ public class Interface implements ActionListener {
 	         echanger(O.elementAt(dernier).getNom(), O.elementAt(j).getNom() );
 	     return j;
 	}
-	
+
 	/**
 	 * Méthode de tri rapide
 	 * Permet de trier le vecteur pièce
@@ -933,7 +943,7 @@ public class Interface implements ActionListener {
 			tri_rapide_Piece(O,premier,pivot-1);
 			tri_rapide_Piece(O,pivot+1,dernier);}
 	}
-	
+
 	/**
 	 * Méthode qui initialise la pièce avec les objets dans le vecteur obj
 	 * @param obj : vecteur d'Objet, tous les objets seront mis dans la pièce
@@ -944,12 +954,12 @@ public class Interface implements ActionListener {
 				piece.add(new Piece(o.getPiece(),0));
 				piece.lastElement().getObjetPiece().add(o);
 			}
-			else if( pieceExist(o.getPiece()) != -1 ) {				
+			else if( pieceExist(o.getPiece()) != -1 ) {
 				piece.elementAt(pieceExist(o.getPiece())).getObjetPiece().add(o);
-			}	
-		}		
+			}
+		}
 	}
-	
+
 	/**
 	 * Méthode de vérification de l'existence d'une pièce
 	 * @param nom de la piece
@@ -957,16 +967,16 @@ public class Interface implements ActionListener {
 	 */
 	public int pieceExist(String nom) {
 		if( piece.isEmpty())return -1;
-		
+
 		for(Piece p : piece) {
 			if( p.getNom().equals(nom)) return piece.indexOf(p);
-		}		
+		}
 	return -1;
 	}
-	
+
 	/**
 	 * Méthode de vérification de l'adresse Mac
-	 * Permet de trier le vecteur objet 
+	 * Permet de trier le vecteur objet
 	 */
 	public boolean contientAdrMAC(Vector<Objet> obj, String adr) {
 		for(Objet o : obj  ) {
@@ -974,7 +984,7 @@ public class Interface implements ActionListener {
 		return true ;}
 		return false;
 	}
-	
+
 	/**
 	 * Méthode qui permet de simuler les conso jour, mois et semaine pour ensuite les sauvegarder
 	 */
@@ -990,24 +1000,13 @@ public class Interface implements ActionListener {
 		s.rechercheDateHeure();
 		sauvegarder_fichier();
 	}
-	
+
 	/**
 	 * Méthode pour allumer ou éteindre tous les objets
 	 */
 	public void Allume_tous_objets() {
 		for(Objet o: donnee.ListeObjet)
-			o.AllumerEteindre();
+			if( o.Switch == false )o.AllumerEteindre();
 	}
-	
-	/**
-	 * Méthode pour afficher la température extérieure
-	 * Ne fonctionne pas
-	 */
-	public void affiche_temperateurExt() {
-		//Simulateur s = new Simulateur(donnee);
-		JLabel ltempExt = new JLabel("TempsExterieur: ");
-		ltempExt.setBounds(350, 12, 200, 15);
-		menupanel.add(ltempExt);
-	}
-	
 }
+
