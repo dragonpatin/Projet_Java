@@ -1058,19 +1058,19 @@ public class Interface implements ActionListener {
                 System.out.println(" L'heure not a number");
                 JOptionPane.showMessageDialog(piecepanel, "Heure doit etre un nombre", "Information", JOptionPane.WARNING_MESSAGE);
             }
-                if (field1.getText() != null && heure_debut != 0 && heure_fin != 0) {
-                    donnee.getPreference().addElement(new preference(field1.getText(), obj ,ins, heure_debut, heure_fin));
-                    JOptionPane.showMessageDialog(menupanel, "Preference ajouté", "Information", JOptionPane.WARNING_MESSAGE);
-                }
-            }
+            if(heure_debut>24 || heure_debut<0 || heure_fin>24 || heure_fin<0){
+				System.out.println(" L'heure out of border");
+				JOptionPane.showMessageDialog(piecepanel, "Heure doit etre inférieure à 24 et supérieure à 0", "Information", JOptionPane.WARNING_MESSAGE);
+			}
+			else {
+				if (field1.getText() != null && heure_debut != 0 && heure_fin != 0 && heure_debut != heure_fin) {
+					donnee.getPreference().addElement(new preference(field1.getText(), obj, ins, heure_debut, heure_fin));
+					JOptionPane.showMessageDialog(menupanel, "Preference ajouté", "Information", JOptionPane.WARNING_MESSAGE);
+				}
+			}
+        }
         else {
             System.out.println("Cancelled");
         }
     }
-	
-
-	
 }
-
-
-
