@@ -1037,7 +1037,8 @@ public class Interface implements ActionListener {
 	
 	public void ajout_preference(Objet obj) {
 
-        String[] items = {"0","1"};
+
+        String[] items = {"Allumer","Eteindre"};
         JComboBox<String> combo = new JComboBox<String>(items);
         JTextField field1 = new JTextField();
         JTextField field2 = new JTextField();
@@ -1045,6 +1046,8 @@ public class Interface implements ActionListener {
         JPanel panel = new JPanel(new GridLayout(0, 1));
         panel.add(new JLabel("Nom preference:"));
         panel.add(field1);
+		//panel.add(new JLabel("0 : Allumer l'objet"));
+		//panel.add(new JLabel("1 : Eteindre l'objet"));
         panel.add(new JLabel("Instruction:"));
         panel.add(combo);
         panel.add(new JLabel("Heure debut:"));
@@ -1061,7 +1064,13 @@ public class Interface implements ActionListener {
             try {
                 heure_debut = Integer.parseInt(field2.getText());
                 heure_fin = Integer.parseInt(field3.getText());
-                ins = Integer.parseInt((String) combo.getSelectedItem());
+                //ins = Integer.parseInt((String) combo.getSelectedItem());
+				if(combo.getSelectedItem() == "Allumer"){
+					ins = 0;
+				}
+				else{
+					ins = 1;
+				}
             } catch (NumberFormatException nfe) {
                 System.out.println(" L'heure not a number");
                 JOptionPane.showMessageDialog(piecepanel, "Heure doit etre un nombre", "Information", JOptionPane.WARNING_MESSAGE);
